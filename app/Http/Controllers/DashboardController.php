@@ -16,10 +16,10 @@ class DashboardController extends Controller
 
         $data['navlink'] = 'dashboard';
         $jumlahInventaris = Inventaris::count();
+        $jumlahPersediaan = Persediaan::count();
         $jumlahPeminjaman = Peminjaman::count();
         $jumlahUser = User::count();
-        $jumlahPersediaan = Persediaan::count();
 
-        return view('dashboard.index', $data, ['inventaris'=>$jumlahInventaris, 'peminjaman'=>$jumlahPeminjaman, 'user'=>$jumlahUser, 'persediaan'=>$jumlahPersediaan]);
+        return view('dashboard.index', $data, ['inventaris'=>$jumlahInventaris, 'persediaan'=>$jumlahPersediaan, 'peminjaman'=>$jumlahPeminjaman, 'user'=>$jumlahUser]);
     }
 }

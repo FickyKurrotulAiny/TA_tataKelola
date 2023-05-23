@@ -6,20 +6,13 @@
     </div>
 </section>
 <div class="modal-body">
-    <form class="main-form" action="{{ route('peminjaman.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="main-form" action="{{ route('pinjam.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <!-- @method('PUT') -->
         <div class="mb-3">
             <label for="" class="form-label">Tanggal</label>
             <input type="date" name="tanggal" placeholder="Tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{old('tanggal')}}">
             @error('tanggal')
-            <span class="text-danger">{{$message}}</span>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Kode Barang</label>
-            <input type="text" name="kode_barang" placeholder="Kode Barang" class="form-control @error('kode_barang') is-invalid @enderror" value="{{old('kode_barang')}}">
-            @error('kode_barang')
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
@@ -31,17 +24,33 @@
             @enderror
         </div>
         <div class="div-3">
-            <label for="" class="form-label">Jumlah Barang</label>
-            <input type="text" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control @error('jumlah_barang') is-invalid @enderror" value="{{old('jumlah_barang')}}">
-            @error('jumlah_barang')
+            <label for="" class="form-label">Tahun Peroleh</label>
+            <input type="text" name="tahun_peroleh" placeholder="Tahun Peroleh" class="form-control @error('tahun_peroleh') is-invalid @enderror" value="{{old('tahun_peroleh')}}">
+            @error('tahun_peroleh')
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
         <br>
         <div class="div-3">
-            <label for="" class="form-label">Nama Peminjam</label>
-            <input type="text" name="nama_peminjam" placeholder="Nama Peminjam" class="form-control @error('nama_peminjam') is-invalid @enderror" value="{{old('nama_peminjam')}}">
-            @error('nama_peminjam')
+            <label for="" class="form-label">Jumlah Barang</label>
+            <input type="text" name="jumlah" placeholder="Jumlah Barang" class="form-control @error('jumlah') is-invalid @enderror" value="{{old('jumlah')}}">
+            @error('jumlah')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+        </div>
+        <br>
+        <div class="div-3">
+            <label for="" class="form-label">Keterangan</label>
+            <input type="text" name="keterangan" placeholder="Keterangan" class="form-control @error('keterangan') is-invalid @enderror" value="{{old('keterangan')}}">
+            @error('keterangan')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+        </div>
+        <br>
+        <div class="div-3">
+            <label for="" class="form-label">Rencana Kembali Tanggal </label>
+            <input type="date" name="tanggal_kembali" placeholder="Rencana Kembali Tanggal" class="form-control @error('tanggal_kembali') is-invalid @enderror" value="{{old('tanggal_kembali')}}">
+            @error('tanggal_kembali')
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
@@ -55,25 +64,25 @@
         </div>
         <br>
         <div class="div-3">
-            <label for="" class="form-label">Petugas Yang Menyerahkan</label>
-            <input type="text" name="petugas" placeholder="Petugas Yang Menyerahkan" class="form-control @error('petugas') is-invalid @enderror" value="{{old('petugas')}}">
-            @error('petugas')
+            <label for="" class="form-label">Program Studi</label>
+            <input type="text" name="program_studi" placeholder="Program Studi" class="form-control @error('program_studi') is-invalid @enderror" value="{{old('program_studi')}}">
+            @error('program_studi')
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
         <br>
         <div class="div-3">
-            <label for="" class="form-label">Yang Mengambil</label>
-            <input type="text" name="mengambil" placeholder="Yang Mengambil" class="form-control @error('mengambil') is-invalid @enderror" value="{{old('mengambil')}}">
-            @error('mengambil')
+            <label for="" class="form-label">Nama Kegiatan</label>
+            <input type="text" name="nama_kegiatan" placeholder="Nama Kegiatan" class="form-control @error('nama_kegiatan') is-invalid @enderror" value="{{old('nama_kegiatan')}}">
+            @error('nama_kegiatan')
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
         <br>
         <div class="div-3">
-            <label for="" class="form-label">Tanggal Kembali</label>
-            <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali" class="form-control @error('tanggal_kembali') is-invalid @enderror" value="{{old('tanggal_kembali')}}">
-            @error('tanggal_kembali')
+            <label for="" class="form-label">Nama Dosen</label>
+            <input type="text" name="nama_dosen" placeholder="Nama Dosen" class="form-control @error('nama_dosen') is-invalid @enderror" value="{{old('nama_dosen')}}">
+            @error('nama_dosen')
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
@@ -82,7 +91,7 @@
             <!-- <div class="form-group">
                 <div class="col-sm-2"> -->
                     <button type="submit" class="btn btn-primary">Tambah</button>
-                    <a href="{{route('peminjaman.index')}}" class="btn btn-secondary">Batal</a>
+                    <a href="{{route('pinjam.index')}}" class="btn btn-secondary">Batal</a>
                 <!-- </div>
             </div> -->
     </form>

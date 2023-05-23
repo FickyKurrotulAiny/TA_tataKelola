@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PinjamController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PersediaanController;
+
 
 
 /*
@@ -30,7 +32,7 @@ use App\Http\Controllers\PersediaanController;
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // user
@@ -39,14 +41,16 @@ Route::get('getUser', [UserController::class, 'getUser'])->name('getUser');
 // Route::post('/login', [LoginController::class, 'authenticate'])->name('login1');
 // Route::get('/logout', [LoginController::class, 'actionlogout'])->name('logout');
 
+// Route::group(['middleware' => ['auth']], function (){
 
+// });
 
 // Route::get('/dashboard', function (){
 //     return view('index');
 // });
 
 //dasboard
-Route::get('getDashboard', [DashboardController::class, 'getDashboard'])->name('getDashboard');
+// Route::get('getDashboard', [DashboardController::class, 'getDashboard'])->name('getDashboard');
 
 //peminjaman
 Route::resource('/peminjaman', PeminjamanController::class);
@@ -59,3 +63,8 @@ Route::get('getInventaris', [InventarisController::class, 'getInventaris'])->nam
 //barang.persediaan
 Route::resource('/persediaan', PersediaanController::class);
 Route::get('getPersediaan', [PersediaanController::class, 'getPersediaan'])->name('getPersediaan');
+
+//pinjam
+Route::resource('/pinjam', PinjamController::class);
+Route::get('getPinjam', [PinjamController::class, 'getPinjam'])->name('getPinjam');
+Route::get('generatePDFPinjam/{$id}', [PinjamController::class, 'generatePDFPinjam'])->name('generatePDFPinjam');

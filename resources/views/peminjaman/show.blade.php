@@ -9,7 +9,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-md">
                     <tr>
-                        <th width="200px">Tanggal</th>
+                        <th width="210px">Tanggal</th>
                         <th width="30px">:</th>
                         <th>{{ Carbon\Carbon::parse($peminjaman->tanggal)->format('d-m-Y')}}</th>
                     </tr>

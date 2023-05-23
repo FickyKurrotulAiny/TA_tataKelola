@@ -29,7 +29,7 @@
         @else (Auth::user()->level == 'user')
         <ul class="sidebar-menu">
             <li><a class="nav-link" href="#"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i class="fas fa-sticky-note"></i> <span>Peminjaman</span></a>
+            <li><a class="nav-link" href="{{ route('pinjam.index') }}"><i class="fas fa-sticky-note"></i> <span>Peminjaman</span></a>
             </li>
         </ul>
         @endif

@@ -23,7 +23,8 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Level</label>
-            <input type="text" name="level" placeholder="level" class="form-control" value="{{old('level', $user->level)}}">
+            <input type="" name="level" class="form-control"
+                value="{{old('level', $user->level)}}">
         </div>
             <!-- <div class="form-group">
                 <div class="col-sm-2"> -->

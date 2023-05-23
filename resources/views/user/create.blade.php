@@ -30,9 +30,13 @@
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
-        <div class="div-3">
-            <label for="" class="form-label">Level</label>
-            <input type="text" name="level" placeholder="Level" class="form-control @error('level') is-invalid @enderror">
+        <div class="mb-3">
+            <label>Level</label>
+            <select name="level" class="form-control" id="level" class="form-control @error('level') is-invalid @enderror" value="{{old('level')}}">
+                <option selected value="">--Pilih Level--</option>
+                <option value="admin">admin</option>
+                <option value="user">user</option>
+            </select>
             @error('level')
             <span class="text-danger">{{$message}}</span>
             @enderror
