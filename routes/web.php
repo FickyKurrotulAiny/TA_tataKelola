@@ -1,10 +1,9 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers;
 
 date_default_timezone_set('Asia/Jakarta');
-
 Route::get('/login', [Controllers\LoginController::class, 'login'])->name('login');
 Route::post('/postlogin', [Controllers\LoginController::class, 'postlogin'])->name('postlogin');
 Route::get('/logout', [Controllers\LoginController::class, 'logout'])->name('logout');
@@ -30,4 +29,9 @@ Route::group(['middleware' => ['auth']], function() {
     //barang.persediaan
     Route::resource('/persediaan', Controllers\PersediaanController::class);
     Route::get('getPersediaan', [Controllers\PersediaanController::class, 'getPersediaan'])->name('getPersediaan');
+
+    //pinjam
+    Route::resource('/pinjam', Controllers\PinjamController::class);
+    Route::get('getPinjam', [Controllers\PinjamController::class, 'getPinjam'])->name('getPinjam');
+    Route::get('generatePDFPinjam/{$id}', [Controllers\PinjamController::class, 'generatePDFPinjam'])->name('generatePDFPinjam');
 });
