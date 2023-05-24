@@ -16,10 +16,10 @@ class PinjamController extends Controller
     {
         // $pinjam = Pinjam::all();
         $pinjam = Pinjam::all();
-        $pdf = PDF::loadview('pinjam.form_peminjaman', compact('pinjam'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadview('pinjam.form_peminjaman', compact('pinjam'));
         // return $pdf->stream('Form_peminjaman PDF.pdf');
         // return ('Form_peminjaman PDF.pdf', compact('pinjam'));
-        // return $pdf->stream('form_peminjaman.pdf', $data, ['pinjam' => $pinjam]);
+        return $pdf->stream('form_peminjaman.pdf', ['pinjam' => $pinjam]);
     }
 
 

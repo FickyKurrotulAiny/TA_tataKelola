@@ -63,7 +63,7 @@
                 <tr>
                     <th><a href="{{ route('pinjam.index') }}" class="btn btn-primary">Kembali</a></th>
                     <th><a href="{{route('generatePDFPinjam', ['id' => $pinjam->id])}}" target="_blank"
-                    class="btn btn-primary">Cetak PDF</a></th>
+                    class="btn btn-primary">Cetak Form</a></th>
                 </tr>
             </div>
         </div>

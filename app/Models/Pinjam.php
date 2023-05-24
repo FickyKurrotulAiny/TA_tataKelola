@@ -30,4 +30,5 @@ class Pinjam extends Model
     public function detailData($id){
         return DB::table('pinjam')->where('id', $id)->first();
     }
+
 }

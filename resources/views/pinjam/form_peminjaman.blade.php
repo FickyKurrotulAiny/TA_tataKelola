@@ -8,17 +8,19 @@
     <title>Form Peminjaman</title>
 </head>
 <style>
-     .withBorder {
-  border: 1px solid;
-
-}
-    .border2{
-  border-right: 1px solid;
-  border-bottom: 1px solid;
+    .withBorder {
+        border: 1px solid;
 
     }
-    .border3{
-  border-bottom: 1px solid;
+
+    .border2 {
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+
+    }
+
+    .border3 {
+        border-bottom: 1px solid;
 
     }
 </style>
@@ -49,25 +51,60 @@
         </td>
     </table>
     <table border="0">
-            <tr>
-                <td width="200">Yang bertanggung jawab dibawah ini</td>
-                <td width="315">:</td>
-            </tr>
-            {{-- <tr>
-                <td width="200">Nama Barang</td>
-                <td width="315">: {{ $pinjam->nama_barang }}</td>
-            </tr> --}}
-        </table>
+        <tr>
+            <td width="170">Yang bertanda tangan dibawah ini</td>
+            <td width="315">:</td>
+        </tr>
+        <br><br><br>
+        <tr>
+            <td width="170">Nama Dosen Peminjam</td>
+            <td width="315">: {{ $pinjam[0]->nama_dosen }}</td>
+        </tr>
+        <tr>
+            <td width="170">Jurusan</td>
+            <td width="315">: {{ $pinjam[0]->jurusan }}</td>
+        </tr>
+        <tr>
+            <td width="170">Program Studi</td>
+            <td width="315">: {{ $pinjam[0]->program_studi }}</td>
+        </tr>
+        <tr>
+            <td width="170">Nama Kegiatan</td>
+            <td width="315">: {{ $pinjam[0]->nama_kegiatan }}</td>
+        </tr>
+        <tr>
+            <td width="170">Tanggal Peminjam</td>
+            <td width="315">: {{ Carbon\Carbon::parse($pinjam[0]->tanggal)->format('d-m-Y') }}</td>
+        </tr>
+        <tr>
+            <td width="170">Rancana Kembali Tanggal</td>
+            <td width="315">: {{ Carbon\Carbon::parse($pinjam[0]->tanggal_kembali)->format('d-m-Y') }}</td>
+        </tr>
+        <br><br><br>
+        <tr>
+            <td width="170">Untuk Meminjam Barang Sebagai Berikut</td>
+            <td width="315">:</td>
+        </tr>
+    </table>
     <br>
     <table style="width: 100%;">
         <tr align="center">
             <th class="withBorder" width="30px">No</th>
-            <th class="withBorder" width="170px">Nama Barang/Alat</th>
-            <th class="withBorder" width="189px">Kode Barang/Alat</th>
+            <th class="withBorder" width="170px">Nama Barang</th>
+            <th class="withBorder" width="189px">Kode Barang</th>
             <th class="withBorder" width="183px">Jumlah Barang</th>
             <th class="withBorder" width="128px">Keterangan</th>
         </tr>
-    <br>
+    </table>
+    <table style="width: 100%;">
+        <tr align="center">
+            <th class="withBorder" width="30px">No</th>
+            <th class="withBorder" width="170px">{{ $pinjam[0]->nama_barang }}</th>
+            <th class="withBorder" width="189px">{{ $pinjam[0]->kode_barang }}</th>
+            <th class="withBorder" width="183px">{{ $pinjam[0]->jumlah }}</th>
+            <th class="withBorder" width="128px">{{ $pinjam[0]->keterangan }}</th>
+        </tr>
+    </table>
 
 </body>
 
