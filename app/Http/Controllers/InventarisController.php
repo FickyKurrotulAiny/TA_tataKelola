@@ -26,10 +26,10 @@ class InventarisController extends Controller
                     ->addColumn('action', function($value){
                     $btn = '<div class="d-flex flex-row bd-highlight mb-3">
                     <a href="'.route('inventaris.show', $value->id).'"
-                        class="btn btn-warning btn-sm">Lihat</i>&nbsp;</a>&nbsp;&nbsp;
+                        class="btn btn-warning mr-3">Lihat</i></a>
 
-                    <a class="btn btn-info btn-sm"
-                        href="'.route('inventaris.edit', $value->id).'">Edit</i>&nbsp;</a>&nbsp;&nbsp;
+                    <a class="btn btn-info mr-3"
+                        href="'.route('inventaris.edit', $value->id).'">Edit</i></a>
 
                     <button class="btn btn-danger delete" id="'.$value->id.'"
                         nama="'.$value->nama.'" type="submit" onclick="deleteInventaris('.$value->id.')">Hapus</i></button>

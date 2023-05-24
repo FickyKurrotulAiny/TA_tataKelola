@@ -12,14 +12,28 @@ use App\Models\Persediaan;
 
 class DashboardController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(){
+        if(Auth::user()->level === 'user'){
+            $inventaris = Inventaris::get();
+            $persediaans = Persediaan::get();
+            return view('dashboard.user', compact('inventaris','persediaans'));
+        }else{
+            $data['navlink'] = 'dashboard';
+            $inventaris = Inventaris::count();
+            $peminjaman = Peminjaman::count();
+            $user = User::count();
+            $persediaan = Persediaan::count();
 
-        $data['navlink'] = 'dashboard';
-        $jumlahInventaris = Inventaris::count();
-        $jumlahPersediaan = Persediaan::count();
-        $jumlahPeminjaman = Peminjaman::count();
-        $jumlahUser = User::count();
-
-        return view('dashboard.index', $data, ['inventaris'=>$jumlahInventaris, 'persediaan'=>$jumlahPersediaan, 'peminjaman'=>$jumlahPeminjaman, 'user'=>$jumlahUser]);
+            return view('dashboard.index', compact('data','inventaris','peminjaman','user','persediaan'));
+        }
     }
 }

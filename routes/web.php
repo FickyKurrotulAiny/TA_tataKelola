@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers;
 
 date_default_timezone_set('Asia/Jakarta');
 Route::get('/login', [Controllers\LoginController::class, 'login'])->name('login');
