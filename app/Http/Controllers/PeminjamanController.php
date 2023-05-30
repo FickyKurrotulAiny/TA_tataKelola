@@ -19,6 +19,7 @@ class PeminjamanController extends Controller
         return view('peminjaman.index', $data, compact('request'));
     }
 
+
     public function getpeminjaman(Request $request){
         if ($request->ajax()) {
             $data = Peminjaman::select('*');
@@ -34,17 +35,13 @@ class PeminjamanController extends Controller
                     })
                     ->addColumn('action', function($value){
                     $btn = '<div class="d-flex flex-row bd-highlight mb-3">
-                    <a href="'.route('peminjaman.show', $value->id).'"
-                        class="btn btn-warning btn-sm"><i class="fas fa-eye"></i>&nbsp;</a>&nbsp;&nbsp;
+                        <a href="'.route('peminjaman.show', $value->id).'" class="btn btn-warning mr-3">Lihat</i></a>
 
-                    <a class="btn btn-info btn-sm"
-                        href="'.route('peminjaman.edit', $value->id).'"><i
-                            class="fas fa-pen"></i>&nbsp;</a>&nbsp;&nbsp;
+                        <a class="btn btn-info mr-3" href="'.route('peminjaman.edit', $value->id).'">Edit</i></a>
 
-                    <button class="btn btn-danger delete" id="'.$value->id.'"
-                        nama="'.$value->nama.'" type="submit" onclick="deletePeminjaman('.$value->id.')"><i
-                            class="fas fa-trash"></i></button>
-                </div>';
+                        <button class="btn btn-danger delete" id="'.$value->id.'" nama="'.$value->nama.'" type="submit"
+                            onclick="deletePeminjaman('.$value->id.')">Hapus</i></button>
+                    </div>';
                     return $btn;
                     })
                     ->rawColumns(['action'])

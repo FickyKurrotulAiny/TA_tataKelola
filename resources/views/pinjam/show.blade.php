@@ -4,7 +4,7 @@
     <div class="section-header">
         <h1>Detail Peminjaman</h1>
     </div>
-    <div class="section-body">
+    <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-md">
@@ -62,7 +62,7 @@
                 <br>
                 <tr>
                     <th><a href="{{ route('pinjam.index') }}" class="btn btn-primary">Kembali</a></th>
-                    <th><a href="{{route('generatePDFPinjam', ['id' => $pinjam->id])}}" target="_blank"
+                    <th><a href="{{route('generatePDFPinjam', $pinjam->id)}}" target="_blank"
                     class="btn btn-primary">Cetak Form</a></th>
                 </tr>
             </div>

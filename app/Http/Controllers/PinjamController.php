@@ -14,12 +14,11 @@ class PinjamController extends Controller
 
     public function generatePDFPinjam(Request $request)
     {
-        // $pinjam = Pinjam::all();
         $pinjam = Pinjam::all();
         $pdf = PDF::loadview('pinjam.form_peminjaman', compact('pinjam'));
         // return $pdf->stream('Form_peminjaman PDF.pdf');
         // return ('Form_peminjaman PDF.pdf', compact('pinjam'));
-        return $pdf->stream('form_peminjaman.pdf', ['pinjam' => $pinjam]);
+        return $pdf->stream('form_peminjaman.pdf', $data, ['pinjam' => $pinjam]);
     }
 
 
@@ -48,17 +47,13 @@ class PinjamController extends Controller
                     })
                     ->addColumn('action', function($value){
                     $btn = '<div class="d-flex flex-row bd-highlight mb-3">
-                    <a href="'.route('pinjam.show', $value->id).'"
-                        class="btn btn-warning btn-sm">Lihat&nbsp;</a>&nbsp;&nbsp;
+                        <a href="'.route('pinjam.show', $value->id).'" class="btn btn-warning mr-3">Lihat</i></a>
 
-                    <a class="btn btn-info btn-sm"
-                        href="'.route('pinjam.edit', $value->id).'"><i
-                            class="fas fa-pen"></i>&nbsp;</a>&nbsp;&nbsp;
+                        <a class="btn btn-info mr-3" href="'.route('pinjam.edit', $value->id).'">Edit</i></a>
 
-                    <button class="btn btn-danger delete" id="'.$value->id.'"
-                        nama="'.$value->nama.'" type="submit" onclick="deletePinjam('.$value->id.')"><i
-                            class="fas fa-trash"></i></button>
-                </div>';
+                        <button class="btn btn-danger delete" id="'.$value->id.'" nama="'.$value->nama.'" type="submit"
+                            onclick="deletePinjam('.$value->id.')">Hapus</i></button>
+                    </div>';
                     return $btn;
                     })
                     ->rawColumns(['action'])

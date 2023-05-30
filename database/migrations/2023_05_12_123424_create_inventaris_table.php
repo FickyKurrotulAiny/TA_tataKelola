@@ -36,6 +36,7 @@ class CreateInventarisTable extends Migration
             $table->string('nama_ruangan');
             $table->string('tempat');
             $table->string('keterangan');
+            $table->string('image', 255)->nullable();
             $table->timestamps();
         });
     }

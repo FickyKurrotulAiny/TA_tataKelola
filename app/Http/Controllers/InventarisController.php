@@ -82,6 +82,7 @@ class InventarisController extends Controller
             'nama_ruangan' => 'required',
             'tempat' => 'required',
             'keterangan' => 'required',
+            'image' => 'required | image|file|max:1024',
         ],[
             'kode_barang.required' => 'Kode Barang Wajib diisi!',
             'nama_barang.required' => 'Nama Barang Wajib diisi!',
@@ -104,10 +105,16 @@ class InventarisController extends Controller
             'nama_ruangan.required' => 'Nama Ruangan Wajib diisi!',
             'tempat.required' => 'Nama Tempat Wajib diisi!',
             'keterangan.required' => 'Keterangan Wajib diisi!',
+            'image.required' => 'Image Wajib diisi!',//image
         ]);
 
         $inventaris = new Inventaris();
         $inventaris = Inventaris::create($request->all());
+        if($request->hasFile('image')){
+            $request->file('image')->move('imageinventaris/', $request->file('image')->getClientOriginalName());
+            $inventaris->image = $request->file('image')->getClientOriginalName();
+            $inventaris->save();
+        }
 
         $inventaris->kode_barang = $request->kode_barang;
         $inventaris->nama_barang = $request->nama_barang;
@@ -171,6 +178,11 @@ class InventarisController extends Controller
     public function update(Request $request, $id)
     {
         $inventaris = Inventaris::findOrFail($id);
+        if($request->hasFile('image')){
+            $request->file('image')->move('imageinventaris/', $request->file('image')->getClientOriginalName());
+            $inventaris->image = $request->file('image')->getClientOriginalName();
+            $inventaris->save();
+        }
 
         $inventaris->kode_barang = $request->kode_barang;
         $inventaris->nama_barang = $request->nama_barang;

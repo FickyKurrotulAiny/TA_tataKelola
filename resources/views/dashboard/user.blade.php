@@ -2,7 +2,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Dashboard</h1>
+            <h1>INFORMASI DATA BARANG YANG TERSEDIA</h1>
         </div>
         <div class="section-body">
             <h2 class="section-title">Data Inventaris</h2>
@@ -47,8 +47,9 @@
                                 <tr>
                                     <th width="20px">No.</th>
                                     <th>Nama Barang</th>
-                                    <th>Merk</th>
-                                    <th>Stock</th>
+                                    <th>Merk Barang</th>
+                                    <th>Jumlah Barang</th>
+                                    <th>Satuan Barang</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,7 +61,8 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $persediaan->nama_barang }}</td>
                                         <td>{{ $persediaan->merk }}</td>
-                                        <td>{{ $persediaan->jumlah }} {{ $persediaan->satuan }}</td>
+                                        <td>{{ $persediaan->jumlah }}</td>
+                                        <td>{{ $persediaan->satuan }}
                                     </tr>
                                 @endforeach
                             </tbody>

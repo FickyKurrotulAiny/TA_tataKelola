@@ -5,17 +5,13 @@
 
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Dashboard &mdash; Stisla</title>
+    <title>Tata Kelola &mdash; JTI</title>
     <!-- <title>@yield('title') {{ config('app.name') }}</title> config app name => .env // Jadi Bisa di rubah -->
 
 
-    <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"> -->
 
-
-    <!-- CSS Libraries -->
 
     <!-- Datatables -->
     <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
@@ -70,8 +66,9 @@
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
-                    Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad
-                        Nauval Azhar</a>
+                    Aplikasi Tata Kelola Barang Milik Negara di Jurusan Teknik Informatika Politeknik Negeri Indramayu
+                    &copy; 2023 <div class="bullet"></div> Design By <a href="https://nauval.in/">Ficky Kurrotul
+                        Ainy</a>
                 </div>
                 <div class="footer-right">
                 </div>
@@ -99,31 +96,8 @@
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
-    <!-- <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js></script> -->
 
-    <!-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> -->
-
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     @include('vendor.sweetalert.alert')
-    <script>
-        $(document).ready(function() {
-            $("#my_summernote").summernote({
-                height: 300,
-                tabsize: 2,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-            $('.dropdown-toggle').dropdown();
-        });
-    </script> -->
 
 
     <!-- @stack('page-scripts') -->
@@ -142,18 +116,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     @yield('script');
-
-    <script>
-        $(document).ready(function() {
-            $('#content_of_letter').summernote({
-                height: '400'
-            });
-            var $outgoingletter = $('textarea[name="#content_of_letter"]').html($('#content_of_letter').code());
-            var textareaValue = $('#content_of_letter').code();
-
-        });
-    </script>
-
+    
     @stack('scripts')
 
 </body>

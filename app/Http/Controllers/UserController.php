@@ -21,15 +21,11 @@ class UserController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($value){
                     $btn = '<div class="d-flex flex-row bd-highlight mb-3">
+                        <a class="btn btn-info mr-3" href="'.route('user.edit', $value->id).'">Edit</i></a>
 
-                    <a class="btn btn-info btn-sm"
-                        href="'.route('user.edit', $value->id).'"><i
-                            class="fas fa-pen-fancy"></i>&nbsp;</a>&nbsp;
-
-                    <button class="btn btn-danger delete" id="'.$value->id.'"
-                        nama="'.$value->nama.'" type="submit" onclick="deleteUser('.$value->id.')"><i
-                            class="fas fa-trash"></i></button>
-                </div>';
+                        <button class="btn btn-danger delete" id="'.$value->id.'" nama="'.$value->nama.'" type="submit"
+                            onclick="deleteUser('.$value->id.')">Hapus</i></button>
+                    </div>';
                     return $btn;
                     })
                     ->rawColumns(['action'])
