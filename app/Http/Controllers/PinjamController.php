@@ -18,7 +18,7 @@ class PinjamController extends Controller
         $pdf = PDF::loadview('pinjam.form_peminjaman', compact('pinjam'));
         // return $pdf->stream('Form_peminjaman PDF.pdf');
         // return ('Form_peminjaman PDF.pdf', compact('pinjam'));
-        return $pdf->stream('form_peminjaman.pdf', $data, ['pinjam' => $pinjam]);
+        return $pdf->stream('form_peminjaman.pdf', ['pinjam' => $pinjam]);
     }
 
 

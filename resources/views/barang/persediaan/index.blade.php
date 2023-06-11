@@ -19,7 +19,7 @@
                                         <th width="3%">No</th>
                                         <th>Nama Barang</th>
                                         <th>Merk/Type</th>
-                                        <th>Jumlah</th>
+                                        <th>Tahun Peroleh</th>
                                         <th>Satuan</th>
                                         <th>Opsi</th>
                                     </tr>
@@ -70,8 +70,8 @@
                     name: 'merk'
                 },
                 {
-                    data: 'jumlah',
-                    name: 'jumlah'
+                    data: 'tahun_peroleh',
+                    name: 'tahun_peroleh'
                 },
                 {
                     data: 'satuan',

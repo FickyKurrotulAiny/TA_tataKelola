@@ -116,7 +116,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     @yield('script');
-    
+
+    <script>
+        $(document).ready(function() {
+            $('#keterangan').summernote({
+                height: '400'
+            });
+            var $outgoingletter = $('textarea[name="#keterangan"]').html($('#keterangan').code());
+            var textareaValue = $('#keterangan').code();
+
+        });
+    </script>
+
     @stack('scripts')
 
 </body>

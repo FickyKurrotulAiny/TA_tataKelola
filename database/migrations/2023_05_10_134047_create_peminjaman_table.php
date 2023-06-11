@@ -14,16 +14,17 @@ class CreatePeminjamanTable extends Migration
     public function up()
     {
         Schema::create('peminjaman', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->date('tanggal');
-            $table->integer('kode_barang');
-            $table->string('nama_barang');
+            $table->integer('kode_barang')->unique();
+            $table->string('nama_barang')->unique();
             $table->string('jumlah_barang');
             $table->string('nama_peminjam');
             $table->string('jurusan');
             $table->string('mengambil');
             $table->string('petugas');
             $table->date('tanggal_kembali');
+            $table->string('keterangan');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -33,5 +33,5 @@ Route::group(['middleware' => ['auth']], function() {
     //pinjam
     Route::resource('/pinjam', Controllers\PinjamController::class);
     Route::get('getPinjam', [Controllers\PinjamController::class, 'getPinjam'])->name('getPinjam');
-    Route::get('generatePDFPinjam/{$id}', [Controllers\PinjamController::class, 'generatePDFPinjam'])->name('generatePDFPinjam');
+    Route::get('generatePDFPinjam', [Controllers\PinjamController::class, 'generatePDFPinjam'])->name('generatePDFPinjam');
 });

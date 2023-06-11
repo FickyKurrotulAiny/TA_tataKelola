@@ -16,6 +16,7 @@ class Persediaan extends Model
             'nama_barang',
             'merk',
             'satuan',
+            'tahun_peroleh',
             'volumeBarang_saldo',
             'volumeBarang_masuk',
             'volumeBarang_keluar',

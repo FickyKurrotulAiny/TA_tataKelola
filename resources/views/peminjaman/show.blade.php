@@ -58,6 +58,11 @@
                                     <th width="30px">:</th>
                                     <th>{{ Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('d-m-Y') }}</th>
                                 </tr>
+                                <tr>
+                                    <th width="200px">Keterangan</th>
+                                    <th width="30px">:</th>
+                                    <th>{!! $peminjaman->keterangan !!}</th>
+                                </tr>
                             </table>
                             <br>
                             <tr>

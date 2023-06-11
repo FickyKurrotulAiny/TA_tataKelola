@@ -31,6 +31,11 @@
                                     value="{{ old('satuan', $persediaan->satuan) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Tahun Peroleh</label>
+                                <input type="text" name="tahun_peroleh" placeholder="Tahun Peroleh"
+                                    class="form-control"value="{{ old('tahun_peroleh', $persediaan->tahun_peroleh) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Volume Barang (Saldo Awal)</label>
                                 <input type="text" name="volumeBarang_saldo" placeholder="Volume Barang (Saldo Awal)"
                                     class="form-control"
@@ -64,6 +69,20 @@
                                 <input type="text" name="jumlah" placeholder="Jumlah" class="form-control"
                                     value="{{ old('jumlah', $persediaan->jumlah) }}">
                             </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="image" class="form-label">Masukan Image</label>
+                                @if ($persediaan->image)
+                                    <img src="{{ asset('imagepersediaan/' . $persediaan->image) }}"
+                                        class="img-preview img-fluid d-block">
+                                @else
+                                    <img class="img-preview img-fluid">
+                                @endif
+                                <input class="form-control @error('image') is-invalid @enderror" type="file"
+                                    id="image" name="image" onchange="previewImage()">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="col-md-12 mt-3">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                                 <a href="{{ route('persediaan.index') }}" class="btn btn-secondary">Batal</a>
@@ -74,4 +93,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('.img-preview');
+
+            imgPreview.style.display = 'blok';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            };
+        }
+    </script>
 @endsection

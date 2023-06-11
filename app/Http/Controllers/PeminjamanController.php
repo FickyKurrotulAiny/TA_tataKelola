@@ -81,6 +81,7 @@ class PeminjamanController extends Controller
             'petugas' => 'required',
             'mengambil' => 'required',
             'tanggal_kembali' => 'required',
+            'keterangan' => 'required',
         ],[
             'tanggal.required' => 'Tanggal Wajib diisi!',
             'kode_barang.required' => 'Kode Barang Wajib diisi!',
@@ -91,6 +92,7 @@ class PeminjamanController extends Controller
             'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
             'mengambil.required' => 'Yang Mengambil Wajib diisi!',
             'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
+            'keterangan' => 'Keterangan Wajib diisi!',
         ]);
 
         $peminjaman = new Peminjaman();
@@ -105,6 +107,7 @@ class PeminjamanController extends Controller
         $peminjaman->petugas = $request->petugas;
         $peminjaman->mengambil = $request->mengambil;
         $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+        $peminjaman->keterangan = $request->keterangan;
         $peminjaman->save();
 
         return redirect('peminjaman')->with('success', 'Tambah Peminjaman Sukses!');
@@ -155,6 +158,7 @@ class PeminjamanController extends Controller
         $peminjaman->petugas = $request->petugas;
         $peminjaman->mengambil = $request->mengambil;
         $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+        $peminjaman->keterangan = $request->keterangan;
         $peminjaman->save();
 
         return redirect('peminjaman')->with('success', 'Edit Peminjaman Sukses!');

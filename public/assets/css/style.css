@@ -3183,14 +3183,14 @@ pre {
         width: 100%;
     }
 }
-/* 4.4 Layout */
+/* 4.4 Layout sidebar */
 .main-sidebar {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
     position: fixed;
     top: 0;
     height: 100%;
     width: 250px;
-    background-color: #fff;
+    background-color: #ffffff;
     z-index: 880;
     left: 0;
 }

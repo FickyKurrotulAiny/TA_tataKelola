@@ -42,6 +42,15 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Tahun Peroleh</label>
+                                <input type="text" name="tahun_peroleh" placeholder="Tahun Peroleh"
+                                    class="form-control @error('tahun_peroleh') is-invalid @enderror"
+                                    value="{{ old('tahun_peroleh') }}">
+                                @error('tahun_peroleh')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Volume Barang (Saldo Awal)</label>
                                 <input type="text" name="volumeBarang_saldo" placeholder="Volume Barang (Saldo Awal)"
                                     class="form-control @error('volumeBarang_saldo') is-invalid @enderror"
@@ -94,9 +103,19 @@
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Jumlah</label>
                                 <input type="text" name="jumlah" placeholder="Jumlah"
-                                    class="form-control @error('jumlah') is-invalid @enderror" value="{{ old('jumlah') }}">
+                                    class="form-control @error('jumlah') is-invalid @enderror"
+                                    value="{{ old('jumlah') }}">
                                 @error('jumlah')
                                     <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="image" class="form-label">Masukan Image</label>
+                                <img class="img-preview img-fluid d-block">
+                                <input class="form-control @error('image') is-invalid @enderror" type="file"
+                                    id="image" name="image" onchange="previewImage()">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <br>
@@ -110,4 +129,20 @@
             </div>
         </div>
     </div>
-            @endsection
+
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('.img-preview');
+
+            imgPreview.style.display = 'blok';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            };
+        }
+    </script>
+@endsection

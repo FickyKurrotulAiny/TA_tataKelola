@@ -62,30 +62,40 @@ class PersediaanController extends Controller
             'nama_barang' => 'required',
             'merk' => 'required',
             'satuan' => 'required',
+            'tahun_peroleh'=> 'required',
             'volumeBarang_saldo' => 'required',
             'volumeBarang_masuk' => 'required',
             'volumeBarang_keluar' => 'required',
             'volumeBarang_sisa' => 'required',
             'harga_satuan' => 'required',
             'jumlah' => 'required',
+            'image' => 'required | image|file|max:1024',
         ],[
             'nama_barang.required' => 'Nama Barang Wajib diisi!',
             'merk.required' => 'Merk/Type Wajib diisi!',
             'satuan.required' => 'Satuan Barang Wajib diisi!',
+            'tahun_peroleh'=>'Tahun Peroleh Wajib diisi',
             'volumeBarang_saldo.required' => 'Volume Barang (Saldo Awal) Wajib diisi!',
             'volumeBarang_masuk.required' => 'Volume Barang (Masuk) Wajib diisi',
             'volumeBarang_keluar.required' => 'Volume Barang (Keluar) Wajib diisi',
             'volumeBarang_sisa.required' => 'Volume Barang (Sisa) Wajib diisi',
             'harga_satuan.required' => 'Harga Satuan Wajib diisi',
             'jumlah.required' => 'Jumlah Wajib diisi!',
+            'image.required' => 'Image Wajib diisi!',
         ]);
 
         $persediaan = new Persediaan();
         $persediaan = Persediaan::create($request->all());
+        if($request->hasFile('image')){
+            $request->file('image')->move('imagepersediaan/', $request->file('image')->getClientOriginalName());
+            $persediaan->image = $request->file('image')->getClientOriginalName();
+            $persediaan->save();
+        }
 
         $persediaan->nama_barang = $request->nama_barang;
         $persediaan->merk = $request->merk;
         $persediaan->satuan = $request->satuan;
+        $persediaan->tahun_peroleh = $request->tahun_peroleh;
         $persediaan->volumeBarang_saldo = $request->volumeBarang_saldo;
         $persediaan->volumeBarang_masuk = $request->volumeBarang_masuk;
         $persediaan->volumeBarang_keluar = $request->volumeBarang_keluar;
@@ -133,10 +143,16 @@ class PersediaanController extends Controller
     public function update(Request $request, $id)
     {
         $persediaan = Persediaan::findOrFail($id);
+        if($request->hasFile('image')){
+            $request->file('image')->move('imagepersediaan/', $request->file('image')->getClientOriginalName());
+            $persediaan->image = $request->file('image')->getClientOriginalName();
+            $persediaan->save();
+        }
 
         $persediaan->nama_barang = $request->nama_barang;
         $persediaan->merk = $request->merk;
         $persediaan->satuan = $request->satuan;
+        $persediaan->tahun_peroleh = $request->tahun_peroleh;
         $persediaan->volumeBarang_saldo = $request->volumeBarang_saldo;
         $persediaan->volumeBarang_masuk = $request->volumeBarang_masuk;
         $persediaan->volumeBarang_keluar = $request->volumeBarang_keluar;

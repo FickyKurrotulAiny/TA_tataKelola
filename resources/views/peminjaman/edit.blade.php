@@ -60,8 +60,12 @@
                                 <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
                                     class="form-control"value="{{ old('tanggal_kembali', $peminjaman->tanggal_kembali) }}">
                             </div>
+                            <div class="mb-3 col-md-6 col-xl-12">
+                                <label for="keterangan" class="form-label">Isi Surat</label>
+                                <textarea name="keterangan" id="keterangan">{{ $peminjaman->keterangan }}</textarea>
+                            </div>
                             <div class="col-md-12 mt-3">
-                                <button type="submit" class="btn btn-primary">Tambah</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                                 <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>

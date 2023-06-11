@@ -221,19 +221,19 @@
         </div>
     </div>
 
-                <script>
-                    function previewImage() {
-                        const image = document.querySelector('#image');
-                        const imgPreview = document.querySelector('.img-preview');
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('.img-preview');
 
-                        imgPreview.style.display = 'blok';
+            imgPreview.style.display = 'blok';
 
-                        const oFReader = new FileReader();
-                        oFReader.readAsDataURL(image.files[0]);
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
 
-                        oFReader.onload = function(oFREvent) {
-                            imgPreview.src = oFREvent.target.result;
-                        };
-                    }
-                </script>
-            @endsection
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            };
+        }
+    </script>
+@endsection

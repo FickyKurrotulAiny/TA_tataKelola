@@ -11,7 +11,7 @@
                     <div class="card">
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" >
                             <table class="table table-bordered table-md">
                                 <tr>
                                     <th width="220px">Nama Barang</th>
@@ -27,6 +27,11 @@
                                     <th width="200px">Satuan</th>
                                     <th width="30px">:</th>
                                     <th>{{ $persediaan->satuan }}</th>
+                                </tr>
+                                <tr>
+                                    <th width="230px">Tahun Peroleh</th>
+                                    <th width="30px">:</th>
+                                    <th>{{ $persediaan->tahun_peroleh }}</th>
                                 </tr>
                                 <tr>
                                     <th width="200px">Volume Barang (Saldo Awal)</th>
@@ -49,6 +54,11 @@
                                     <th>{{ $persediaan->volumeBarang_sisa }}</th>
                                 </tr>
                                 <tr>
+                                    <th width="200px">Harga Satuan</th>
+                                    <th width="30px">:</th>
+                                    <th>{{ $persediaan->harga_satuan }}</th>
+                                </tr>
+                                <tr>
                                     <th width="200px">Satuan</th>
                                     <th width="30px">:</th>
                                     <th>{{ $persediaan->satuan }}</th>
@@ -57,6 +67,11 @@
                                     <th width="200px">Jumlah Barang</th>
                                     <th width="30px">:</th>
                                     <th>{{ $persediaan->jumlah }}</th>
+                                </tr>
+                                <tr>
+                                    <th width="230px">Foto Barang</th>
+                                    <th width="30px">:</th>
+                                    <th><img src="{{ url('imagepersediaan/' . $persediaan->image) }}" width="150px"></th>
                                 </tr>
                             </table>
                             <br>

@@ -14,16 +14,18 @@ class CreatePersediaanTable extends Migration
     public function up()
     {
         Schema::create('persediaan', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_barang');
+            $table->increments('id');
+            $table->string('nama_barang')->unique();
             $table->string('merk');
             $table->string('satuan');
+            $table->string('tahun_peroleh');
             $table->string('volumeBarang_saldo');
             $table->string('volumeBarang_masuk');
             $table->string('volumeBarang_keluar');
             $table->string('volumeBarang_sisa');
             $table->string('harga_satuan');
-            $table->integer('jumlah');
+            $table->string('jumlah');
+            $table->string('image', 255)->nullable();
             $table->timestamps();
         });
     }
