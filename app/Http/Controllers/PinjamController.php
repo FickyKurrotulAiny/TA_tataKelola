@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventaris;
 use Illuminate\Http\Request;
 use App\Models\Pinjam;
+use App\Models\PinjamDetail;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use PDF;
 
@@ -69,7 +73,8 @@ class PinjamController extends Controller
     public function create()
     {
         $data['navlink'] = 'pinjam';
-        return view('pinjam.create', $data);
+        $barangs = Inventaris::get();
+        return view('pinjam.create',compact('barangs'), $data);
     }
 
     /**
@@ -81,16 +86,12 @@ class PinjamController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-
             'nama_dosen' => 'required',
             'jurusan' => 'required',
             'program_studi' => 'required',
             'nama_kegiatan' => 'required',
             'tanggal' => 'required',
             'tanggal_kembali' => 'required',
-            'nama_barang' => 'required',
-            'tahun_peroleh' => 'required',
-            'jumlah' => 'required',
             'keterangan' => 'required',
         ],[
             'nama_dosen.required' => 'Nama Dosen Wajib diisi!',
@@ -99,28 +100,40 @@ class PinjamController extends Controller
             'nama_kegiatan.required'  => 'Nama Kegiatan Wajib diisi!',
             'tanggal.required'  => 'Tanggal Wajib diisi!',
             'tanggal_kembali.required'  => 'Tanggal Kembali Wajib diisi!',
-            'nama_barang.required'  => 'Nama Barang Wajib diisi!',
-            'tahun_peroleh.required'  => 'Tahun Peroleh Wajib diisi!',
-            'jumlah.required'  => 'Jumlah Wajib diisi!',
             'keterangan.required'  => 'Keterangan Wajib diisi!',
         ]);
 
-        $pinjam = new Pinjam();
-        $pinjam = Pinjam::create($request->all());
+        DB::beginTransaction();
+        try {
+            $pinjam = new Pinjam();
+            $pinjam = Pinjam::create($request->all());
 
-        $pinjam->nama_dosen = $request->nama_dosen;
-        $pinjam->jurusan = $request->jurusan;
-        $pinjam->program_studi = $request->program_studi;
-        $pinjam->nama_kegiatan = $request->nama_kegiatan;
-        $pinjam->tanggal = $request->tanggal;
-        $pinjam->tanggal_kembali = $request->tanggal_kembali;
-        $pinjam->nama_barang = $request->nama_barang;
-        $pinjam->tahun_peroleh = $request->tahun_peroleh;
-        $pinjam->jumlah = $request->jumlah;
-        $pinjam->keterangan = $request->keterangan;
-        $pinjam->save();
+            $pinjam->nama_dosen = $request->nama_dosen;
+            $pinjam->jurusan = $request->jurusan;
+            $pinjam->program_studi = $request->program_studi;
+            $pinjam->nama_kegiatan = $request->nama_kegiatan;
+            $pinjam->tanggal = $request->tanggal;
+            $pinjam->tanggal_kembali = $request->tanggal_kembali;
+            $pinjam->keterangan = $request->keterangan;
+            if($pinjam->save()){
+                foreach($request->kode_barang as $key=>$kode_barang){
+                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
 
-        return redirect('pinjam')->with('success', 'Tambah Pinjam Sukses!');
+                    $pinjam_detail = new PinjamDetail;
+                    $pinjam_detail->id_pinjam = $pinjam->id;
+                    $pinjam_detail->id_barang = $barang->id;
+                    $pinjam_detail->jumlah = $request->qty[$key];
+                    $pinjam_detail->save();
+                }
+                DB::commit();
+                return redirect('pinjam')->with('success', 'Tambah Pinjam Sukses!');
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect('pinjam')->with('error', $e->getMessage());
+        }
+
+
     }
 
     /**
