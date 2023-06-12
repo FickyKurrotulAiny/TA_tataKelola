@@ -5,10 +5,10 @@
             <h1>INFORMASI DATA BARANG YANG TERSEDIA</h1>
         </div>
         <div class="section-body">
-            <h2 class="section-title">Data Inventaris</h2>
+            <h2 class="section-title">Data Barang Inventaris (Barang yang dikembalikan)</h2>
             <div class="row">
                 @foreach ($inventaris as $invent)
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    <div class="col-12 col-sm-6 col-md-10 col-lg-4">
                         <article class="article article-style-b">
                             <div class="article-details">
                                 <div class="article-title">
@@ -17,12 +17,15 @@
                                             {{ $invent->nama_barang }} - {{ $invent->merk }} ({{ $invent->tahun_peroleh }})
                                         </a>
                                     </h2>
+                                    <img src="{{ url('imageinventaris/' . $invent->image) }}" width="200px">
                                 </div>
+                                <br>
                                 <ul style="padding-left: 30px">
                                     <li>Stock : {{ $invent->jumlah }} {{ $invent->satuan }}</li>
                                     <li>Gedung : {{ $invent->nama_gedung }}</li>
                                     <li>Ruangan : {{ $invent->nama_ruangan }}</li>
                                     <li>Tempat : {{ $invent->tempat }}</li>
+
                                 </ul>
                                 <div class="article-cta d-flex" style="justify-content: center">
                                     <button class="btn btn-primary btn-details"
@@ -38,7 +41,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Barang</h4>
+                    <h4>Data Persediaan Barang (Habis Pakai)</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -48,7 +51,6 @@
                                     <th width="20px">No.</th>
                                     <th>Nama Barang</th>
                                     <th>Merk Barang</th>
-                                    <th>Jumlah Barang</th>
                                     <th>Satuan Barang</th>
                                 </tr>
                             </thead>
@@ -61,7 +63,6 @@
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $persediaan->nama_barang }}</td>
                                         <td>{{ $persediaan->merk }}</td>
-                                        <td>{{ $persediaan->jumlah }}</td>
                                         <td>{{ $persediaan->satuan }}
                                     </tr>
                                 @endforeach

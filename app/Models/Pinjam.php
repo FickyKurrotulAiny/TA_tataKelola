@@ -16,6 +16,7 @@ class Pinjam extends Model
         'nama_dosen',
         'jurusan',
         'program_studi',
+        'kelas',
         'nama_kegiatan',
         'tanggal',
         'tanggal_kembali',

@@ -88,6 +88,15 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Kelas</label>
+                                    <input type="text" name="kelas" placeholder="Kelas"
+                                        class="form-control @error('kelas') is-invalid @enderror"
+                                        value="{{ old('kelas') }}">
+                                    @error('kelas')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
                                     <label for="" class="form-label">Nama Kegiatan</label>
                                     <input type="text" name="nama_kegiatan" placeholder="Nama Kegiatan"
                                         class="form-control @error('nama_kegiatan') is-invalid @enderror"

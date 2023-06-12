@@ -47,13 +47,18 @@
                                 </div>
                                 <div class="mb-3 col-md-6 col-xl-4">
                                     <label for="" class="form-label">Jurusan</label>
-                                    <input type="text" name="jjurusan" placeholder="Jurusan"
-                                        class="form-control"value="{{ old('jjurusan', $pinjam->jjurusan) }}">
+                                    <input type="text" name="jurusan" placeholder="Jurusan"
+                                        class="form-control"value="{{ old('jurusan', $pinjam->jurusan) }}">
                                 </div>
                                 <div class="mb-3 col-md-6 col-xl-4">
                                     <label for="" class="form-label">Program Studi</label>
                                     <input type="text" name="program_studi" placeholder="Program Studi"
                                         class="form-control"value="{{ old('program_studi', $pinjam->program_studi) }}">
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Kelas</label>
+                                    <input type="text" name="kelas" placeholder="Kelas"
+                                        class="form-control"value="{{ old('kelas', $pinjam->kelas) }}">
                                 </div>
                                 <div class="mb-3 col-md-6 col-xl-4">
                                     <label for="" class="form-label">Nama Kegiatan</label>
@@ -66,7 +71,7 @@
                                         class="form-control"value="{{ old('nama_dosen', $pinjam->nama_dosen) }}">
                                 </div>
                                 <div class="col-md-12 mt-3">
-                                    <button type="submit" class="btn btn-primary">Tambah</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
                                     <a href="{{ route('pinjam.index') }}" class="btn btn-secondary">Batal</a>
                                 </div>
                             </form>

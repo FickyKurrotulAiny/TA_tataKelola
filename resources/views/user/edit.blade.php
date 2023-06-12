@@ -36,7 +36,7 @@
                                         value="{{ old('level', $user->level) }}">
                                 </div>
                                 <div class="col-md-12 mt-3">
-                                    <button type="submit" class="btn btn-primary">Tambah</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
                                     <a href="{{ route('user.index') }}" class="btn btn-secondary">Batal</a>
                                 </div>
                             </form>

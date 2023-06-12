@@ -59,11 +59,6 @@
                                     <th>{{ $persediaan->harga_satuan }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Satuan</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $persediaan->satuan }}</th>
-                                </tr>
-                                <tr>
                                     <th width="200px">Jumlah Barang</th>
                                     <th width="30px">:</th>
                                     <th>{{ $persediaan->jumlah }}</th>

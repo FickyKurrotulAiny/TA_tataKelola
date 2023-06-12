@@ -18,6 +18,7 @@ class CreatePinjamTable extends Migration
             $table->string('nama_dosen');
             $table->string('jurusan');
             $table->string('program_studi');
+            $table->string('kelas');
             $table->string('nama_kegiatan');
             $table->string('tanggal');
             $table->string('tanggal_kembali');

@@ -53,6 +53,11 @@
                                         <th>{{ $pinjam->program_studi }}</th>
                                     </tr>
                                     <tr>
+                                        <th width="200px">Kelas</th>
+                                        <th width="30px">:</th>
+                                        <th>{{ $pinjam->kelas }}</th>
+                                    </tr>
+                                    <tr>
                                         <th width="200px">Nama Kegiatan</th>
                                         <th width="30px">:</th>
                                         <th>{{ $pinjam->nama_kegiatan }}</th>

@@ -85,6 +85,7 @@ class PinjamController extends Controller
             'nama_dosen' => 'required',
             'jurusan' => 'required',
             'program_studi' => 'required',
+            'kelas' => 'required',
             'nama_kegiatan' => 'required',
             'tanggal' => 'required',
             'tanggal_kembali' => 'required',
@@ -96,6 +97,7 @@ class PinjamController extends Controller
             'nama_dosen.required' => 'Nama Dosen Wajib diisi!',
             'jurusan.required'  => 'Jurusan Wajib diisi!',
             'program_studi.required'  => 'Program Studi Wajib diisi!',
+            'kelas.required' => 'Kelas Wajib diisi!',
             'nama_kegiatan.required'  => 'Nama Kegiatan Wajib diisi!',
             'tanggal.required'  => 'Tanggal Wajib diisi!',
             'tanggal_kembali.required'  => 'Tanggal Kembali Wajib diisi!',
@@ -111,6 +113,7 @@ class PinjamController extends Controller
         $pinjam->nama_dosen = $request->nama_dosen;
         $pinjam->jurusan = $request->jurusan;
         $pinjam->program_studi = $request->program_studi;
+        $pinjam->kelas = $request->kelas;
         $pinjam->nama_kegiatan = $request->nama_kegiatan;
         $pinjam->tanggal = $request->tanggal;
         $pinjam->tanggal_kembali = $request->tanggal_kembali;
@@ -162,6 +165,7 @@ class PinjamController extends Controller
         $pinjam->nama_dosen = $request->nama_dosen;
         $pinjam->jurusan = $request->jurusan;
         $pinjam->program_studi = $request->program_studi;
+        $pinjam->kelas = $request->kelas;
         $pinjam->nama_kegiatan = $request->nama_kegiatan;
         $pinjam->tanggal = $request->tanggal;
         $pinjam->tanggal_kembali = $request->tanggal_kembali;
