@@ -31,26 +31,11 @@
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-
-    <!-- @stack('page-styles') -->
-    <!-- Start GA -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <style>
-        trix-toolbar [data-trix-button-group="file-tools"] {
-            display: none;
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 42px !important;
         }
     </style>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94034622-3');
-    </script>
-    <!-- /END GA -->
 </head>
 
 <body>
