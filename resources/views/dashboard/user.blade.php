@@ -25,7 +25,6 @@
                                     <li>Gedung : {{ $invent->nama_gedung }}</li>
                                     <li>Ruangan : {{ $invent->nama_ruangan }}</li>
                                     <li>Tempat : {{ $invent->tempat }}</li>
-
                                 </ul>
                                 <div class="article-cta d-flex" style="justify-content: center">
                                     <button class="btn btn-primary btn-details"
