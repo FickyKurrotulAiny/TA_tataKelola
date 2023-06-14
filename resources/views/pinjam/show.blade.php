@@ -18,21 +18,6 @@
                                         <th>{{ Carbon\Carbon::parse($pinjam->tanggal)->format('d-m-Y') }}</th>
                                     </tr>
                                     <tr>
-                                        <th width="200px">Nama Barang</th>
-                                        <th width="30px">:</th>
-                                        <th>{{ $pinjam->nama_barang }}</th>
-                                    </tr>
-                                    <tr>
-                                        <th width="200px">Tahun Peroleh</th>
-                                        <th width="30px">:</th>
-                                        <th>{{ $pinjam->tahun_peroleh }}</th>
-                                    </tr>
-                                    <tr>
-                                        <th width="200px">Jumlah Barang</th>
-                                        <th width="30px">:</th>
-                                        <th>{{ $pinjam->jumlah }}</th>
-                                    </tr>
-                                    <tr>
                                         <th width="200px">Keterangan</th>
                                         <th width="30px">:</th>
                                         <th>{{ $pinjam->keterangan }}</th>
@@ -62,6 +47,27 @@
                                         <th width="30px">:</th>
                                         <th>{{ $pinjam->nama_dosen }}</th>
                                     </tr>
+                                </table>
+                                <table class="table table-bordered table-md">
+                                    <thead>
+                                        <th>No.</th>
+                                        <th>Nama Barang</th>
+                                        <th>Tanggal Peroleh</th>
+                                        <th>Jumlah</th>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($pinjam->details as $details)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $details->barang->nama_barang }}</td>
+                                                <td>{{ $details->barang->tahun_peroleh }}</td>
+                                                <td>{{ $details->jumlah }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                                 <br>
                                 <tr>
