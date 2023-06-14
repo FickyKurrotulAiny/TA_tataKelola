@@ -8,7 +8,7 @@
             <h2 class="section-title">Data Barang Inventaris (Barang yang dikembalikan)</h2>
             <div class="row">
                 @foreach ($inventaris as $invent)
-                    <div class="col-12 col-sm-6 col-md-10 col-lg-4">
+                    <div class="col-12 col-sm-6 col-md-10 col-lg-3">
                         <article class="article article-style-b">
                             <div class="article-details">
                                 <div class="article-title">

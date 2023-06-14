@@ -21,7 +21,7 @@
                                         Tanggal Pinjam
                                     </label>
                                     <input type="text" name="tanggal" class="form-control" readonly
-                                        value="{{ date('Y-m-d') }}" placeholder="Choose date" />
+                                        value="{{ date('d-m-Y') }}" placeholder="Choose date" />
                                 </div>
                                 <div class="mb-3 col-md-6 col-xl-4">
                                     <label for="" class="form-label">Nama Kegiatan</label>
@@ -38,6 +38,51 @@
                                         class="form-control @error('tanggal_kembali') is-invalid @enderror"
                                         value="{{ old('tanggal_kembali') }}">
                                     @error('tanggal_kembali')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Jurusan</label>
+                                    <input type="text" name="jurusan" placeholder="Jurusan"
+                                        class="form-control @error('jurusan') is-invalid @enderror"
+                                        value="{{ old('jurusan') }}">
+                                    @error('jurusan')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Program Studi</label>
+                                    <input type="text" name="program_studi" placeholder="Program Studi"
+                                        class="form-control @error('program_studi') is-invalid @enderror"
+                                        value="{{ old('program_studi') }}">
+                                    @error('program_studi')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Kelas</label>
+                                    <input type="text" name="kelas" placeholder="Kelas"
+                                        class="form-control @error('kelas') is-invalid @enderror"
+                                        value="{{ old('kelas') }}">
+                                    @error('kelas')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Nama Dosen</label>
+                                    <input type="text" name="nama_dosen" placeholder="Nama Dosen"
+                                        class="form-control @error('nama_dosen') is-invalid @enderror"
+                                        value="{{ old('nama_dosen') }}">
+                                    @error('nama_dosen')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Keterangan</label>
+                                    <input type="text" name="keterangan" placeholder="Keterangan"
+                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                        value="{{ old('keterangan') }}">
+                                    @error('keterangan')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -66,65 +111,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Jurusan</label>
-                                    <input type="text" name="jurusan" placeholder="Jurusan"
-                                        class="form-control @error('jurusan') is-invalid @enderror"
-                                        value="{{ old('jurusan') }}">
-                                    @error('jurusan')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Program Studi</label>
-                                    <input type="text" name="program_studi" placeholder="Program Studi"
-                                        class="form-control @error('program_studi') is-invalid @enderror"
-                                        value="{{ old('program_studi') }}">
-                                    @error('program_studi')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-<<<<<<< HEAD
-                                    <label for="" class="form-label">Kelas</label>
-                                    <input type="text" name="kelas" placeholder="Kelas"
-                                        class="form-control @error('kelas') is-invalid @enderror"
-                                        value="{{ old('kelas') }}">
-                                    @error('kelas')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Nama Kegiatan</label>
-                                    <input type="text" name="nama_kegiatan" placeholder="Nama Kegiatan"
-                                        class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                        value="{{ old('nama_kegiatan') }}">
-                                    @error('nama_kegiatan')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-=======
->>>>>>> ab6071bac8d0ccc4bd82150f7c9b01ed5d0b92b7
-                                    <label for="" class="form-label">Nama Dosen</label>
-                                    <input type="text" name="nama_dosen" placeholder="Nama Dosen"
-                                        class="form-control @error('nama_dosen') is-invalid @enderror"
-                                        value="{{ old('nama_dosen') }}">
-                                    @error('nama_dosen')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="" class="form-label">Keterangan</label>
-                                    <textarea rows="6" placeholder="Keterangan" name="keterangan"
-                                        class="form-control @error('keterangan') is-invalid @enderror"></textarea>
-                                    @error('keterangan')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-md-12 mt-3">
                                     <button type="submit" class="btn btn-primary">Tambah</button>

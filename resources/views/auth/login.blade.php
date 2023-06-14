@@ -15,6 +15,13 @@
                             <h4>Login</h4>
                         </div>
                         <div class="card-body">
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible text-center">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    {{ session()->get('error') }}
+                                </div>
+                            @endif
                             <form method="POST" action="{{ route('postlogin') }}" class="needs-validation" novalidate="">
                                 @csrf
                                 <div class="form-group">

@@ -113,6 +113,7 @@ class PinjamController extends Controller
             $pinjam->nama_dosen = $request->nama_dosen;
             $pinjam->jurusan = $request->jurusan;
             $pinjam->program_studi = $request->program_studi;
+            $pinjam->kelas = $request->kelas;
             $pinjam->nama_kegiatan = $request->nama_kegiatan;
             $pinjam->tanggal = $request->tanggal;
             $pinjam->tanggal_kembali = $request->tanggal_kembali;
@@ -120,7 +121,6 @@ class PinjamController extends Controller
             if($pinjam->save()){
                 foreach($request->kode_barang as $key=>$kode_barang){
                     $barang = Inventaris::where('kode_barang',$kode_barang)->first();
-
                     $pinjam_detail = new PinjamDetail;
                     $pinjam_detail->id_pinjam = $pinjam->id;
                     $pinjam_detail->id_barang = $barang->id;
@@ -172,21 +172,34 @@ class PinjamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pinjam = Pinjam::findOrFail($id);
-        $pinjam->nama_dosen = $request->nama_dosen;
-        $pinjam->jurusan = $request->jurusan;
-        $pinjam->program_studi = $request->program_studi;
-        $pinjam->kelas = $request->kelas;
-        $pinjam->nama_kegiatan = $request->nama_kegiatan;
-        $pinjam->tanggal = $request->tanggal;
-        $pinjam->tanggal_kembali = $request->tanggal_kembali;
-        $pinjam->nama_barang = $request->nama_barang;
-        $pinjam->tahun_peroleh = $request->tahun_peroleh;
-        $pinjam->jumlah = $request->jumlah;
-        $pinjam->keterangan = $request->keterangan;
-        $pinjam->save();
+        DB::beginTransaction();
+        try {
+            $pinjam = Pinjam::findOrFail($id);
 
-        return redirect('pinjam')->with('success', 'Edit Pinjam Sukses!');
+            $pinjam->nama_dosen = $request->nama_dosen;
+            $pinjam->jurusan = $request->jurusan;
+            $pinjam->program_studi = $request->program_studi;
+            $pinjam->kelas = $request->kelas;
+            $pinjam->nama_kegiatan = $request->nama_kegiatan;
+            $pinjam->tanggal = $request->tanggal;
+            $pinjam->tanggal_kembali = $request->tanggal_kembali;
+            $pinjam->keterangan = $request->keterangan;
+            if($pinjam->save()){
+                foreach($request->kode_barang as $key=>$kode_barang){
+                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
+                    $pinjam_detail = new PinjamDetail;
+                    $pinjam_detail->id_pinjam = $pinjam->id;
+                    $pinjam_detail->id_barang = $barang->id;
+                    $pinjam_detail->jumlah = $request->qty[$key];
+                    $pinjam_detail->save();
+                }
+                DB::commit();
+                return redirect('pinjam')->with('success', 'Edit Pinjam Sukses!');
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect('pinjam')->with('error', $e->getMessage());
+        }
     }
 
     /**

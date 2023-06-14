@@ -22,7 +22,7 @@ class CreatePinjamTable extends Migration
             $table->string('nama_kegiatan');
             $table->string('tanggal');
             $table->string('tanggal_kembali');
-            $table->string('nama_barang')->unique();
+            $table->string('nama_barang');
             $table->string('tahun_peroleh');
             $table->string('jumlah');
             $table->string('keterangan');
