@@ -23,16 +23,16 @@ class DashboardController extends Controller
     }
     public function index(){
         if(Auth::user()->level === 'user'){
+            $taris = Inventaris::where('kondisi_baru')->get();
             $inventaris = Inventaris::get();
             $persediaans = Persediaan::get();
-            return view('dashboard.user', compact('inventaris','persediaans'));
+            return view('dashboard.user', compact('inventaris','persediaans', 'taris'));
         }else{
             $data['navlink'] = 'dashboard';
             $inventaris = Inventaris::count();
             $peminjaman = Peminjaman::count();
             $user = User::count();
             $persediaan = Persediaan::count();
-
             return view('dashboard.index', compact('data','inventaris','peminjaman','user','persediaan'));
         }
     }

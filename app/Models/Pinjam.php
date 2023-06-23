@@ -25,4 +25,8 @@ class Pinjam extends Model
 
     protected $hidden = [];
 
+    public function details(){
+        return $this->hasMany(PinjamDetail::class,'id_pinjam');
+    }
+
 }

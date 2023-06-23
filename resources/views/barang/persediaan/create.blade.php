@@ -16,8 +16,8 @@
                             @csrf
                             <!-- @method('PUT') -->
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Nama Barang</label>
-                                <input type="text" name="nama_barang" placeholder="Nama Barang"
+                                <label for="" class="form-label">Nama Bahan</label>
+                                <input type="text" name="nama_barang" placeholder="Nama Bahan"
                                     class="form-control @error('nama_barang') is-invalid @enderror"
                                     value="{{ old('nama_barang') }}">
                                 @error('nama_barang')
@@ -26,7 +26,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Merk/Type</label>
-                                <input type="text" name="merk" placeholder="Mrek/Type"
+                                <input type="text" name="merk" placeholder="Mekk/Type"
                                     class="form-control @error('merk') is-invalid @enderror" value="{{ old('merk') }}">
                                 @error('merk')
                                     <span class="text-danger">{{ $message }}</span>

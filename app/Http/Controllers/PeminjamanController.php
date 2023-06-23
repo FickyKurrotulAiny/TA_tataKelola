@@ -81,6 +81,9 @@ class PeminjamanController extends Controller
             'petugas' => 'required',
             'mengambil' => 'required',
             'tanggal_kembali' => 'required',
+            'nama_kegiatan' => 'required',
+            'kelas' => 'required',
+            'program_studi' => 'required',
             'keterangan' => 'required',
         ],[
             'tanggal.required' => 'Tanggal Wajib diisi!',
@@ -92,6 +95,9 @@ class PeminjamanController extends Controller
             'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
             'mengambil.required' => 'Yang Mengambil Wajib diisi!',
             'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
+            'nama_kegiatan' => 'Nama kegiatan Wajib diisi!',
+            'kelas' => 'Kelas Wajib diisi!',
+            'program_studi' => 'Program Studi Wajib diisi!',
             'keterangan' => 'Keterangan Wajib diisi!',
         ]);
 
@@ -107,6 +113,9 @@ class PeminjamanController extends Controller
         $peminjaman->petugas = $request->petugas;
         $peminjaman->mengambil = $request->mengambil;
         $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+        $peminjaman->nama_kegiatan = $request->nama_kegiatan;
+        $peminjaman->kelas = $request->kelas;
+        $peminjaman->program_studi = $request->program_studi;
         $peminjaman->keterangan = $request->keterangan;
         $peminjaman->save();
 
@@ -158,6 +167,9 @@ class PeminjamanController extends Controller
         $peminjaman->petugas = $request->petugas;
         $peminjaman->mengambil = $request->mengambil;
         $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+        $peminjaman->nama_kegiatan = $request->nama_kegiatan;
+        $peminjaman->kelas = $request->kelas;
+        $peminjaman->program_studi = $request->program_studi;
         $peminjaman->keterangan = $request->keterangan;
         $peminjaman->save();
 

@@ -16,8 +16,8 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Nama Barang</label>
-                                <input type="text" name="nama_barang" placeholder="Nama Barang"
+                                <label for="" class="form-label">Nama Bahan</label>
+                                <input type="text" name="nama_barang" placeholder="Nama Bahan"
                                     class="form-control"value="{{ old('nama_barang', $persediaan->nama_barang) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">

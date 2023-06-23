@@ -24,6 +24,14 @@
 
   gtag('config', 'UA-94034622-3');
 </script>
+
+<style>
+    body{
+        background-image: url("assets/img/gscpolindra.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+    </style>
 <!-- /END GA --></head>
 
 <body>

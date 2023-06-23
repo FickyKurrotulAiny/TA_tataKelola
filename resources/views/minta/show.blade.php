@@ -6,72 +6,67 @@
                 <div class="card" style="width: 100%;">
                     <div class="card-header">
                         <h3>
-                            Detail Persediaan</h3>
+                            Detail Permintaan</h3>
                     </div>
                     <div class="card">
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive" >
+                        <div class="table-responsive">
                             <table class="table table-bordered table-md">
                                 <tr>
-                                    <th width="220px">Nama Bahan</th>
+                                    <th width="210px">Tanggal</th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->nama_barang }}</th>
+                                    <th>{{ Carbon\Carbon::parse($minta->tanggal)->format('d-m-Y') }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Merk/Type</th>
+                                    <th width="200px">Nama Bahan</th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->merk }}</th>
+                                    <th>{{ $minta->nama_bahan }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Satuan</th>
+                                    <th width="200px">Jumlah</th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->satuan }}</th>
+                                    <th>{{ $minta->jumlah }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="230px">Tahun Peroleh</th>
+                                    <th width="200px">Nama Dosen </th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->tahun_peroleh }}</th>
+                                    <th>{{ $minta->nama_dosen }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Volume Barang (Saldo Awal)</th>
+                                    <th width="200px">Mata Kuliah </th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->volumeBarang_saldo }}</th>
+                                    <th>{{ $minta->mata_kuliah }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Volume Barang (Masuk)</th>
+                                    <th width="200px">Kelas </th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->volumeBarang_masuk }}</th>
+                                    <th>{{ $minta->kelas }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Volume Barang (Keluar)</th>
+                                    <th width="200px">Satuan </th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->volumeBarang_keluar }}</th>
+                                    <th>{{ $minta->satuan }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Volume Barang (Sisa)</th>
+                                    <th width="200px">Yang mengambil </th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->volumeBarang_sisa }}</th>
+                                    <th>{{ $minta->mengambil }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Harga Satuan</th>
+                                    <th width="200px">Petugas Yang Memberikan</th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->harga_satuan }}</th>
+                                    <th>{{ $minta->petugas }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Jumlah Barang</th>
+                                    <th width="200px">Keterangan</th>
                                     <th width="30px">:</th>
-                                    <th>{{ $persediaan->jumlah }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="230px">Foto Barang</th>
-                                    <th width="30px">:</th>
-                                    <th><img src="{{ url('imagepersediaan/' . $persediaan->image) }}" width="150px"></th>
+                                    <th>{!! $minta->keterangan !!}</th>
                                 </tr>
                             </table>
                             <br>
                             <tr>
-                                <th><a href="{{ route('persediaan.index') }}" class="btn btn-primary">Kembali</a></th>
+                                <th><a href="{{ route('minta.index') }}" class="btn btn-primary">Kembali</a></th>
                             </tr>
                         </div>
                     </div>

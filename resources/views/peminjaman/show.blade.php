@@ -34,14 +34,29 @@
                                     <th>{{ $peminjaman->jumlah_barang }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Nama Peminjam</th>
+                                    <th width="200px">Nama Dosen Peminjam</th>
                                     <th width="30px">:</th>
                                     <th>{{ $peminjaman->nama_peminjam }}</th>
+                                </tr>
+                                <tr>
+                                    <th width="200px">Kelas </th>
+                                    <th width="30px">:</th>
+                                    <th>{{ $peminjaman->kelas }}</th>
                                 </tr>
                                 <tr>
                                     <th width="200px">Jurusan</th>
                                     <th width="30px">:</th>
                                     <th>{{ $peminjaman->jurusan }}</th>
+                                </tr>
+                                <tr>
+                                    <th width="200px">Program Studi</th>
+                                    <th width="30px">:</th>
+                                    <th>{{ $peminjaman->program_studi }}</th>
+                                </tr>
+                                <tr>
+                                    <th width="200px">Nama Kegiatan</th>
+                                    <th width="30px">:</th>
+                                    <th>{{ $peminjaman->nama_kegiatan }}</th>
                                 </tr>
                                 <tr>
                                     <th width="200px">Petugas Yang Menyerahkan</th>

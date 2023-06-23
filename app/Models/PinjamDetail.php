@@ -17,4 +17,8 @@ class PinjamDetail extends Model
     ];
 
     protected $hidden = [];
+
+    public function barang(){
+        return $this->hasOne(Inventaris::class,'id','id_barang');
+    }
 }

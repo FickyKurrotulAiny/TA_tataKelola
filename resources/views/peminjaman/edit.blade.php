@@ -36,14 +36,29 @@
                                     value="{{ old('jumlah_barang', $peminjaman->jumlah_barang) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Nama Peminjam</label>
-                                <input type="text" name="nama_peminjam" placeholder="Nama Peminjam"
+                                <label for="" class="form-label">Nama Dosen Peminjam</label>
+                                <input type="text" name="nama_peminjam" placeholder="Nama Dosen Peminjam"
                                     class="form-control"value="{{ old('nama_peminjam', $peminjaman->nama_peminjam) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Kelas</label>
+                                <input type="text" name="kelas" placeholder="Kelas"
+                                    class="form-control"value="{{ old('kelas', $peminjaman->kelas) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Jurusan</label>
                                 <input type="text" name="jurusan" placeholder="Jurusan"
                                     class="form-control"value="{{ old('jurusan', $peminjaman->jurusan) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Program Studi</label>
+                                <input type="text" name="program_studi" placeholder="Program Studi"
+                                    class="form-control"value="{{ old('program_studi', $peminjaman->program_studi) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Nama Kegiatan</label>
+                                <input type="text" name="nama_kegiatan" placeholder="Nama Kegiatan</label>"
+                                    class="form-control"value="{{ old('nama_kegiatan', $peminjaman->nama_kegiatan) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Petugas Yang Menyerahkan</label>
@@ -61,7 +76,7 @@
                                     class="form-control"value="{{ old('tanggal_kembali', $peminjaman->tanggal_kembali) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-12">
-                                <label for="keterangan" class="form-label">Isi Surat</label>
+                                <label for="keterangan" class="form-label">Keterangan</label>
                                 <textarea name="keterangan" id="keterangan">{{ $peminjaman->keterangan }}</textarea>
                             </div>
                             <div class="col-md-12 mt-3">

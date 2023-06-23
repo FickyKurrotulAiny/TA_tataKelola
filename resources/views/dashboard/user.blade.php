@@ -2,10 +2,26 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>INFORMASI DATA BARANG YANG TERSEDIA</h1>
+            <div class="row">
+                <div class="col">
+                    <h1>INFORMASI DATA BARANG YANG TERSEDIA</h1>
+                    <form class="form-inline mr-auto">
+                        <ul class="navbar-nav mr-3">
+                            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
+                                        class="fas fa-search"></i></a></li>
+                        </ul>
+                        <div class="search-element float-right">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search"
+                                data-width="250">
+                            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                            <div class="search-backdrop"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="section-body">
-            <h2 class="section-title">Data Barang Inventaris (Barang yang dikembalikan)</h2>
+            <h2 class="section-title">Data Barang Inventaris (Peminjaman)</h2>
             <div class="row">
                 @foreach ($inventaris as $invent)
                     <div class="col-12 col-sm-6 col-md-10 col-lg-3">
@@ -14,18 +30,12 @@
                                 <div class="article-title">
                                     <h2>
                                         <a href="javascript:void(0)">
-                                            {{ $invent->nama_barang }} - {{ $invent->merk }} ({{ $invent->tahun_peroleh }})
+                                            {{ $invent->nama_barang }} - {{ $invent->merk }}
+                                            ({{ $invent->tahun_peroleh }})
                                         </a>
                                     </h2>
-                                    <img src="{{ url('imageinventaris/' . $invent->image) }}" width="200px">
+                                    <img src="{{ url('imageinventaris/' . $invent->image) }}" width="200px" title="">
                                 </div>
-                                <br>
-                                <ul style="padding-left: 30px">
-                                    <li>Stock : {{ $invent->jumlah }} {{ $invent->satuan }}</li>
-                                    <li>Gedung : {{ $invent->nama_gedung }}</li>
-                                    <li>Ruangan : {{ $invent->nama_ruangan }}</li>
-                                    <li>Tempat : {{ $invent->tempat }}</li>
-                                </ul>
                                 <div class="article-cta d-flex" style="justify-content: center">
                                     <button class="btn btn-primary btn-details"
                                         data-title="{{ $invent->nama_barang }} - {{ $invent->merk }} ({{ $invent->tahun_peroleh }})"
@@ -38,9 +48,30 @@
                     </div>
                 @endforeach
             </div>
-            <div class="card">
+            <h2 class="section-title">Data Persediaan Barang (Permintaan)</h2>
+            <div class="row">
+                @foreach ($persediaans as $persediaan)
+                    <div class="col-12 col-sm-6 col-md-10 col-lg-3">
+                        <article class="article article-style-b">
+                            <div class="article-details">
+                                <div class="article-title">
+                                    <h2>
+                                        <a href="javascript:void(0)">
+                                            {{ $persediaan->nama_barang }} - {{ $persediaan->merk }}
+                                            ({{ $persediaan->satuan }})
+                                        </a>
+                                    </h2>
+                                    <img src="{{ url('imagepersediaan/' . $persediaan->image) }}" width="200px"
+                                        title="">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                @endforeach
+            </div>
+            {{-- <div class="card">
                 <div class="card-header">
-                    <h4>Data Persediaan Barang (Habis Pakai)</h4>
+                    <h4>Data Persediaan Barang (Permintaan)</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -69,7 +100,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
     <div class="modal fade" tabindex="-1" role="dialog" id="modal-details" style="display: none;" aria-hidden="true">
@@ -103,7 +134,7 @@
 
             cols += '<td width="45%">Stock</td>';
             cols += '<td>:</td>';
-            cols += '<td>' + details.jumlah + '</td>';
+            cols += '<td>' + details.kondisi_baru + '</td>';
 
             newRow.append(cols);
             $("#modal-details table tbody").prepend(newRow);

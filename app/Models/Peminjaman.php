@@ -22,6 +22,9 @@ class Peminjaman extends Model
         'petugas',
         'mengambil',
         'tanggal_kembali',
+        'nama_kegiatan',
+        'kelas',
+        'program_studi',
         'keterangan',
     ];
 

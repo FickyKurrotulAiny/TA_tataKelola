@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePinjamTable extends Migration
+class CreatePermintaanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,15 @@ class CreatePinjamTable extends Migration
      */
     public function up()
     {
-        Schema::create('pinjam', function (Blueprint $table) {
+        Schema::create('permintaan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string(' user_id');
+            $table->date('tanggal');
             $table->string('nama_dosen');
-            $table->string('jurusan');
-            $table->string('program_studi');
+            $table->string('mata_kuliah');
             $table->string('kelas');
-            $table->string('nama_kegiatan');
-            $table->string('tanggal');
-            $table->string('tanggal_kembali');
-            $table->string('nama_barang');
-            $table->string('tahun_peroleh');
+            $table->string('nama_bahan');
             $table->string('jumlah');
+            $table->string('satuan');
             $table->string('keterangan');
             $table->timestamps();
         });
@@ -38,6 +34,6 @@ class CreatePinjamTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pinjam');
+        Schema::dropIfExists('permintaan');
     }
 }

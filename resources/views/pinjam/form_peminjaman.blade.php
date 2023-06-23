@@ -27,16 +27,16 @@
 </style>
 
 <body>
-    <table style="width:100%">
+    <table style="width:100%" class="withBorder">
         <tr>
             <th class="kop"><img src="assets/img/polindra.png" alt="logo" width="50"></th>
-            <th class="kop" colspan="2">JURUSAN TEKNIK INFORMATIKA <br>
+            <th colspan="2">JURUSAN TEKNIK INFORMATIKA <br>
                 POLITEKNIK NEGERI INDRAMAYU
             </th>
         </tr>
         <tr>
             <td class="kop">FORMULIR</td>
-            <td class="kop">PEMINJAMAN DAN PENGEMBALIAN BARANG/ALAT</td>
+            <td class="kop">REKOMENDASI PEMINJAMAN BARANG INVENTARIS </td>
             <td class="kop">No.FR.PPAP.01</td>
         </tr>
     </table>
@@ -48,27 +48,27 @@
             </tr>
             <tr>
                 <td width="100%">Nama Dosen Peminjam</td>
-                <td width="100%">: {{ $pinjam[0]->nama_dosen }}</td>
+                <td width="100%">: {{ $pinjam->nama_dosen }}</td>
             </tr>
             <tr>
                 <td width="100%">Jurusan</td>
-                <td width="100%">: {{ $pinjam[0]->jurusan }}</td>
+                <td width="100%">: {{ $pinjam->jurusan }}</td>
             </tr>
             <tr>
                 <td width="100%">Program Studi / Kelas</td>
-                <td width="100%">: {{ $pinjam[0]->program_studi }} / {{ $pinjam[0]->kelas }} </td>
+                <td width="100%">: {{ $pinjam->program_studi }} / {{ $pinjam->kelas }} </td>
             </tr>
             <tr>
                 <td width="100%">Nama Kegiatan</td>
-                <td width="100%">: {{ $pinjam[0]->nama_kegiatan }}</td>
+                <td width="100%">: {{ $pinjam->nama_kegiatan }}</td>
             </tr>
             <tr>
                 <td width="100%">Tanggal Meminjam</td>
-                <td width="100%">: {{ Carbon\Carbon::parse($pinjam[0]->tanggal)->format('d-m-Y') }}</td>
+                <td width="100%">: {{ Carbon\Carbon::parse($pinjam->tanggal)->format('d-m-Y') }}</td>
             </tr>
             <tr>
                 <td width="100%">Rancana Kembali Tanggal</td>
-                <td width="100%">: {{ Carbon\Carbon::parse($pinjam[0]->tanggal_kembali)->format('d-m-Y') }}</td>
+                <td width="100%">: {{ Carbon\Carbon::parse($pinjam->tanggal_kembali)->format('d-m-Y') }}</td>
             </tr>
             <tr>
                 <td width="100%">Untuk meminjam barang/alat sebagai berikut</td>
@@ -76,24 +76,28 @@
             </tr>
         </table>
         <br>
-        <table style="width:100%">
+        <table style="width:100%" class="withBorder">
             <tr align="center">
-                <th class="withBorder" width="30">No</th>
-                <th class="withBorder" width="100%">Nama Barang/Alat</th>
-                <th class="withBorder" width="100%">Kode Barang</th>
-                <th class="withBorder" width="100%">Jumlah</th>
-                <th class="withBorder" width="100%">Keterangan</th>
+                <th width="30">No</th>
+                <th width="100%">Nama Barang/Alat</th>
+                <th width="100%">Kode Barang</th>
+                <th width="100%">Jumlah</th>
+                <th width="100%">Keterangan</th>
             </tr>
         </table>
-        <table style="width:100%">
-            <tr align="center">
-                <th class="withBorder" width="30">1</th>
-                <th class="withBorder" width="100%">{{ $pinjam[0]->nama_barang }}</th>
-                <th class="withBorder" width="100%">{{ $pinjam[0]->kode_barang }}</th>
-                <th class="withBorder" width="100%">{{ $pinjam[0]->jumlah }}</th>
-                <th class="withBorder" width="100%">{{ $pinjam[0]->keterangan }}</th>
-            </tr>
-        </table>
+        <tbody>
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach ($pinjam->details as $details)
+                        <tr class="gr">
+                            <th class="gr" width="30">{{ $no++ }}</th>
+                            <th class="gr">{{ $details->barang->nama_barang }}</th>
+                            <th class="gr">{{ $details->barang->kode_barang }}</th>
+                            <th class="gr" style="text-align: right">{{ $details->jumlah }}</th>
+                        </tr>
+                    @endforeach
+                </tbody>
         <table style="width:100%" border="0">
             <tr font size="10">
                 <td width="100%">Catatan: jika meminjam laptop/komputer sangat disarankan untuk tidak menyimpan data

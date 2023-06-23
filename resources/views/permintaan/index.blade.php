@@ -2,25 +2,25 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Daftar Persediaan</h1>
+        <h1>Daftar Permintaan</h1>
     </div>
     <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-header">
-                        <a href="{{route('persediaan.create')}}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;&nbsp;Tambah</a>
+                        <a href="{{route('permintaan.create')}}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;&nbsp;Tambah</a>
                     </div>
                     <div class="card-body">
                         <!-- <div class="table-responsive"> -->
-                            <table class="table table-bordered table-md" id="persediaan">
+                            <table class="table table-bordered table-md" id="permintaan">
                                 <thead>
                                     <tr>
                                         <th width="3%">No</th>
-                                        <th>Nama Bahan</th>
-                                        <th>Merk/Type</th>
-                                        <th>Tahun Peroleh</th>
-                                        <th>Satuan</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Dosen</th>
+                                        <th>Mata Kuliah</th>
+                                        <th>Kelas</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </thead>
@@ -46,12 +46,12 @@
 <script>
     $(document).ready(function () {
 
-        $('#persediaan').DataTable({
+        $('#permintaan').DataTable({
             processing: true,
             serverside: true,
             // responsive: true,
             ajax: {
-                url: "{{route('getPersediaan')}}"
+                url: "{{route('getPermintaan')}}"
             },
 
             columns: [
@@ -62,20 +62,20 @@
                     searchable: false
                 },
                 {
-                    data: 'nama_barang',
-                    name: 'nama_barang'
+                    data: 'tanggal',
+                    name: 'tanggal'
                 },
                 {
-                    data: 'merk',
-                    name: 'merk'
+                    data: 'nama_dosen',
+                    name: 'nama_dosen'
                 },
                 {
-                    data: 'tahun_peroleh',
-                    name: 'tahun_peroleh'
+                    data: 'mata_kuliah',
+                    name: 'mata_kuliah'
                 },
                 {
-                    data: 'satuan',
-                    name: 'satuan'
+                    data: 'kelas',
+                    name: 'kelas'
                 },
                 {
                     data: 'action',
@@ -85,10 +85,10 @@
         })
     });
 
-    function deletePersediaan(id){
+    function deletePermintaan(id){
         swal({
                 title: "Yakin ?",
-                text: "Anda akan menghapusnya persediaan",
+                text: "Anda akan menghapusnya permintaan",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -96,27 +96,27 @@
             .then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
-                        url: "/persediaan/" +id,
+                        url: "/permintaan/" +id,
                         method: "DELETE",
                         headers: {
                             'X-CSRF-TOKEN': "{{ csrf_token() }}"
                         },
                         success: function (res) {
-                            toastr.success('Persediaan berhasil dihapus', 'Berhasil')
+                            toastr.success('Permintaan berhasil dihapus', 'Berhasil')
                             table.draw()
                         },
                         error: function (err) {
                             toastr.error(
-                                'Terjadi kesalahan saat menghapus persediaan',
+                                'Terjadi kesalahan saat menghapus permintaan',
                                 'Perhatian')
                         }
                     })
 
-                    swal("Persediaan berhasil dihapus", {
+                    swal("Permintaan berhasil dihapus", {
                         icon: "success",
                     }).then(() => window.location.reload());
                 } else {
-                    swal("Persediaan tidak jadi dihapus");
+                    swal("Permintaan tidak jadi dihapus");
                 }
             });
     }
