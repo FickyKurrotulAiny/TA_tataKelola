@@ -18,9 +18,7 @@
                                     <tr>
                                         <th width="3%">No</th>
                                         <th>Tanggal</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Jumlah</th>
+                                        <th>Dosen Peminjam</th>
                                         <th>Tanggal Kembali</th>
                                         <th>Opsi</th>
                                     </tr>
@@ -67,16 +65,8 @@
                     name: 'tanggal'
                 },
                 {
-                    data: 'kode_barang',
-                    name: 'kode_barang'
-                },
-                {
-                    data: 'nama_barang',
-                    name: 'nama_barang'
-                },
-                {
-                    data: 'jumlah_barang',
-                    name: 'jumlah_barang'
+                    data: 'nama_peminjam',
+                    name: 'nama_peminjam'
                 },
                 {
                     data: 'tanggal_kembali',

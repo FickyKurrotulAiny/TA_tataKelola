@@ -70,6 +70,7 @@ class PersediaanController extends Controller
             'harga_satuan' => 'required',
             'jumlah' => 'required',
             'image' => 'required | image|file|max:1024',
+            'jumlah_barang' => 'required',
         ],[
             'nama_barang.required' => 'Nama Barang Wajib diisi!',
             'merk.required' => 'Merk/Type Wajib diisi!',
@@ -82,6 +83,7 @@ class PersediaanController extends Controller
             'harga_satuan.required' => 'Harga Satuan Wajib diisi',
             'jumlah.required' => 'Jumlah Wajib diisi!',
             'image.required' => 'Image Wajib diisi!',
+            'jumlah_barang.required' => 'Jumlah Barang Wajib diisii!',
         ]);
 
         $persediaan = new Persediaan();
@@ -102,6 +104,7 @@ class PersediaanController extends Controller
         $persediaan->volumeBarang_sisa = $request->volumeBarang_sisa;
         $persediaan->harga_satuan = $request->harga_satuan;
         $persediaan->jumlah = $request->jumlah;
+        $persediaan->jumlah_barang = $request->jumlah_barang;
         $persediaan->save();
 
         return redirect('persediaan')->with('success', 'Tambah Persediaan Sukses!');
@@ -159,6 +162,7 @@ class PersediaanController extends Controller
         $persediaan->volumeBarang_sisa = $request->volumeBarang_sisa;
         $persediaan->harga_satuan = $request->harga_satuan;
         $persediaan->jumlah = $request->jumlah;
+        $persediaan->jumlah_barang = $request->jumlah_barang;
         $persediaan->save();
 
         return redirect('persediaan')->with('success', 'Edit persediaan Sukses!');

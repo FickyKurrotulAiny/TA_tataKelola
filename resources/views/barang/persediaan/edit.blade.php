@@ -31,6 +31,11 @@
                                     value="{{ old('satuan', $persediaan->satuan) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Jumlah Barang</label>
+                                <input type="text" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control"
+                                    value="{{ old('jumlah_barang', $persediaan->jumlah_barang) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Tahun Peroleh</label>
                                 <input type="text" name="tahun_peroleh" placeholder="Tahun Peroleh"
                                     class="form-control"value="{{ old('tahun_peroleh', $persediaan->tahun_peroleh) }}">

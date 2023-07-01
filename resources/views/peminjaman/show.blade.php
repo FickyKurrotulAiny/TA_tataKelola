@@ -19,21 +19,6 @@
                                     <th>{{ Carbon\Carbon::parse($peminjaman->tanggal)->format('d-m-Y') }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Kode Barang</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->kode_barang }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Nama Barang</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->nama_barang }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Jumlah Barang</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->jumlah_barang }}</th>
-                                </tr>
-                                <tr>
                                     <th width="200px">Nama Dosen Peminjam</th>
                                     <th width="30px">:</th>
                                     <th>{{ $peminjaman->nama_peminjam }}</th>
@@ -78,6 +63,31 @@
                                     <th width="30px">:</th>
                                     <th>{!! $peminjaman->keterangan !!}</th>
                                 </tr>
+                            </table>
+                            <table class="table table-bordered table-md">
+                                <thead>
+                                    <th>No.</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Merk</th>
+                                    <th>Tahun Peroleh</th>
+                                    <th>Jumlah</th>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($peminjaman->details as $details)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $details->barang->kode_barang }}</td>
+                                            <td>{{ $details->barang->nama_barang }}</td>
+                                            <td>{{ $details->barang->merk }}</td>
+                                            <td>{{ $details->barang->tahun_peroleh }}</td>
+                                            <td>{{ $details->jumlah }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                             <br>
                             <tr>

@@ -8,6 +8,7 @@ use App\Models\Inventaris;
 use App\Models\Peminjaman;
 use App\Models\User;
 use App\Models\Persediaan;
+use App\Models\Minta;
 
 
 class DashboardController extends Controller
@@ -33,7 +34,8 @@ class DashboardController extends Controller
             $peminjaman = Peminjaman::count();
             $user = User::count();
             $persediaan = Persediaan::count();
-            return view('dashboard.index', compact('data','inventaris','peminjaman','user','persediaan'));
+            $minta = Minta::count();
+            return view('dashboard.index', compact('data','inventaris','peminjaman','user','persediaan', 'minta'));
         }
     }
 }

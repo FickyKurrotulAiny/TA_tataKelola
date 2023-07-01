@@ -22,4 +22,10 @@ class Permintaan extends Model
         'satuan',
         'keterangan',
     ];
+
+    protected $hidden = [];
+
+    public function details(){
+        return $this->hasMany(PermintaanDetail::class,'id_permintaan');
+    }
 }

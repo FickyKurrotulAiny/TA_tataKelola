@@ -3,8 +3,10 @@
     <section class="section">
         <div class="section-header">
             <div class="row">
-                <div class="col">
+                <div class="col-md-12">
                     <h1>INFORMASI DATA BARANG YANG TERSEDIA</h1>
+                </div>
+                <div class="col-md-12">
                     <form class="form-inline mr-auto">
                         <ul class="navbar-nav mr-3">
                             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
@@ -58,11 +60,18 @@
                                     <h2>
                                         <a href="javascript:void(0)">
                                             {{ $persediaan->nama_barang }} - {{ $persediaan->merk }}
-                                            ({{ $persediaan->satuan }})
+                                            ({{ $persediaan->tahun_peroleh }})
                                         </a>
                                     </h2>
                                     <img src="{{ url('imagepersediaan/' . $persediaan->image) }}" width="200px"
                                         title="">
+                                </div>
+                                <div class="article-cta d-flex" style="justify-content: center">
+                                    <button class="btn btn-primary btn-details"
+                                        data-title="{{ $persediaan->nama_barang }} - {{ $persediaan->merk }} ({{ $persediaan->tahun_peroleh }})"
+                                        data-details={{ base64_encode(json_encode($persediaan, true)) }}>
+                                        Details
+                                    </button>
                                 </div>
                             </div>
                         </article>

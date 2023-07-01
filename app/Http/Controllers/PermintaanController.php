@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use App\Models\Permintaan;
+use App\Models\Persediaan;
+use App\Models\PermintaanDetail;
 use PDF;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class PermintaanController extends Controller
 {
@@ -63,7 +67,8 @@ class PermintaanController extends Controller
     public function create()
     {
         $data['navlink'] = 'permintaan';
-        return view('permintaan.create', $data);
+        $barangs = Persediaan::get();
+        return view('permintaan.create', compact('barangs'), $data);
     }
 
     /**
@@ -80,8 +85,6 @@ class PermintaanController extends Controller
         'nama_dosen' => 'required',
         'mata_kuliah' => 'required',
         'kelas' => 'required',
-        'nama_bahan' => 'required',
-        'jumlah' => 'required',
         'satuan' => 'required',
         'keterangan' => 'required',
         ],[
@@ -89,26 +92,32 @@ class PermintaanController extends Controller
         'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
         'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
         'kelas.required' => 'Kelas Wajib diisii!',
-        'nama_bahan.required' => 'Nama Bahan Wajib diisii!',
-        'jumlah.required' => 'Jumlah Wajib diisii!',
         'satuan.required' => 'Satuan Wajib diisii!',
         'keterangan.required' => 'Keterangan Wajib diisii!',
         ]);
 
-        $permintaan = new Permintaan();
-        $permintaan = Permintaan::create($request->all());
-
-        $permintaan->tanggal = $request->tanggal;
-        $permintaan->nama_dosen = $request->nama_dosen;
-        $permintaan->mata_kuliah = $request->mata_kuliah;
-        $permintaan->kelas = $request->kelas;
-        $permintaan->nama_bahan = $request->nama_bahan;
-        $permintaan->jumlah = $request->jumlah;
-        $permintaan->satuan = $request->satuan;
-        $permintaan->keterangan = $request->keterangan;
-        $permintaan->save();
-
-        return redirect('permintaan')->with('success', 'Tambah Permintaan Sukses!');
+        DB::beginTransaction();
+        try {
+            $permintaan = new Permintaan();
+            $permintaan->tanggal = $request->tanggal;
+            $permintaan->nama_dosen = $request->nama_dosen;
+            $permintaan->mata_kuliah = $request->mata_kuliah;
+            $permintaan->kelas = $request->kelas;
+            $permintaan->satuan = $request->satuan;
+            $permintaan->keterangan = $request->keterangan;
+            if($permintaan->save()){
+                foreach($request->nama_bahan as $key=>$nama_bahan){
+                    $barang = Persediaan::where('nama_bahan', $nama_bahan)->first();
+                    $permintaan_detail = new PermintaanDetail;
+                    $permintaan_detail->id_permintaan = $permintaan->id;
+                    $permintaan_detail->id_barang = $barang->id;
+                    $pinjam_detail->jumlah = $request->qty[$key];
+                    $permintaan_detail->save();
+                }
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+        }
     }
 
     /**
@@ -120,6 +129,7 @@ class PermintaanController extends Controller
     public function show($id)
     {
         $permintaan = Permintaan::findOrFail($id);
+        $pinjam = Pinjam::where('id',$id)->with('details.barang')->first();
         $data['navlink'] = 'permintaan';
         return view('permintaan.show', $data, ['permintaan' => $permintaan]);
     }
@@ -147,19 +157,52 @@ class PermintaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $permintaan = Permintaan::findOrFail($id);
+        $request->validate([
+        'tanggal' => 'required',
+        'nama_dosen' => 'required',
+        'mata_kuliah' => 'required',
+        'kelas' => 'required',
+        'jumlah' => 'required',
+        'satuan' => 'required',
+        'keterangan' => 'required',
+        ],[
+        'tanggal.required' => 'Tanggal Wajib diisii!',
+        'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
+        'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
+        'kelas.required' => 'Kelas Wajib diisii!',
+        'jumlah.required' => 'Jumlah Wajib diisii!',
+        'satuan.required' => 'Satuan Wajib diisii!',
+        'keterangan.required' => 'Keterangan Wajib diisii!',
+        ]);
 
-        $permintaan->tanggal = $request->tanggal;
-        $permintaan->nama_dosen = $request->nama_dosen;
-        $permintaan->mata_kuliah = $request->mata_kuliah;
-        $permintaan->kelas = $request->kelas;
-        $permintaan->nama_bahan = $request->nama_bahan;
-        $permintaan->jumlah = $request->jumlah;
-        $permintaan->satuan = $request->satuan;
-        $permintaan->keterangan = $request->keterangan;
-        $permintaan->save();
+        DB::beginTransaction();
+        try {
+            $permintaan = Permintaan::findOrFail($id);
 
-        return redirect('permintaan')->with('success', 'Edit Permintaan Sukses!');
+            $permintaan->tanggal = $request->tanggal;
+            $permintaan->nama_dosen = $request->nama_dosen;
+            $permintaan->mata_kuliah = $request->mata_kuliah;
+            $permintaan->kelas = $request->kelas;
+            $permintaan->jumlah = $request->jumlah;
+            $permintaan->satuan = $request->satuan;
+            $permintaan->keterangan = $request->keterangan;
+            if($permintaan->save()){
+                PermintaanDetail::where('id_peminjaman', $id)->delete();
+                foreach($request->nama_bahan as $key=>$nama_bahan){
+                    $barang = Persediaan::where('nama_bahan', $nama_bahan)->first();
+
+                    $permintaan_detail = new PermintaanDetail;
+                    $permintaan_detail->id_permintaan = $permintaan->id;
+                    $permintaan_detail->id_barang = $barang->id;
+                    $permintaan_detail->save();
+                }
+                DB::commit();
+                return redirect('permintaan')->with('success', 'Edit Permintaan Sukses!');
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect('permintaan')->with('error', $e->getMessage());
+        }
     }
 
     /**

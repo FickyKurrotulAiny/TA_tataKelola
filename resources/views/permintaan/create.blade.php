@@ -16,32 +16,12 @@
                             @csrf
                             <!-- @method('PUT') -->
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Tanggal</label>
-                                <input type="date" name="tanggal" placeholder="Tanggal"
-                                    class="form-control @error('tanggal') is-invalid @enderror"
-                                    value="{{ old('tanggal') }}">
-                                @error('tanggal')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Nama Bahan</label>
-                                <input type="text" name="nama_bahan" placeholder="Nama Bahan"
-                                    class="form-control @error('nama_bahan') is-invalid @enderror"
-                                    value="{{ old('nama_bahan') }}">
-                                @error('nama_bahan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Jumlah</label>
-                                <input type="text" name="jumlah" placeholder="Jumlah"
-                                    class="form-control @error('jumlah') is-invalid @enderror"
-                                    value="{{ old('jumlah') }}">
-                                @error('jumlah')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                                    <label class="form-label">
+                                        Tanggal Pinjam
+                                    </label>
+                                    <input type="text" name="tanggal" class="form-control" readonly
+                                        value="{{ date('d-m-Y') }}" placeholder="Choose date" />
+                                </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Dosen</label>
                                 <input type="text" name="nama_dosen" placeholder="Nama Dosen"
@@ -61,19 +41,9 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Satuan</label>
-                                <input type="text" name="satuan" placeholder="Satuan"
-                                    class="form-control @error('satuan') is-invalid @enderror"
-                                    value="{{ old('satuan') }}">
-                                @error('satuan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Kelas</label>
                                 <input type="text" name="kelas" placeholder="Kelas"
-                                    class="form-control @error('kelas') is-invalid @enderror"
-                                    value="{{ old('kelas') }}">
+                                    class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}">
                                 @error('kelas')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -87,6 +57,34 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Pilih Barang</label>
+                                <select class="js-select2-barang form-control" name="state">
+                                    <option value="" disabled selected>Silahkan pilih barang yang ingin di minta
+                                    </option>
+                                    @foreach ($barangs as $barang)
+                                        <option value="{{ $barang->nama_bahan }}"
+                                            data-json="{{ base64_encode(json_encode($barang)) }}">
+                                            {{ $barang->nama_barang }} -
+                                            {{ $barang->merk }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-12 mt-3 mb-3">
+                                    <table class="table order-list" id="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama Bahan</th>
+                                                <th>Satuan</th>
+                                                <th>Merk</th>
+                                                <th>Jumlah Barang</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             <br>
                             <div class="col-md-12 mt-3">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
@@ -100,3 +98,55 @@
     </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.js-select2-barang').select2();
+        });
+        $('.js-select2-barang').on('change', function() {
+            var selectedOption = $(this).find('option:selected');
+            var value = selectedOption.val();
+            var jsonData = selectedOption.data('json');
+            var decodedData = JSON.parse(atob(jsonData));
+            var pre_qty = 0;
+
+            $(".nama-barang").each(function(i) {
+                if ($(this).val() == value) {
+                    rowindex = i;
+                    pre_qty = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val();
+                }
+            })
+
+            var flag = 1;
+            if (pre_qty > 0) {
+                var qty = parseInt(pre_qty) + 1;
+                $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val(qty);
+                flag = 0;
+            }
+            if (flag) {
+                var newRow = $("<tr>");
+                var cols = '';
+
+                cols += '<td>' + decodedData.nama_barang + '</td>';
+                cols += '<td>' + decodedData.satuan + '</td>';
+                cols += '<td>' + decodedData.merk + '</td>';
+                cols +=
+                    '<td><input type="number" class="form-control qty" name="qty[]" value="1" step="any" required/></td>';
+                cols +=
+                    '<td><button type="button" class="ibtnDel btn btn-md btn-danger">Hapus</button></td>';
+                cols += '<input type="hidden" class="nama-barang" name="nama_bahan[]" value="' + decodedData
+                    .nama_bahan + '"/>';
+
+                newRow.append(cols);
+                $("table.order-list tbody").prepend(newRow);
+            }
+        });
+
+        $("table.order-list tbody").on("click", ".ibtnDel", function(event) {
+            rowindex = $(this).closest('tr').index();
+            $(this).closest("tr").remove();
+        });
+    </script>
+@endpush
+

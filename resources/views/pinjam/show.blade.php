@@ -59,6 +59,7 @@
                                         <th>No.</th>
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
+
                                         <th>Tahun Peroleh</th>
                                         <th>Jumlah</th>
                                     </thead>

@@ -58,6 +58,21 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="card card-statistic-1">
+                                <div class="card-icon bg-dark d-flex justify-content-center align-items-center">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="card-wrap">
+                                    <div class="card-header">
+                                        <h4>Jumlah Permintaan</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        {{ $minta }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="card card-statistic-1">
                                 <div class="card-icon bg-warning d-flex justify-content-center align-items-center">
                                     <i class="fas fa-user-plus"></i>
                                 </div>

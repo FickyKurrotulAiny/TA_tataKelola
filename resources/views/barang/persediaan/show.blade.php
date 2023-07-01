@@ -29,6 +29,11 @@
                                     <th>{{ $persediaan->satuan }}</th>
                                 </tr>
                                 <tr>
+                                    <th width="200px">Jumlah Barang</th>
+                                    <th width="30px">:</th>
+                                    <th>{{ $persediaan->jumlah_barang}}</th>
+                                </tr>
+                                <tr>
                                     <th width="230px">Tahun Peroleh</th>
                                     <th width="30px">:</th>
                                     <th>{{ $persediaan->tahun_peroleh }}</th>
@@ -59,7 +64,7 @@
                                     <th>{{ $persediaan->harga_satuan }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Jumlah Barang</th>
+                                    <th width="200px">Jumlah</th>
                                     <th width="30px">:</th>
                                     <th>{{ $persediaan->jumlah }}</th>
                                 </tr>

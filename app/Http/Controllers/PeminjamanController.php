@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
+use App\Models\Inventaris;
+use App\Models\PeminjamanDetail;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class PeminjamanController extends Controller
 {
@@ -59,7 +63,8 @@ class PeminjamanController extends Controller
     public function create()
     {
         $data['navlink'] = 'peminjaman';
-        return view('peminjaman.create', $data);
+        $barangs = Inventaris::get();
+        return view('peminjaman.create' ,compact('barangs') , $data);
     }
 
     /**
@@ -73,9 +78,6 @@ class PeminjamanController extends Controller
 
     $request->validate([
             'tanggal' => 'required',
-            'kode_barang' => 'required',
-            'nama_barang' => 'required',
-            'jumlah_barang' => 'required',
             'nama_peminjam' => 'required',
             'jurusan' => 'required',
             'petugas' => 'required',
@@ -87,9 +89,6 @@ class PeminjamanController extends Controller
             'keterangan' => 'required',
         ],[
             'tanggal.required' => 'Tanggal Wajib diisi!',
-            'kode_barang.required' => 'Kode Barang Wajib diisi!',
-            'nama_barang.required' => 'Nama Barang Wajib diisi!',
-            'jumlah_barang.required' => 'Jumlah Barang Wajib diisi!',
             'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
             'jurusan.required' => 'Jurusan Wajib diisi!',
             'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
@@ -101,26 +100,35 @@ class PeminjamanController extends Controller
             'keterangan' => 'Keterangan Wajib diisi!',
         ]);
 
-        $peminjaman = new Peminjaman();
-        $peminjaman = Peminjaman::create($request->all());
-
-        $peminjaman->tanggal = $request->tanggal;
-        $peminjaman->kode_barang = $request->kode_barang;
-        $peminjaman->nama_barang = $request->nama_barang;
-        $peminjaman->jumlah_barang = $request->jumlah_barang;
-        $peminjaman->nama_peminjam = $request->nama_peminjam;
-        $peminjaman->jurusan = $request->jurusan;
-        $peminjaman->petugas = $request->petugas;
-        $peminjaman->mengambil = $request->mengambil;
-        $peminjaman->tanggal_kembali = $request->tanggal_kembali;
-        $peminjaman->nama_kegiatan = $request->nama_kegiatan;
-        $peminjaman->kelas = $request->kelas;
-        $peminjaman->program_studi = $request->program_studi;
-        $peminjaman->keterangan = $request->keterangan;
-        $peminjaman->save();
-
-        return redirect('peminjaman')->with('success', 'Tambah Peminjaman Sukses!');
+        DB::beginTransaction();
+        try {
+            $peminjaman = new Peminjaman();
+            $peminjaman->nama_peminjam = $request->nama_peminjam;
+            $peminjaman->jurusan = $request->jurusan;
+            $peminjaman->petugas = $request->petugas;
+            $peminjaman->mengambil = $request->mengambil;
+            $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+            $peminjaman->nama_kegiatan = $request->nama_kegiatan;
+            $peminjaman->kelas = $request->kelas;
+            $peminjaman->program_studi = $request->program_studi;
+            $peminjaman->keterangan = $request->keterangan;
+            if($peminjaman->save()){
+                foreach($request->kode_barang as $key=>$kode_barang){
+                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
+                    $peminjaman_detail = new PeminjamanDetail;
+                    $peminjaman_detail->id_peminjaman = $peminjaman->id;
+                    $peminjaman_detail->id_barang = $barang->id;
+                    $peminjaman_detail->jumlah = $request->qty[$key];
+                    $peminjaman_detail->save();
+            }
+            DB::commit();
+            return redirect('peminjaman')->with('success', 'Tambah Peminjaman Sukses!');
+        }
+    }catch (Exception $e) {
+        Db::rollback();
+        return redirect('peminjaman')->with('error', $e->getMessage());
     }
+}
 
     /**
      * Display the specified resource.
@@ -130,7 +138,8 @@ class PeminjamanController extends Controller
      */
     public function show($id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman = Peminjaman::where('id',$id)->with('details.barang')->first();
+
         $data['navlink'] = 'peminjaman';
         return view('peminjaman.show', $data, ['peminjaman' => $peminjaman]);
     }
@@ -143,9 +152,10 @@ class PeminjamanController extends Controller
      */
     public function edit($id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman = Peminjaman::where('id',$id)->with('details.barang')->first();
+        $barangs = Inventaris::get();
         $data['navlink'] = 'peminjaman';
-        return view('peminjaman.edit', $data, compact('peminjaman'));
+        return view('peminjaman.edit', $data, compact('peminjaman', 'barangs'));
     }
 
     /**
@@ -157,23 +167,60 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
-        $peminjaman->tanggal = $request->tanggal;
-        $peminjaman->kode_barang = $request->kode_barang;
-        $peminjaman->nama_barang = $request->nama_barang;
-        $peminjaman->jumlah_barang = $request->jumlah_barang;
-        $peminjaman->nama_peminjam = $request->nama_peminjam;
-        $peminjaman->jurusan = $request->jurusan;
-        $peminjaman->petugas = $request->petugas;
-        $peminjaman->mengambil = $request->mengambil;
-        $peminjaman->tanggal_kembali = $request->tanggal_kembali;
-        $peminjaman->nama_kegiatan = $request->nama_kegiatan;
-        $peminjaman->kelas = $request->kelas;
-        $peminjaman->program_studi = $request->program_studi;
-        $peminjaman->keterangan = $request->keterangan;
-        $peminjaman->save();
+        $request->validate([
+            'tanggal' => 'required',
+            'nama_peminjam' => 'required',
+            'jurusan' => 'required',
+            'petugas' => 'required',
+            'mengambil' => 'required',
+            'tanggal_kembali' => 'required',
+            'nama_kegiatan' => 'required',
+            'kelas' => 'required',
+            'program_studi' => 'required',
+            'keterangan' => 'required',
+        ],[
+            'tanggal.required' => 'Tanggal Wajib diisi!',
+            'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
+            'jurusan.required' => 'Jurusan Wajib diisi!',
+            'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
+            'mengambil.required' => 'Yang Mengambil Wajib diisi!',
+            'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
+            'nama_kegiatan' => 'Nama kegiatan Wajib diisi!',
+            'kelas' => 'Kelas Wajib diisi!',
+            'program_studi' => 'Program Studi Wajib diisi!',
+            'keterangan' => 'Keterangan Wajib diisi!',
+        ]);
 
-        return redirect('peminjaman')->with('success', 'Edit Peminjaman Sukses!');
+        DB::beginTransaction();
+        try {
+            $peminjaman = Peminjaman::findOrFail($id);
+            $peminjaman->nama_peminjam = $request->nama_peminjam;
+            $peminjaman->jurusan = $request->jurusan;
+            $peminjaman->petugas = $request->petugas;
+            $peminjaman->mengambil = $request->mengambil;
+            $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+            $peminjaman->nama_kegiatan = $request->nama_kegiatan;
+            $peminjaman->kelas = $request->kelas;
+            $peminjaman->program_studi = $request->program_studi;
+            $peminjaman->keterangan = $request->keterangan;
+            if($peminjaman->save()){
+                PeminjamanDetail::where('id_pemminjaman',$id)->delete();
+                foreach($request->kode_barang as $key=>$kode_barang){
+                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
+                    $peminjaman_detail = new PeminjamanDetail;
+                    $peminjaman_detail->id_peminjaman = $peminjaman->id;
+                    $peminjaman_detail->id_barang = $barang->id;
+                    $peminjaman_detail->jumlah = $request->qty[$key];
+                    $peminjaman_detail->save();
+            }
+            DB::commit();
+            return redirect('peminjaman')->with('success', 'Edit Peminjaman Sukses!');
+        }
+    }catch (Exception $e) {
+        Db::rollback();
+        return redirect('peminjaman')->with('error', $e->getMessage());
+    }
+
     }
 
     /**

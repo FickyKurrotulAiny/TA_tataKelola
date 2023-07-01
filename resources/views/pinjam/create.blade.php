@@ -105,6 +105,7 @@
                                             <tr>
                                                 <th>Kode Barang</th>
                                                 <th>Nama Barang</th>
+                                                <th>Merk</th>
                                                 <th>Tahun Peroleh</th>
                                                 <th>Jumlah Barang</th>
                                                 <th></th>
@@ -159,6 +160,7 @@
 
                 cols += '<td>' + decodedData.kode_barang + '</td>';
                 cols += '<td>' + decodedData.nama_barang + '</td>';
+                cols += '<td>' + decodedData.merk + '</td>';
                 cols += '<td>' + decodedData.tahun_peroleh + '</td>';
                 cols +=
                     '<td><input type="number" class="form-control qty" name="qty[]" value="1" step="any" required/></td>';

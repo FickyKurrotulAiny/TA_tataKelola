@@ -42,6 +42,15 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Jumlah Barang</label>
+                                <input type="text" name="jumlah_barang" placeholder="Jumlah Barang"
+                                    class="form-control @error('jumlah_barang') is-invalid @enderror"
+                                    value="{{ old('jumlah_barang') }}">
+                                @error('jumlah_barang')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Tahun Peroleh</label>
                                 <input type="text" name="tahun_peroleh" placeholder="Tahun Peroleh"
                                     class="form-control @error('tahun_peroleh') is-invalid @enderror"
@@ -121,7 +130,7 @@
                             <br>
                             <div class="col-md-12 mt-3">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
-                                <a href="{{ route('inventaris.index') }}" class="btn btn-secondary">Batal</a>
+                                <a href="{{ route('persediaan.index') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>
                     </div>

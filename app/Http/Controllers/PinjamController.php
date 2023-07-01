@@ -19,10 +19,16 @@ class PinjamController extends Controller
 
     public function generatePDFPinjam($id)
     {
+            $pinjam = Pinjam::find($id);
+            $data['navlink'] = 'pinjam';
+            $pdf = PDF::loadview('pinjam.form_peminjaman', ['pinjam'=>$pinjam]);
+            return $pdf->stream('pinjam.pdf');
 
-        $pinjam = Pinjam::where('id', $id)->with('details.barang')->first();
-        $data['navlink'] = 'pinjam';
-        return view('pinjam.form_peminjaman', $data, ['pinjam' => $pinjam]);
+
+        // $pinjam = Pinjam::where('id', $id)->with('details.barang')->first();
+        // $data['navlink'] = 'pinjam';
+        // return view('pinjam.form_peminjaman', $data, ['pinjam' => $pinjam]);
+
         // $pdf = PDF::loadview('pinjam.form_peminjaman', $data, ['pinjam' => $pinjam]);
     }
 
@@ -123,7 +129,7 @@ class PinjamController extends Controller
                 foreach($request->kode_barang as $key=>$kode_barang){
                     $barang = Inventaris::where('kode_barang',$kode_barang)->first();
                     $pinjam_detail = new PinjamDetail;
-                    $pinjam_detail->id_pinjam = $pinjam->id;
+                    $pinjam_detail->id_peminjaman = $pinjam->id;
                     $pinjam_detail->id_barang = $barang->id;
                     $pinjam_detail->jumlah = $request->qty[$key];
                     $pinjam_detail->save();

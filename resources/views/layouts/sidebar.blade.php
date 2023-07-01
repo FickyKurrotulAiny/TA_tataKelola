@@ -5,9 +5,9 @@
             <img src="{{ url('/assets/img/polindra.png') }}" alt="logo" width="70"
                 class="shadow-light rounded-circle">
         </div>
-        <br>
+        <br><br>
         <div class="sidebar-brand">
-            <a href="index.html">Maintenance Jurusan TI</a>
+            <a>Maintenance Jurusan TI</a>
         </div>
         <br>
         @if (Auth::user()->level == 'admin')
@@ -61,6 +61,8 @@
                         Route::current()->getName() == 'user.edit') class="active" @endif><a class="nav-link"
                         href="{{ route('user.index') }}"><i class="fas fa-user-plus"></i><span>User</span></a></li>
                 <li><a class="nav-link" href="#"><i class="fas fa-fire"></i> <span>Laporan</span></a></li>
+                <li><a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>    
+                    <span>Keluar</span></a></li>
             </ul>
         @else (Auth::user()->level == 'user')
             <ul class="sidebar-menu">
@@ -81,6 +83,8 @@
                         href="{{ route('permintaan.index') }}"><i class="fas fa-file-alt"></i>
                         <span>Permintaanan</span></a>
                 </li>
+                <li><a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>
+                    <span>Keluar</span></a></li>
             </ul>
         @endif
     </aside>

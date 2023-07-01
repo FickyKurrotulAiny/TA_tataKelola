@@ -30,7 +30,11 @@ class Peminjaman extends Model
 
     protected $hidden = [];
 
-    public function detailData($id){
-        return DB::table('peminjaman')->where('id', $id)->first();
+    // public function detailData($id){
+    //     return DB::table('peminjaman')->where('id', $id)->first();
+    // }
+
+    public function details(){
+        return $this->hasMany(PeminjamanDetail::class,'id_peminjaman');
     }
 }

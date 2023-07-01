@@ -9,7 +9,7 @@
                             <img src="assets/img/polindra.png" alt="logo" width="90"
                                 class="shadow-light rounded-circle">
                         </div>
-                            <p class="text-center" style="font-size:20px"><strong>INFORMASI DAN PEMINJAMAN BARANG DAN ALAT</strong>
+                            <p class="text-center" style="font-size:20px"><strong>INFORMASI DAN PEMINJAMAN BARANG/ALAT</strong>
                             </p>
                             <p class="text-center" style="font-size:15px"><strong>JURUSAN TEKNIK INFORMATIKA</strong></p>
                             <hr>

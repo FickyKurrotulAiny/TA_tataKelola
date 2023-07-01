@@ -71,33 +71,39 @@
                 <td width="100%">: {{ Carbon\Carbon::parse($pinjam->tanggal_kembali)->format('d-m-Y') }}</td>
             </tr>
             <tr>
+                <td width="100%">Keterangan</td>
+                <td width="100%">: {{ $pinjam->keterangan }}</td>
+            </tr>
+            <tr>
                 <td width="100%">Untuk meminjam barang/alat sebagai berikut</td>
                 <td width="100%">:</td>
             </tr>
         </table>
         <br>
         <table style="width:100%" class="withBorder">
-            <tr align="center">
+            <thead>
                 <th width="30">No</th>
-                <th width="100%">Nama Barang/Alat</th>
-                <th width="100%">Kode Barang</th>
-                <th width="100%">Jumlah</th>
-                <th width="100%">Keterangan</th>
-            </tr>
+                <th>Nama Barang/Alat</th>
+                <th>Kode Barang</th>
+                <th>Jumlah</th>
+                <th>Keterangan</th>
+            </thead>
+            <tbody>
+                @php
+                    $no = 1;
+                @endphp
+                @foreach ($pinjam->details as $details)
+                    <tr class="gr">
+                        <th class="gr" width="30">{{ $no++ }}</th>
+                        <th class="gr">{{ $details->barang->nama_barang }}</th>
+                        <th class="gr">{{ $details->barang->kode_barang }}</th>
+                        <th class="gr">{{ $details->jumlah }}</th>
+                        <th class="gr">{{ $pinjam->keterangan }}</th>
+                        {{-- <th class="gr" style="text-align: right">{{ $details->jumlah }}</th> --}}
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
-        <tbody>
-                    @php
-                        $no = 1;
-                    @endphp
-                    @foreach ($pinjam->details as $details)
-                        <tr class="gr">
-                            <th class="gr" width="30">{{ $no++ }}</th>
-                            <th class="gr">{{ $details->barang->nama_barang }}</th>
-                            <th class="gr">{{ $details->barang->kode_barang }}</th>
-                            <th class="gr" style="text-align: right">{{ $details->jumlah }}</th>
-                        </tr>
-                    @endforeach
-                </tbody>
         <table style="width:100%" border="0">
             <tr font size="10">
                 <td width="100%">Catatan: jika meminjam laptop/komputer sangat disarankan untuk tidak menyimpan data

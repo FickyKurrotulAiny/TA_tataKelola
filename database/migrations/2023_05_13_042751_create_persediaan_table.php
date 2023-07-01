@@ -25,6 +25,7 @@ class CreatePersediaanTable extends Migration
             $table->string('volumeBarang_sisa');
             $table->string('harga_satuan');
             $table->string('jumlah');
+            $table->string('jumlah_barang');
             $table->string('image', 255)->nullable();
             $table->timestamps();
         });
