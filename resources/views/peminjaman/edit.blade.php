@@ -17,7 +17,7 @@
                             @method('PUT')
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">tanggal</label>
-                                <input type="date" name="tanggal" placeholder="tanggal"
+                                <input type="date" name="tanggal" readonly placeholder="tanggal"
                                     class="form-control"value="{{ old('tanggal', $peminjaman->tanggal) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">

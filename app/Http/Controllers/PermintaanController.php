@@ -10,6 +10,7 @@ use App\Models\Persediaan;
 use App\Models\PermintaanDetail;
 use PDF;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PermintaanController extends Controller
@@ -36,7 +37,7 @@ class PermintaanController extends Controller
 
     public function getpermintaan(Request $request){
         if ($request->ajax()) {
-            $data = Permintaan::select('*');
+            $data = Permintaan::where('user_id',Auth::user()->id);
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('tanggal', function($value){
@@ -80,43 +81,48 @@ class PermintaanController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-        'tanggal' => 'required',
-        'nama_dosen' => 'required',
-        'mata_kuliah' => 'required',
-        'kelas' => 'required',
-        'satuan' => 'required',
-        'keterangan' => 'required',
-        ],[
-        'tanggal.required' => 'Tanggal Wajib diisii!',
-        'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
-        'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
-        'kelas.required' => 'Kelas Wajib diisii!',
-        'satuan.required' => 'Satuan Wajib diisii!',
-        'keterangan.required' => 'Keterangan Wajib diisii!',
-        ]);
-
         DB::beginTransaction();
         try {
+            $request->validate([
+                'tanggal' => 'required',
+                'nama_dosen' => 'required',
+                'mata_kuliah' => 'required',
+                'kelas' => 'required',
+                'keterangan' => 'required',
+            ],[
+                'tanggal.required' => 'Tanggal Wajib diisii!',
+                'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
+                'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
+                'kelas.required' => 'Kelas Wajib diisii!',
+                'keterangan.required' => 'Keterangan Wajib diisii!',
+            ]);
+
             $permintaan = new Permintaan();
-            $permintaan->tanggal = $request->tanggal;
+            $permintaan->tanggal = Carbon::now();
             $permintaan->nama_dosen = $request->nama_dosen;
             $permintaan->mata_kuliah = $request->mata_kuliah;
             $permintaan->kelas = $request->kelas;
-            $permintaan->satuan = $request->satuan;
             $permintaan->keterangan = $request->keterangan;
+            $permintaan->user_id = Auth::user()->id;
+
             if($permintaan->save()){
-                foreach($request->nama_bahan as $key=>$nama_bahan){
-                    $barang = Persediaan::where('nama_bahan', $nama_bahan)->first();
+                foreach($request->id_bahan as $key=>$id_bahan){
+                    $barang = Persediaan::where('id', $id_bahan)->first();
                     $permintaan_detail = new PermintaanDetail;
                     $permintaan_detail->id_permintaan = $permintaan->id;
                     $permintaan_detail->id_barang = $barang->id;
-                    $pinjam_detail->jumlah = $request->qty[$key];
+                    $permintaan_detail->jumlah = $request->qty[$key];
                     $permintaan_detail->save();
+
+                    // return $permintaan_detail;
                 }
+                DB::commit();
+                return redirect('permintaan')->with('success', 'Tambah Permintaan Sukses!');
             }
         } catch (Exception $e) {
             DB::rollback();
+            // return $e->getMessage();
+            return redirect('permintaan')->with('error', $e->getMessage());
         }
     }
 
@@ -128,10 +134,11 @@ class PermintaanController extends Controller
      */
     public function show($id)
     {
-        $permintaan = Permintaan::findOrFail($id);
-        $pinjam = Pinjam::where('id',$id)->with('details.barang')->first();
+        $permintaan = Permintaan::where('id',$id)->with('details.barang')->first();
         $data['navlink'] = 'permintaan';
-        return view('permintaan.show', $data, ['permintaan' => $permintaan]);
+        $barangs = Persediaan::get();
+
+        return view('permintaan.show', $data, compact('permintaan'));
     }
 
     /**
@@ -144,7 +151,8 @@ class PermintaanController extends Controller
     {
         $permintaan = Permintaan::findOrFail($id);
         $data['navlink'] = 'permintaan';
-        return view('permintaan.edit', $data, compact('permintaan'));
+        $barangs = Persediaan::get();
+        return view('permintaan.edit', $data, compact('permintaan','barangs'));
     }
 
 
@@ -157,47 +165,48 @@ class PermintaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-        'tanggal' => 'required',
-        'nama_dosen' => 'required',
-        'mata_kuliah' => 'required',
-        'kelas' => 'required',
-        'jumlah' => 'required',
-        'satuan' => 'required',
-        'keterangan' => 'required',
-        ],[
-        'tanggal.required' => 'Tanggal Wajib diisii!',
-        'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
-        'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
-        'kelas.required' => 'Kelas Wajib diisii!',
-        'jumlah.required' => 'Jumlah Wajib diisii!',
-        'satuan.required' => 'Satuan Wajib diisii!',
-        'keterangan.required' => 'Keterangan Wajib diisii!',
-        ]);
 
         DB::beginTransaction();
         try {
+            $request->validate([
+                'tanggal' => 'required',
+                'nama_dosen' => 'required',
+                'mata_kuliah' => 'required',
+                'kelas' => 'required',
+                'keterangan' => 'required',
+            ],[
+                'tanggal.required' => 'Tanggal Wajib diisii!',
+                'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
+                'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
+                'kelas.required' => 'Kelas Wajib diisii!',
+                'keterangan.required' => 'Keterangan Wajib diisii!',
+            ]);
+
             $permintaan = Permintaan::findOrFail($id);
 
-            $permintaan->tanggal = $request->tanggal;
+            $permintaan->tanggal = Carbon::now();
             $permintaan->nama_dosen = $request->nama_dosen;
             $permintaan->mata_kuliah = $request->mata_kuliah;
             $permintaan->kelas = $request->kelas;
-            $permintaan->jumlah = $request->jumlah;
-            $permintaan->satuan = $request->satuan;
             $permintaan->keterangan = $request->keterangan;
-            if($permintaan->save()){
-                PermintaanDetail::where('id_peminjaman', $id)->delete();
-                foreach($request->nama_bahan as $key=>$nama_bahan){
-                    $barang = Persediaan::where('nama_bahan', $nama_bahan)->first();
+            $permintaan->user_id = Auth::user()->id;
 
+            if($permintaan->save()){
+                PermintaanDetail::where('id_permintaan',$id)->delete();
+
+                foreach($request->id_barang as $key=>$id_barang){
+
+                    $barang = Persediaan::where('id', $id_barang)->first();
                     $permintaan_detail = new PermintaanDetail;
                     $permintaan_detail->id_permintaan = $permintaan->id;
                     $permintaan_detail->id_barang = $barang->id;
+                    $permintaan_detail->jumlah = $request->qty[$key];
                     $permintaan_detail->save();
+
+                    // return $permintaan_detail;
                 }
                 DB::commit();
-                return redirect('permintaan')->with('success', 'Edit Permintaan Sukses!');
+                return redirect('permintaan')->with('success', 'Update Permintaan Sukses!');
             }
         } catch (Exception $e) {
             DB::rollback();
@@ -214,6 +223,7 @@ class PermintaanController extends Controller
     public function destroy($id)
     {
         $permintaan = Permintaan::find($id);
+        PermintaanDetail::where('id_permintaan',$id)->delete();
         $permintaan->delete();
         return $id;
     }

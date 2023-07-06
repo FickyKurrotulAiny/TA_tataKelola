@@ -76,34 +76,35 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
 
-    $request->validate([
-            'tanggal' => 'required',
-            'nama_peminjam' => 'required',
-            'jurusan' => 'required',
-            'petugas' => 'required',
-            'mengambil' => 'required',
-            'tanggal_kembali' => 'required',
-            'nama_kegiatan' => 'required',
-            'kelas' => 'required',
-            'program_studi' => 'required',
-            'keterangan' => 'required',
-        ],[
-            'tanggal.required' => 'Tanggal Wajib diisi!',
-            'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
-            'jurusan.required' => 'Jurusan Wajib diisi!',
-            'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
-            'mengambil.required' => 'Yang Mengambil Wajib diisi!',
-            'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
-            'nama_kegiatan' => 'Nama kegiatan Wajib diisi!',
-            'kelas' => 'Kelas Wajib diisi!',
-            'program_studi' => 'Program Studi Wajib diisi!',
-            'keterangan' => 'Keterangan Wajib diisi!',
-        ]);
-
         DB::beginTransaction();
         try {
+            $request->validate([
+                'tanggal' => 'required',
+                'nama_peminjam' => 'required',
+                'jurusan' => 'required',
+                'petugas' => 'required',
+                'mengambil' => 'required',
+                'tanggal_kembali' => 'required',
+                'nama_kegiatan' => 'required',
+                'kelas' => 'required',
+                'program_studi' => 'required',
+                'keterangan' => 'required',
+            ],[
+                'tanggal.required' => 'Tanggal Wajib diisi!',
+                'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
+                'jurusan.required' => 'Jurusan Wajib diisi!',
+                'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
+                'mengambil.required' => 'Yang Mengambil Wajib diisi!',
+                'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
+                'nama_kegiatan' => 'Nama kegiatan Wajib diisi!',
+                'kelas' => 'Kelas Wajib diisi!',
+                'program_studi' => 'Program Studi Wajib diisi!',
+                'keterangan' => 'Keterangan Wajib diisi!',
+            ]);
+
             $peminjaman = new Peminjaman();
             $peminjaman->nama_peminjam = $request->nama_peminjam;
+            $peminjaman->tanggal = Carbon::now();
             $peminjaman->jurusan = $request->jurusan;
             $peminjaman->petugas = $request->petugas;
             $peminjaman->mengambil = $request->mengambil;
@@ -119,16 +120,17 @@ class PeminjamanController extends Controller
                     $peminjaman_detail->id_peminjaman = $peminjaman->id;
                     $peminjaman_detail->id_barang = $barang->id;
                     $peminjaman_detail->jumlah = $request->qty[$key];
+
                     $peminjaman_detail->save();
+                }
+                DB::commit();
+                return redirect('peminjaman')->with('success', 'Tambah Peminjaman Sukses!');
             }
-            DB::commit();
-            return redirect('peminjaman')->with('success', 'Tambah Peminjaman Sukses!');
+        }catch (Exception $e) {
+            Db::rollback();
+            return redirect('peminjaman')->with('error', $e->getMessage());
         }
-    }catch (Exception $e) {
-        Db::rollback();
-        return redirect('peminjaman')->with('error', $e->getMessage());
     }
-}
 
     /**
      * Display the specified resource.
@@ -139,9 +141,9 @@ class PeminjamanController extends Controller
     public function show($id)
     {
         $peminjaman = Peminjaman::where('id',$id)->with('details.barang')->first();
-
+        $barangs = Inventaris::get();
         $data['navlink'] = 'peminjaman';
-        return view('peminjaman.show', $data, ['peminjaman' => $peminjaman]);
+        return view('peminjaman.show', $data, compact('peminjaman','barangs'));
     }
 
     /**
@@ -167,32 +169,33 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'tanggal' => 'required',
-            'nama_peminjam' => 'required',
-            'jurusan' => 'required',
-            'petugas' => 'required',
-            'mengambil' => 'required',
-            'tanggal_kembali' => 'required',
-            'nama_kegiatan' => 'required',
-            'kelas' => 'required',
-            'program_studi' => 'required',
-            'keterangan' => 'required',
-        ],[
-            'tanggal.required' => 'Tanggal Wajib diisi!',
-            'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
-            'jurusan.required' => 'Jurusan Wajib diisi!',
-            'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
-            'mengambil.required' => 'Yang Mengambil Wajib diisi!',
-            'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
-            'nama_kegiatan' => 'Nama kegiatan Wajib diisi!',
-            'kelas' => 'Kelas Wajib diisi!',
-            'program_studi' => 'Program Studi Wajib diisi!',
-            'keterangan' => 'Keterangan Wajib diisi!',
-        ]);
 
         DB::beginTransaction();
         try {
+            $request->validate([
+                'tanggal' => 'required',
+                'nama_peminjam' => 'required',
+                'jurusan' => 'required',
+                'petugas' => 'required',
+                'mengambil' => 'required',
+                'tanggal_kembali' => 'required',
+                'nama_kegiatan' => 'required',
+                'kelas' => 'required',
+                'program_studi' => 'required',
+                'keterangan' => 'required',
+            ],[
+                'tanggal.required' => 'Tanggal Wajib diisi!',
+                'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
+                'jurusan.required' => 'Jurusan Wajib diisi!',
+                'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
+                'mengambil.required' => 'Yang Mengambil Wajib diisi!',
+                'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
+                'nama_kegiatan' => 'Nama kegiatan Wajib diisi!',
+                'kelas' => 'Kelas Wajib diisi!',
+                'program_studi' => 'Program Studi Wajib diisi!',
+                'keterangan' => 'Keterangan Wajib diisi!',
+            ]);
+
             $peminjaman = Peminjaman::findOrFail($id);
             $peminjaman->nama_peminjam = $request->nama_peminjam;
             $peminjaman->jurusan = $request->jurusan;
@@ -203,14 +206,16 @@ class PeminjamanController extends Controller
             $peminjaman->kelas = $request->kelas;
             $peminjaman->program_studi = $request->program_studi;
             $peminjaman->keterangan = $request->keterangan;
+
             if($peminjaman->save()){
-                PeminjamanDetail::where('id_pemminjaman',$id)->delete();
+                PeminjamanDetail::where('id_peminjaman',$id)->delete();
                 foreach($request->kode_barang as $key=>$kode_barang){
                     $barang = Inventaris::where('kode_barang',$kode_barang)->first();
                     $peminjaman_detail = new PeminjamanDetail;
                     $peminjaman_detail->id_peminjaman = $peminjaman->id;
                     $peminjaman_detail->id_barang = $barang->id;
                     $peminjaman_detail->jumlah = $request->qty[$key];
+
                     $peminjaman_detail->save();
             }
             DB::commit();
@@ -218,6 +223,7 @@ class PeminjamanController extends Controller
         }
     }catch (Exception $e) {
         Db::rollback();
+        // return $e;
         return redirect('peminjaman')->with('error', $e->getMessage());
     }
 
@@ -232,6 +238,7 @@ class PeminjamanController extends Controller
     public function destroy($id)
     {
         $peminjaman = Peminjaman::find($id);
+        PeminjamanDetail::where('id_peminjaman',$id)->delete();
         $peminjaman->delete();
         return $id;
     }
