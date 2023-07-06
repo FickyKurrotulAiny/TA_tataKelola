@@ -16,13 +16,11 @@
                             @csrf
                             <!-- @method('PUT') -->
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Tanggal</label>
-                                <input type="date" name="tanggal" placeholder="Tanggal"
-                                    class="form-control @error('tanggal') is-invalid @enderror"
-                                    value="{{ old('tanggal') }}">
-                                @error('tanggal')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                <label class="form-label">
+                                    Tanggal Pinjam
+                                </label>
+                                <input type="text" name="tanggal" class="form-control" readonly
+                                    value="{{ date('d-m-Y') }}" placeholder="Choose date" />
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Dosen Peminjam</label>

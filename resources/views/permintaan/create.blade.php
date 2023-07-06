@@ -63,7 +63,7 @@
                                     <option value="" disabled selected>Silahkan pilih barang yang ingin di minta
                                     </option>
                                     @foreach ($barangs as $barang)
-                                        <option value="{{ $barang->nama_bahan }}"
+                                        <option value="{{ $barang->id }}"
                                             data-json="{{ base64_encode(json_encode($barang)) }}">
                                             {{ $barang->nama_barang }} -
                                             {{ $barang->merk }}</option>
@@ -110,8 +110,8 @@
             var jsonData = selectedOption.data('json');
             var decodedData = JSON.parse(atob(jsonData));
             var pre_qty = 0;
-
-            $(".nama-barang").each(function(i) {
+            console.log(decodedData)
+            $(".id-barang").each(function(i) {
                 if ($(this).val() == value) {
                     rowindex = i;
                     pre_qty = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val();
@@ -135,8 +135,8 @@
                     '<td><input type="number" class="form-control qty" name="qty[]" value="1" step="any" required/></td>';
                 cols +=
                     '<td><button type="button" class="ibtnDel btn btn-md btn-danger">Hapus</button></td>';
-                cols += '<input type="hidden" class="nama-barang" name="nama_bahan[]" value="' + decodedData
-                    .nama_bahan + '"/>';
+                cols += '<input type="hidden" class="id-barang" name="id_bahan[]" value="' + decodedData
+                    .id + '"/>';
 
                 newRow.append(cols);
                 $("table.order-list tbody").prepend(newRow);
