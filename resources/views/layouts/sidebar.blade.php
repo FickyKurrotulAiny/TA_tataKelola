@@ -67,7 +67,8 @@
                         Route::current()->getName() == 'user.create' ||
                         Route::current()->getName() == 'user.edit') class="active" @endif><a class="nav-link"
                         href="{{ route('user.index') }}"><i class="fas fa-user-plus"></i><span>User</span></a></li>
-                <li><a class="nav-link" href="#"><i class="fas fa-fire"></i> <span>Laporan</span></a></li>
+                <li><a class="nav-link" href="{{ route('laporan.index') }}"><i class="fas fa-fire"></i> <span>Laporan</span></a></li>
+
                 <li><a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span></a></li>
             </ul>

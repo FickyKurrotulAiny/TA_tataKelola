@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 
+
 date_default_timezone_set('Asia/Jakarta');
 Route::get('/login', [Controllers\LoginController::class, 'login'])->name('login');
 Route::post('/postlogin', [Controllers\LoginController::class, 'postlogin'])->name('postlogin');
@@ -41,4 +42,11 @@ Route::group(['middleware' => ['auth']], function() {
     //minta
     Route::resource('/minta', Controllers\MintaController::class);
     Route::get('getMinta', [Controllers\MintaController::class, 'getMinta'])->name('getMinta');
+
+    //laporan
+    Route::resource('/laporan', Controllers\LaporanController::class);
+    Route::get('opsi', [Controllers\LaporanController::class, 'opsi'])->name('opsi');
+
+    Route::get('/barang/search', [Controllers\DashboardController::class, 'search'])->name('search');
+
 });

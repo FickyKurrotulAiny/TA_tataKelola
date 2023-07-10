@@ -71,7 +71,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
                                 <div class="col-md-12 mt-3 mb-3">
                                     <table class="table order-list" id="table-list">
                                         <thead>

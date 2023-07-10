@@ -11,6 +11,7 @@ use App\Models\Persediaan;
 use App\Models\Minta;
 
 
+
 class DashboardController extends Controller
 {
     /**
@@ -38,4 +39,35 @@ class DashboardController extends Controller
             return view('dashboard.index', compact('data','inventaris','peminjaman','user','persediaan', 'minta'));
         }
     }
+
+    public function search(Request $request)
+    {
+        try{
+            $search = $request->search;
+            $inventaris = Inventaris::where('nama_barang', 'like', "%" . $search . "%")
+                        ->paginate(5);
+            $persediaans = Persediaan::where('nama_barang', 'like', "%" . $search . "%")
+                        ->paginate(5);
+            return view('dashboard.user', compact('inventaris', 'persediaans'))->with('i', ($request->input('page', 1) - 1) * 5);
+
+        }catch(\Exception $e){
+            dd($e);
+        }
+    }
+
+    public function cari(Request $request)
+    {
+        try{
+            $search = $request->search;
+            $inventaris = Inventaris::where('nama_barang', 'like', "%" . $search . "%")
+                        ->paginate(5);
+            $persediaans = Persediaan::where('nama_barang', 'like', "%" . $search . "%")
+                        ->paginate(5);
+            return view('dashboard.user', compact('inventaris', 'persediaans'))->with('i', ($request->input('page', 1) - 1) * 5);
+
+        }catch(\Exception $e){
+            dd($e);
+        }
+    }
 }
+

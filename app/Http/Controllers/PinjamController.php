@@ -215,7 +215,6 @@ class PinjamController extends Controller
                 PinjamDetail::where('id_pinjam',$id)->delete();
                 foreach($request->kode_barang as $key=>$kode_barang){
                     $barang = Inventaris::where('kode_barang',$kode_barang)->first();
-
                     $pinjam_detail = new PinjamDetail;
                     $pinjam_detail->id_pinjam = $pinjam->id;
                     $pinjam_detail->id_barang = $barang->id;

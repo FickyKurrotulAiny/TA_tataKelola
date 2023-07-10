@@ -5,8 +5,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-header">
-                        <h3>
-                            Dashboard Admin Pengelolaan BMN TI</h3>
+                        <h3>Data Terkini</h3>
                     </div>
                     <div class="card">
                     </div>

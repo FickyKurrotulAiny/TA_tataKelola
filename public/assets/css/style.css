@@ -1046,15 +1046,15 @@ select.form-control:not([size]):not([multiple]) {
 }
 .card.card-statistic-1 .card-icon,
 .card.card-statistic-2 .card-icon {
-    width: 100px; /* ukuran kotak icon*/
-    height: 90px; /* ukuran kebawa kotak icon*/
+    width: 80px; /* ukuran kotak icon*/
+    height: 70px; /* ukuran kebawa kotak icon*/
     margin: 30px; /* posisi/tata letak kotak icon*/
     border-radius: 0px; /* bentuk kotak didalam icon*/
     line-height: 94px;
     text-align: center;
     float: left;
     margin-right: 40px;
-} /* jarak kotak icon dan tulisan*/
+}
 .card.card-statistic-1 .card-icon .ion,
 .card.card-statistic-1 .card-icon .fas,
 .card.card-statistic-1 .card-icon .far,
@@ -1065,7 +1065,7 @@ select.form-control:not([size]):not([multiple]) {
 .card.card-statistic-2 .card-icon .far,
 .card.card-statistic-2 .card-icon .fab,
 .card.card-statistic-2 .card-icon .fal {
-    font-size: 35px; /* ukuranicon*/
+    font-size: 25px; /* ukuranicon*/
     color: #fff;
 } /* warna icon*/
 .card.card-statistic-1 .card-icon {
@@ -1081,7 +1081,7 @@ select.form-control:not([size]):not([multiple]) {
 .card.card-statistic-1 .card-header,
 .card.card-statistic-2 .card-header {
     padding-bottom: 7; /* spasi antara tulisan atas sma bawa*/
-    padding-top: 50px;
+    padding-top: 40px;
 } /* posisi tulisan atas bawaa*/
 .card.card-statistic-2 .card-body {
     padding-top: 20px;
@@ -1104,7 +1104,7 @@ select.form-control:not([size]):not([multiple]) {
     margin-bottom: 0;
 }
 .card.card-statistic-1 .card-body {
-    font-size: 30px;
+    font-size: 25px;
 } /* ukuran angka*/
 .card.card-statistic-2 .card-chart {
     padding-top: 20px;

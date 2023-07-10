@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Peminjaman Barang/Alat</title>
+    <title>Form Permintaan Barang/Alat</title>
 </head>
 <style>
     .withBorder {
@@ -29,7 +29,7 @@
 <body>
     <table style="width:100%" class="withBorder">
         <tr>
-            <th colspan="2">FORM PERMINTAAN BAHAN PRAKTIKUM<br>
+            <th colspan="2">LAPORAN PERRMINTAAN BARANG<br>
                 TEKNIK INFORMATIKA
             </th>
         </tr>
@@ -52,24 +52,30 @@
         </table>
         <br>
         <table style="width:100%" class="withBorder">
-            <tr align="center">
+            <thead>
                 <th width="30">No</th>
-                <th width="100%">Nama Bahan</th>
-                <th width="100%">Jumlah</th>
-                <th width="100%">Satuan</th>
-                <th width="100%">Keterangan</th>
-            </tr>
+                <th >Nama Bahan</th>
+                <th >Jumlah</th>
+                <th >Satuan</th>
+                <th >Merk</th>
+                <th >Keterangan</th>
+            </thead>
+            <tbody>
+                @php
+                    $no = 1;
+                @endphp
+                @foreach ($permintaan->details as $details)
+                    <tr class="gr">
+                        <th class="gr" width="30">{{ $no++ }}</th>
+                        <th>{{ $details->barang->nama_barang }}</th>
+                        <th>{{ $details->jumlah }}</th>
+                        <th>{{ $details->barang->satuan }}</th>
+                        <th>{{ $details->barang->merk }}</th>
+                        <th>{{ $permintaan->keterangan }}</th>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
-        <table style="width:100%" class="withBorder">
-            <tr align="center">
-                <th width="30">1</th>
-                <th width="100%">{{ $permintaan->nama_bahan }}</th>
-                <th width="100%">{{ $permintaan->jumlah }}</th>
-                <th width="100%">{{ $permintaan->satuan }}</th>
-                <th width="100%">{{ $permintaan->keterangan }}</th>
-            </tr>
-        </table>
-
         <br>
         <table style="width:100%" border="0">
             <tr>

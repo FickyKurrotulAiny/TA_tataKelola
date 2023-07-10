@@ -149,7 +149,8 @@ class PermintaanController extends Controller
      */
     public function edit($id)
     {
-        $permintaan = Permintaan::findOrFail($id);
+        $permintaan = Permintaan::where('id', $id)->with('details.barang')->first();
+        // $permintaan = Permintaan::findOrFail($id);
         $data['navlink'] = 'permintaan';
         $barangs = Persediaan::get();
         return view('permintaan.edit', $data, compact('permintaan','barangs'));
@@ -165,10 +166,7 @@ class PermintaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        DB::beginTransaction();
-        try {
-            $request->validate([
+        $request->validate([
                 'tanggal' => 'required',
                 'nama_dosen' => 'required',
                 'mata_kuliah' => 'required',
@@ -182,6 +180,9 @@ class PermintaanController extends Controller
                 'keterangan.required' => 'Keterangan Wajib diisii!',
             ]);
 
+        DB::beginTransaction();
+        try {
+
             $permintaan = Permintaan::findOrFail($id);
 
             $permintaan->tanggal = Carbon::now();
@@ -190,12 +191,9 @@ class PermintaanController extends Controller
             $permintaan->kelas = $request->kelas;
             $permintaan->keterangan = $request->keterangan;
             $permintaan->user_id = Auth::user()->id;
-
             if($permintaan->save()){
                 PermintaanDetail::where('id_permintaan',$id)->delete();
-
                 foreach($request->id_barang as $key=>$id_barang){
-
                     $barang = Persediaan::where('id', $id_barang)->first();
                     $permintaan_detail = new PermintaanDetail;
                     $permintaan_detail->id_permintaan = $permintaan->id;

@@ -12,7 +12,7 @@
                         <a href="{{route('permintaan.create')}}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;&nbsp;Tambah</a>
                     </div>
                     <div class="card-body">
-                        <!-- <div class="table-responsive"> -->
+                        {{-- <!-- <div class="table-responsive"> --> --}}
                             <table class="table table-bordered table-md" id="permintaan">
                                 <thead>
                                     <tr>
