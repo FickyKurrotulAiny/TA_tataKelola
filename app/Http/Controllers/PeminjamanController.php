@@ -10,6 +10,7 @@ use App\Models\Inventaris;
 use App\Models\PeminjamanDetail;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class PeminjamanController extends Controller
 {
@@ -18,38 +19,44 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $data['navlink'] = 'peminjaman';
         return view('peminjaman.index', $data, compact('request'));
     }
 
 
-    public function getpeminjaman(Request $request){
+    public function getpeminjaman(Request $request)
+    {
         if ($request->ajax()) {
-            $data = Peminjaman::select('*');
+            if (Auth::user()->level === 'user') {
+                $data = Peminjaman::where('user_id', Auth::user()->id);
+            } else {
+                $data = Peminjaman::query();
+            }
             return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('tanggal', function($value){
-                        $tanggal = Carbon::parse($value->tanggal)->format('d-m-Y');
-                        return $tanggal;
-                    })
-                    ->addColumn('tanggal_kembali', function($value){
-                        $tanggal_kembali = Carbon::parse($value->tanggal_kembali)->format('d-m-Y');
-                        return $tanggal_kembali;
-                    })
-                    ->addColumn('action', function($value){
+                ->addIndexColumn()
+                ->addColumn('tanggal', function ($value) {
+                    $tanggal = Carbon::parse($value->tanggal)->format('d-m-Y');
+                    return $tanggal;
+                })
+                ->addColumn('tanggal_kembali', function ($value) {
+                    $tanggal_kembali = Carbon::parse($value->tanggal_kembali)->format('d-m-Y');
+                    return $tanggal_kembali;
+                })
+                ->addColumn('action', function ($value) {
                     $btn = '<div class="d-flex flex-row bd-highlight mb-3">
-                        <a href="'.route('peminjaman.show', $value->id).'" class="btn btn-warning mr-3">Lihat</i></a>
+                        <a href="' . route('peminjaman.show', $value->id) . '" class="btn btn-warning mr-3">Lihat</i></a>
 
-                        <a class="btn btn-info mr-3" href="'.route('peminjaman.edit', $value->id).'">Edit</i></a>
+                        <a class="btn btn-info mr-3" href="' . route('peminjaman.edit', $value->id) . '">Edit</i></a>
 
-                        <button class="btn btn-danger delete" id="'.$value->id.'" nama="'.$value->nama.'" type="submit"
-                            onclick="deletePeminjaman('.$value->id.')">Hapus</i></button>
+                        <button class="btn btn-danger delete" id="' . $value->id . '" nama="' . $value->nama . '" type="submit"
+                            onclick="deletePeminjaman(' . $value->id . ')">Hapus</i></button>
                     </div>';
                     return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -64,7 +71,7 @@ class PeminjamanController extends Controller
     {
         $data['navlink'] = 'peminjaman';
         $barangs = Inventaris::get();
-        return view('peminjaman.create' ,compact('barangs') , $data);
+        return view('peminjaman.create', compact('barangs'), $data);
     }
 
     /**
@@ -89,7 +96,7 @@ class PeminjamanController extends Controller
                 'kelas' => 'required',
                 'program_studi' => 'required',
                 'keterangan' => 'required',
-            ],[
+            ], [
                 'tanggal.required' => 'Tanggal Wajib diisi!',
                 'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
                 'jurusan.required' => 'Jurusan Wajib diisi!',
@@ -113,21 +120,29 @@ class PeminjamanController extends Controller
             $peminjaman->kelas = $request->kelas;
             $peminjaman->program_studi = $request->program_studi;
             $peminjaman->keterangan = $request->keterangan;
-            if($peminjaman->save()){
-                foreach($request->kode_barang as $key=>$kode_barang){
-                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
+            if ($peminjaman->save()) {
+                foreach ($request->kode_barang as $key => $kode_barang) {
+                    $barang = Inventaris::where('kode_barang', $kode_barang)->first();
+                    if ((int)$barang->jumlah < (int)$request->qty[$key])
+                        return redirect('peminjaman')->with('error', 'Jumlah pinjam melebihi stock tersedia!!');
+
                     $peminjaman_detail = new PeminjamanDetail;
                     $peminjaman_detail->id_peminjaman = $peminjaman->id;
                     $peminjaman_detail->id_barang = $barang->id;
                     $peminjaman_detail->jumlah = $request->qty[$key];
+
+                    //update stock barang inventaris
+                    $barang->jumlah = $barang->jumlah - $request->qty[$key];
+                    $barang->save();
 
                     $peminjaman_detail->save();
                 }
                 DB::commit();
                 return redirect('peminjaman')->with('success', 'Tambah Peminjaman Sukses!');
             }
-        }catch (Exception $e) {
-            Db::rollback();
+        } catch (Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
             return redirect('peminjaman')->with('error', $e->getMessage());
         }
     }
@@ -140,10 +155,10 @@ class PeminjamanController extends Controller
      */
     public function show($id)
     {
-        $peminjaman = Peminjaman::where('id',$id)->with('details.barang')->first();
+        $peminjaman = Peminjaman::where('id', $id)->with('details.barang')->first();
         $barangs = Inventaris::get();
         $data['navlink'] = 'peminjaman';
-        return view('peminjaman.show', $data, compact('peminjaman','barangs'));
+        return view('peminjaman.show', $data, compact('peminjaman', 'barangs'));
     }
 
     /**
@@ -154,7 +169,7 @@ class PeminjamanController extends Controller
      */
     public function edit($id)
     {
-        $peminjaman = Peminjaman::where('id',$id)->with('details.barang')->first();
+        $peminjaman = Peminjaman::where('id', $id)->with('details.barang')->first();
         $barangs = Inventaris::get();
         $data['navlink'] = 'peminjaman';
         return view('peminjaman.edit', $data, compact('peminjaman', 'barangs'));
@@ -183,7 +198,7 @@ class PeminjamanController extends Controller
                 'kelas' => 'required',
                 'program_studi' => 'required',
                 'keterangan' => 'required',
-            ],[
+            ], [
                 'tanggal.required' => 'Tanggal Wajib diisi!',
                 'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
                 'jurusan.required' => 'Jurusan Wajib diisi!',
@@ -207,26 +222,40 @@ class PeminjamanController extends Controller
             $peminjaman->program_studi = $request->program_studi;
             $peminjaman->keterangan = $request->keterangan;
 
-            if($peminjaman->save()){
-                PeminjamanDetail::where('id_peminjaman',$id)->delete();
-                foreach($request->kode_barang as $key=>$kode_barang){
-                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
-                    $peminjaman_detail = new PeminjamanDetail;
-                    $peminjaman_detail->id_peminjaman = $peminjaman->id;
-                    $peminjaman_detail->id_barang = $barang->id;
+            if ($peminjaman->save()) {
+                $delete_id = [];
+                foreach ($request->kode_barang as $key => $kode_barang) {
+                    $barang = Inventaris::where('kode_barang', $kode_barang)->first();
+
+                    $delete_id[] = $barang->id;
+                    $peminjaman_detail = PeminjamanDetail::where([['id_peminjaman',$peminjaman->id],['id_barang',$barang->id]])->first();
+
+                    if ((int)$request->qty[$key] > (int)$peminjaman_detail->jumlah) {
+                        $selisih = $request->qty[$key] - $peminjaman_detail->jumlah;
+                        if ((int)$barang->jumlah < (int)$selisih)
+                            return redirect('peminjaman')->with('error', 'Jumlah pinjam melebihi stock tersedia!!');
+
+                        $barang->jumlah = $barang->jumlah - $selisih;
+                    } else {
+                        $selisih = $peminjaman_detail->jumlah - $request->qty[$key];
+                        $barang->jumlah = $barang->jumlah + $selisih;
+                    }
+
                     $peminjaman_detail->jumlah = $request->qty[$key];
-
+                    $barang->save();
                     $peminjaman_detail->save();
+                }
+                PeminjamanDetail::where('id_peminjaman',$id)
+                ->whereNotIn('id_barang',$delete_id)
+                ->forceDelete();
+                DB::commit();
+                return redirect('peminjaman')->with('success', 'Edit Peminjaman Sukses!');
             }
-            DB::commit();
-            return redirect('peminjaman')->with('success', 'Edit Peminjaman Sukses!');
+        } catch (Exception $e) {
+            Db::rollback();
+            // return $e;
+            return redirect('peminjaman')->with('error', $e->getMessage());
         }
-    }catch (Exception $e) {
-        Db::rollback();
-        // return $e;
-        return redirect('peminjaman')->with('error', $e->getMessage());
-    }
-
     }
 
     /**
@@ -238,7 +267,17 @@ class PeminjamanController extends Controller
     public function destroy($id)
     {
         $peminjaman = Peminjaman::find($id);
-        PeminjamanDetail::where('id_peminjaman',$id)->delete();
+        $peminjamanDetails = PeminjamanDetail::where('id_peminjaman', $id)->get();
+        foreach($peminjamanDetails as $peminjamanDetail){
+            // Update stok pada tabel barang
+            $barang = Inventaris::where('id', $peminjamanDetail->id_barang)->first();
+            $barang->jumlah = $barang->jumlah + $peminjamanDetail->jumlah;
+            $barang->save();
+        }
+
+        // Hapus semua peminjaman detail terkait
+        PeminjamanDetail::where('id_peminjaman', $id)->delete();
+        // Hapus peminjaman
         $peminjaman->delete();
         return $id;
     }

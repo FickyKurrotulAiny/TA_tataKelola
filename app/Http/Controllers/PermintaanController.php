@@ -37,7 +37,11 @@ class PermintaanController extends Controller
 
     public function getpermintaan(Request $request){
         if ($request->ajax()) {
-            $data = Permintaan::where('user_id',Auth::user()->id);
+            if (Auth::user()->level === 'user') {
+                $data = Permintaan::where('user_id', Auth::user()->id);
+            } else {
+                $data = Permintaan::query();
+            }
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('tanggal', function($value){
@@ -108,13 +112,18 @@ class PermintaanController extends Controller
             if($permintaan->save()){
                 foreach($request->id_bahan as $key=>$id_bahan){
                     $barang = Persediaan::where('id', $id_bahan)->first();
+                    if ((int)$barang->jumlah < (int)$request->qty[$key])
+                        return redirect('permintaan')->with('error', 'Jumlah permintaan melebihi stock tersedia!!');
+
                     $permintaan_detail = new PermintaanDetail;
                     $permintaan_detail->id_permintaan = $permintaan->id;
                     $permintaan_detail->id_barang = $barang->id;
                     $permintaan_detail->jumlah = $request->qty[$key];
                     $permintaan_detail->save();
 
-                    // return $permintaan_detail;
+                    //update stock barang inventaris
+                    $barang->jumlah = $barang->jumlah - $request->qty[$key];
+                    $barang->save();
                 }
                 DB::commit();
                 return redirect('permintaan')->with('success', 'Tambah Permintaan Sukses!');
@@ -194,17 +203,33 @@ class PermintaanController extends Controller
             if($permintaan->save()){
                 PermintaanDetail::where('id_permintaan',$id)->delete();
 
+                $delete_id = [];
                 foreach($request->id_barang as $key=>$id_barang){
 
                     $barang = Persediaan::where('id', $id_barang)->first();
-                    $permintaan_detail = new PermintaanDetail;
-                    $permintaan_detail->id_permintaan = $permintaan->id;
-                    $permintaan_detail->id_barang = $barang->id;
+
+                    $delete_id[] = $barang->id;
+                    $permintaan_detail = PermintaanDetail::where([['id_permintaan',$permintaan->id],['id_barang',$barang->id]])->first();
+
+                    if ((int)$request->qty[$key] > (int)$permintaan_detail->jumlah) {
+                        $selisih = $request->qty[$key] - $permintaan_detail->jumlah;
+                        if ((int)$barang->jumlah < (int)$selisih)
+                            return redirect('permintaan')->with('error', 'Jumlah permintaan melebihi stock tersedia!!');
+
+                        $barang->jumlah = $barang->jumlah - $selisih;
+                    } else {
+                        $selisih = $permintaan_detail->jumlah - $request->qty[$key];
+                        $barang->jumlah = $barang->jumlah + $selisih;
+                    }
+
                     $permintaan_detail->jumlah = $request->qty[$key];
                     $permintaan_detail->save();
 
                     // return $permintaan_detail;
                 }
+                PermintaanDetail::where('id_permintaan',$id)
+                ->whereNotIn('id_barang',$delete_id)
+                ->forceDelete();
                 DB::commit();
                 return redirect('permintaan')->with('success', 'Update Permintaan Sukses!');
             }
@@ -223,7 +248,17 @@ class PermintaanController extends Controller
     public function destroy($id)
     {
         $permintaan = Permintaan::find($id);
-        PermintaanDetail::where('id_permintaan',$id)->delete();
+        $permintaanDetails = PermintaanDetail::where('id_permintaan', $id)->get();
+        foreach($permintaanDetails as $permintaanDetail){
+            // Update stok pada tabel barang
+            $barang = Persediaan::where('id', $permintaanDetail->id_barang)->first();
+            $barang->jumlah = $barang->jumlah + $permintaanDetail->jumlah;
+            $barang->save();
+        }
+
+        // Hapus semua permintaan detail terkait
+        PermintaanDetail::where('id_permintaan', $id)->delete();
+        // Hapus permintaan
         $permintaan->delete();
         return $id;
     }
