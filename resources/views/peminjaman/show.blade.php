@@ -11,59 +11,85 @@
                     <div class="card">
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-md">
-                                <tr>
-                                    <th width="210px">Tanggal</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ Carbon\Carbon::parse($peminjaman->tanggal)->format('d-m-Y') }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Nama Dosen Peminjam</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->nama_peminjam }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Kelas </th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->kelas }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Jurusan</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->jurusan }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Program Studi</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->program_studi }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Nama Kegiatan</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->nama_kegiatan }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Petugas Yang Menyerahkan</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->petugas }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Yang Mengambil</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $peminjaman->mengambil }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Tanggal Kembali</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('d-m-Y') }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Keterangan</th>
-                                    <th width="30px">:</th>
-                                    <th>{!! $peminjaman->keterangan !!}</th>
-                                </tr>
-                            </table>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-md">
+                                        <tr>
+                                            <th width="210px">Tanggal Pinjam</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ Carbon\Carbon::parse($peminjaman->tanggal)->format('d-m-Y') }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Tanggal Kembali</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('d-m-Y') }}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Nama Dosen Peminjam</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->nama_peminjam }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Kelas </th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->kelas }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Jurusan</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->jurusan }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Program Studi</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->program_studi }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Nama Kegiatan</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->nama_kegiatan }}</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-md">
+                                        <tr>
+                                            <th width="200px">Petugas Yang Menyerahkan</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->petugas }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Yang Mengambil</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->mengambil }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Yang Mengembalikan</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->mengembalikan }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Petugas Yang Menerima</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->menerima }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Keadaaan Barang</th>
+                                            <th width="30px">:</th>
+                                            <th>{{ $peminjaman->keadaan_barang }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="200px">Keterangan</th>
+                                            <th width="30px">:</th>
+                                            <th>{!! $peminjaman->keterangan !!}</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                             <table class="table table-bordered table-md">
                                 <thead>
                                     <th>No.</th>
@@ -89,11 +115,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <br>
-                            <tr>
-                                <th><a href="{{ route('peminjaman.index') }}" class="btn btn-primary">Kembali</a></th>
-                            </tr>
+                            <br><br>
                         </div>
+                        <br>
+                        <tr>
+                            <th><a href="{{ route('peminjaman.index') }}" class="btn btn-primary">Kembali</a></th>
+                        </tr>
                     </div>
                 </div>
             </div>

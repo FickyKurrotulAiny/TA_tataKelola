@@ -16,9 +16,14 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">tanggal</label>
-                                <input type="date" name="tanggal" readonly placeholder="tanggal"
+                                <label for="" class="form-label">Tanggal Pinjam</label>
+                                <input type="date" name="tanggal" placeholder="Tanggal"
                                     class="form-control"value="{{ old('tanggal', $peminjaman->tanggal) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Tanggal Kembali</label>
+                                <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
+                                    class="form-control"value="{{ old('tanggal_kembali', $peminjaman->tanggal_kembali) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Dosen Peminjam</label>
@@ -56,9 +61,19 @@
                                     class="form-control"value="{{ old('mengambil', $peminjaman->mengambil) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Tanggal Kembali</label>
-                                <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
-                                    class="form-control"value="{{ old('tanggal_kembali', $peminjaman->tanggal_kembali) }}">
+                                <label for="" class="form-label">Yang Mengembalikan</label>
+                                <input type="date" name="mengembalikan" placeholder="Yang Mengembalikan"
+                                    class="form-control"value="{{ old('mengembalikan', $peminjaman->mengembalikan) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Petugas Yang Menerima</label>
+                                <input type="date" name="menerima" placeholder="Petugas Yang Menerima"
+                                    class="form-control"value="{{ old('menerima', $peminjaman->menerima) }}">
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Keadaan Barang</label>
+                                <input type="date" name="keadaan_barang" placeholder="Keadaan Barang"
+                                    class="form-control"value="{{ old('keadaan_barang', $peminjaman->keadaan_barang) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-12">
                                 <label for="keterangan" class="form-label">Keterangan</label>

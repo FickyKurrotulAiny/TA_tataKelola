@@ -12,7 +12,7 @@ use App\Models\Minta;
 
 
 
-class DashboardController extends Controller
+class Dashboard1Controller extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,9 +25,8 @@ class DashboardController extends Controller
     }
     public function index(){
         if(Auth::user()->level === 'user'){
-            $taris = Inventaris::where('kondisi_baru')->get();
-            $inventaris = Inventaris::get();
-            return view('dashboard.user', compact('inventaris', 'taris'));
+            $persediaans = Persediaan::get();
+            return view('dashboard.user2', compact('persediaans'));
         }else{
             $data['navlink'] = 'dashboard';
             $inventaris = Inventaris::count();
@@ -43,9 +42,9 @@ class DashboardController extends Controller
     {
         try{
             $search = $request->search;
-            $inventaris = Inventaris::where('nama_barang', 'like', "%" . $search . "%")
+            $persediaans = Persediaan::where('nama_barang', 'like', "%" . $search . "%")
                         ->paginate(5);
-            return view('dashboard.user', compact('inventaris'))->with('i', ($request->input('page', 1) - 1) * 5);
+            return view('dashboard.user2', compact('persediaans'))->with('i', ($request->input('page', 1) - 1) * 5);
 
         }catch(\Exception $e){
             dd($e);

@@ -16,11 +16,22 @@
                             @csrf
                             <!-- @method('PUT') -->
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label class="form-label">
-                                    Tanggal Pinjam
-                                </label>
-                                <input type="text" name="tanggal" class="form-control" readonly
-                                    value="{{ date('d-m-Y') }}" placeholder="Choose date" />
+                                <label for="" class="form-label">Tanggal Pinjam</label>
+                                <input type="date" name="tanggal" placeholder="Tanggal"
+                                    class="form-control @error('tanggal') is-invalid @enderror"
+                                    value="{{ old('tanggal') }}">
+                                @error('tanggal')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Tanggal Kembali</label>
+                                <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
+                                    class="form-control @error('tanggal_kembali') is-invalid @enderror"
+                                    value="{{ old('tanggal_kembali') }}">
+                                @error('tanggal_kembali')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Dosen Peminjam</label>
@@ -85,11 +96,29 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Tanggal Kembali</label>
-                                <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
-                                    class="form-control @error('tanggal_kembali') is-invalid @enderror"
-                                    value="{{ old('tanggal_kembali') }}">
-                                @error('tanggal_kembali')
+                                <label for="" class="form-label">Yang Mengembalikan</label>
+                                <input type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
+                                    class="form-control @error('mengembalikan') is-invalid @enderror"
+                                    value="{{ old('mengembalikan') }}">
+                                @error('mengembalikan')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Petigas Yang Menerima</label>
+                                <input type="text" name="menerima" placeholder="Petigas Yang Menerima"
+                                    class="form-control @error('menerima') is-invalid @enderror"
+                                    value="{{ old('menerima') }}">
+                                @error('menerima')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Keadaan Barang</label>
+                                <input type="text" name="keadaan_barang" placeholder="Keadaan Barang"
+                                    class="form-control @error('keadaan_barang') is-invalid @enderror"
+                                    value="{{ old('keadaan_barang') }}">
+                                @error('keadaan_barang')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

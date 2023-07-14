@@ -4,7 +4,7 @@
         <div class="section-header">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>INFORMASI DATA BARANG INVENTARIS YANG TERSEDIA</h1>
+                    <h1>INFORMASI DATA BARANG PERSEDIAAN YANG TERSEDIA</h1>
                     <div class="card-header-action">
                         <form action="{{ route('search') }}" method="get">
                             @method('get')
@@ -19,25 +19,26 @@
         </div>
         <div class="section-body">
             <div class="row">
-                @foreach ($inventaris as $invent)
+                @foreach ($persediaans as $persediaan)
                     <div class="col-12 col-sm-6 col-md-10 col-lg-3">
                         <article class="article article-style-b">
                             <div class="article-details">
                                 <div class="article-title">
                                     <h2>
                                         <a href="javascript:void(0)">
-                                            {{ $invent->nama_barang }} - {{ $invent->merk }}
-                                            ({{ $invent->tahun_peroleh }})
+                                            {{ $persediaan->nama_barang }} - {{ $persediaan->merk }}
+                                            ({{ $persediaan->tahun_peroleh }})
                                         </a>
                                     </h2>
                                     <center>
-                                    <img src="{{ url('imageinventaris/' . $invent->image) }}" width="200px" title="" height="200px">
+                                        <img src="{{ url('imagepersediaan/' . $persediaan->image) }}" width="200px"
+                                            height="200px" title="">
                                     </center>
                                 </div>
                                 <div class="article-cta d-flex" style="justify-content: center">
                                     <button class="btn btn-primary btn-details"
-                                        data-title="{{ $invent->nama_barang }} - {{ $invent->merk }} ({{ $invent->tahun_peroleh }})"
-                                        data-details={{ base64_encode(json_encode($invent, true)) }}>
+                                        data-title="{{ $persediaan->nama_barang }} - {{ $persediaan->merk }} ({{ $persediaan->tahun_peroleh }})"
+                                        data-details={{ base64_encode(json_encode($persediaan, true)) }}>
                                         Details
                                     </button>
                                 </div>
@@ -79,7 +80,7 @@
 
             cols += '<td width="45%">Stock</td>';
             cols += '<td>:</td>';
-            cols += '<td>' + details.kondisi_baru + '</td>';
+            cols += '<td>' + details.jumlah_barang + '</td>';
 
             newRow.append(cols);
             $("#modal-details table tbody").prepend(newRow);

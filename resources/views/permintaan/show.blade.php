@@ -44,6 +44,7 @@
                                     <th>No.</th>
                                     <th>Nama Barang</th>
                                     <th>Merk</th>
+                                    <th>Satuan</th>
                                     <th>Jumlah</th>
                                 </thead>
                                 <tbody>
@@ -55,6 +56,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $details->barang->nama_barang }}</td>
                                             <td>{{ $details->barang->merk }}</td>
+                                            <td>{{ $details->barang->satuan }}</td>
                                             <td>{{ $details->jumlah }}</td>
                                         </tr>
                                     @endforeach

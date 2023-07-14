@@ -105,6 +105,7 @@
                                             <tr>
                                                 <th>Kode Barang</th>
                                                 <th>Nama Barang</th>
+                                                <th>Merk</th>
                                                 <th>Tahun Peroleh</th>
                                                 <th>Jumlah Barang</th>
                                                 <th></th>
@@ -115,6 +116,7 @@
                                                 <tr>
                                                     <td>{{ $details->barang->kode_barang }}</td>
                                                     <td>{{ $details->barang->nama_barang }}</td>
+                                                    <td>{{ $details->barang->merk }}</td>
                                                     <td>{{ $details->barang->tahun_peroleh }}</td>
                                                     <td>
                                                         <input type="number" class="form-control qty" name="qty[]"

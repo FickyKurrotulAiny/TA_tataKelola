@@ -59,6 +59,7 @@
                                         <th>No.</th>
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
+                                        <th>Merk</th>
                                         <th>Tahun Peroleh</th>
                                         <th>Jumlah</th>
                                     </thead>
@@ -71,6 +72,7 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $details->barang->kode_barang }}</td>
                                                 <td>{{ $details->barang->nama_barang }}</td>
+                                                <td>{{ $details->barang->merk }}</td>
                                                 <td>{{ $details->barang->tahun_peroleh }}</td>
                                                 <td>{{ $details->jumlah }}</td>
                                             </tr>

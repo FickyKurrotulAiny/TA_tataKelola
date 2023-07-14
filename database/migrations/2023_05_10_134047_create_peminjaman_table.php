@@ -28,6 +28,9 @@ class CreatePeminjamanTable extends Migration
             $table->string('kelas');
             $table->string('program_studi');
             $table->string('keterangan');
+            $table->string('mengembalikan');
+            $table->string('menerima');
+            $table->string('keadaan_barang');
             $table->softDeletes();
             $table->timestamps();
         });

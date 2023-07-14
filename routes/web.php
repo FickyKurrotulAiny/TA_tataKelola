@@ -11,11 +11,13 @@ Route::get('/logout', [Controllers\LoginController::class, 'logout'])->name('log
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', [Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dasboard1', [Controllers\Dashboard1Controller::class, 'index'])->name('dashboard1');
     Route::resource('/user', Controllers\UserController::class);
     Route::get('getUser', [Controllers\UserController::class, 'getUser'])->name('getUser');
 
     //dasboard
     Route::get('getDashboard', [Controllers\DashboardController::class, 'getDashboard'])->name('getDashboard');
+    Route::get('getDashboard1', [Controllers\Dashboard1Controller::class, 'getDashboard1'])->name('getDashboard1');
 
     //peminjaman
     Route::resource('/peminjaman', Controllers\PeminjamanController::class);
@@ -48,5 +50,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('opsi', [Controllers\LaporanController::class, 'opsi'])->name('opsi');
 
     Route::get('/barang/search', [Controllers\DashboardController::class, 'search'])->name('search');
+    Route::get('/barang/search', [Controllers\Dashboard1Controller::class, 'search'])->name('search');
 
 });

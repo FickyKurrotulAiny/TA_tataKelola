@@ -26,6 +26,9 @@ class Peminjaman extends Model
         'kelas',
         'program_studi',
         'keterangan',
+        'mengembalikan',
+        'menerima',
+        'keadaan_barang',
     ];
 
     protected $hidden = [];

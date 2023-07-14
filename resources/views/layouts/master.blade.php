@@ -49,15 +49,14 @@
             <div class="main-content">
                 @yield('content')
             </div>
-            {{-- <footer class="main-footer">
+            <footer class="main-footer">
                 <div class="footer-left">
                     Aplikasi Tata Kelola Barang Milik Negara di Jurusan Teknik Informatika Politeknik Negeri Indramayu
-                    &copy; 2023 <div class="bullet"></div> Design By <a href="https://nauval.in/">Ficky Kurrotul
-                        Ainy</a>
+                    &copy; 2023
                 </div>
                 <div class="footer-right">
                 </div>
-            </footer> --}}
+            </footer>
         </div>
     </div>
 

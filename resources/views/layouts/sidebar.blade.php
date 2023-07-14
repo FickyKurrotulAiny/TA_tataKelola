@@ -67,15 +67,19 @@
                         Route::current()->getName() == 'user.create' ||
                         Route::current()->getName() == 'user.edit') class="active" @endif><a class="nav-link"
                         href="{{ route('user.index') }}"><i class="fas fa-user-plus"></i><span>User</span></a></li>
-                <li><a class="nav-link" href="{{ route('laporan.index') }}"><i class="fas fa-fire"></i> <span>Laporan</span></a></li>
-
+                <li @if (Route::current()->getName() == 'laporan.index') class="active" @endif
+                ><a class="nav-link" href="{{ route('laporan.index') }}"><i class="fas fa-fire"></i> <span>Laporan</span></a></li>
                 <li><a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span></a></li>
             </ul>
         @else (Auth::user()->level == 'user')
             <ul class="sidebar-menu">
                 <li class="{{ Request::is('/') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                    <a href="{{ route('dashboard') }}"><i
+                            class="fas fa-dolly-flatbed"></i><span>Barang Inventaris</span></a>
+                </li>
+                <li @if (Route::current()->getName() == 'dashboard1') class="active" @endif>
+                    <a href="{{ route('dashboard1') }}"><i class="fas fa-boxes"></i><span>Barang Persediaan</span></a>
                 </li>
                 <li @if (Route::current()->getName() == 'pinjam.index' ||
                         Route::current()->getName() == 'pinjam.show' ||

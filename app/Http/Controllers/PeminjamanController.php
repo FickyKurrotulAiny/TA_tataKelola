@@ -89,6 +89,9 @@ class PeminjamanController extends Controller
                 'kelas' => 'required',
                 'program_studi' => 'required',
                 'keterangan' => 'required',
+                'mengembalikan' => 'required',
+                'menerima' => 'required',
+                'keadaan_barang' => 'required',
             ],[
                 'tanggal.required' => 'Tanggal Wajib diisi!',
                 'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
@@ -100,6 +103,9 @@ class PeminjamanController extends Controller
                 'kelas' => 'Kelas Wajib diisi!',
                 'program_studi' => 'Program Studi Wajib diisi!',
                 'keterangan' => 'Keterangan Wajib diisi!',
+                'mengembalikan' => 'Yang Mengembalikan Wajib diisi!',
+                'menerima' => 'Petugas Yang Menerima Wajib diisi!',
+                'keadaan_barang' => 'Keadaan Barang Wajib diisi!',
             ]);
 
             $peminjaman = new Peminjaman();
@@ -113,6 +119,9 @@ class PeminjamanController extends Controller
             $peminjaman->kelas = $request->kelas;
             $peminjaman->program_studi = $request->program_studi;
             $peminjaman->keterangan = $request->keterangan;
+            $peminjaman->mengembalikan = $request->mengembalikan;
+            $peminjaman->menerima = $request->menerima;
+            $peminjaman->keadaan_barang = $request->keadaan_barang;
             if($peminjaman->save()){
                 foreach($request->kode_barang as $key=>$kode_barang){
                     $barang = Inventaris::where('kode_barang',$kode_barang)->first();
@@ -183,6 +192,9 @@ class PeminjamanController extends Controller
                 'kelas' => 'required',
                 'program_studi' => 'required',
                 'keterangan' => 'required',
+                'mengembalikan' => 'required',
+                'menerima' => 'required',
+                'keadaan_barang' => 'required',
             ],[
                 'tanggal.required' => 'Tanggal Wajib diisi!',
                 'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
@@ -194,6 +206,9 @@ class PeminjamanController extends Controller
                 'kelas' => 'Kelas Wajib diisi!',
                 'program_studi' => 'Program Studi Wajib diisi!',
                 'keterangan' => 'Keterangan Wajib diisi!',
+                'mengembalikan' => 'Yang Mengembalikan Wajib diisi!',
+                'menerima' => 'Petugas Yang Menerima Wajib diisi!',
+                'keadaan_barang' => 'Keadaan Barang Wajib diisi!',
             ]);
 
             $peminjaman = Peminjaman::findOrFail($id);
@@ -206,7 +221,9 @@ class PeminjamanController extends Controller
             $peminjaman->kelas = $request->kelas;
             $peminjaman->program_studi = $request->program_studi;
             $peminjaman->keterangan = $request->keterangan;
-
+            $peminjaman->mengembalikan = $request->mengembalikan;
+            $peminjaman->menerima = $request->menerima;
+            $peminjaman->keadaan_barang = $request->keadaan_barang;
             if($peminjaman->save()){
                 PeminjamanDetail::where('id_peminjaman',$id)->delete();
                 foreach($request->kode_barang as $key=>$kode_barang){

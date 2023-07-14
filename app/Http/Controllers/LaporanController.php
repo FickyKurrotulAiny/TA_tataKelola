@@ -29,6 +29,11 @@ class LaporanController extends Controller
         }
     }
 
+    public function pilihan(Request $request){
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+    }
+
     /**
      * Display a listing of the resource.
      *
