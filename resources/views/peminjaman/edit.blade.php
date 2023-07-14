@@ -16,8 +16,13 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3 col-md-6 col-xl-4">
+<<<<<<< HEAD
                                 <label for="" class="form-label">Tanggal Pinjam</label>
                                 <input type="date" name="tanggal" placeholder="Tanggal"
+=======
+                                <label for="" class="form-label">tanggal</label>
+                                <input required type="date" name="tanggal" readonly placeholder="tanggal"
+>>>>>>> 203c5ad41e25480a530502031c786399b9d0736a
                                     class="form-control"value="{{ old('tanggal', $peminjaman->tanggal) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
@@ -27,37 +32,37 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Dosen Peminjam</label>
-                                <input type="text" name="nama_peminjam" placeholder="Nama Dosen Peminjam"
+                                <input required type="text" name="nama_peminjam" placeholder="Nama Dosen Peminjam"
                                     class="form-control"value="{{ old('nama_peminjam', $peminjaman->nama_peminjam) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Kelas</label>
-                                <input type="text" name="kelas" placeholder="Kelas"
+                                <input required type="text" name="kelas" placeholder="Kelas"
                                     class="form-control"value="{{ old('kelas', $peminjaman->kelas) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Jurusan</label>
-                                <input type="text" name="jurusan" placeholder="Jurusan"
+                                <input required type="text" name="jurusan" placeholder="Jurusan"
                                     class="form-control"value="{{ old('jurusan', $peminjaman->jurusan) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Program Studi</label>
-                                <input type="text" name="program_studi" placeholder="Program Studi"
+                                <input required type="text" name="program_studi" placeholder="Program Studi"
                                     class="form-control"value="{{ old('program_studi', $peminjaman->program_studi) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Kegiatan</label>
-                                <input type="text" name="nama_kegiatan" placeholder="Nama Kegiatan</label>"
+                                <input required type="text" name="nama_kegiatan" placeholder="Nama Kegiatan</label>"
                                     class="form-control"value="{{ old('nama_kegiatan', $peminjaman->nama_kegiatan) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Petugas Yang Menyerahkan</label>
-                                <input type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
+                                <input required type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
                                     class="form-control"value="{{ old('petugas', $peminjaman->petugas) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Yang Mengambil</label>
-                                <input type="text" name="mengambil" placeholder="Yang Mengambil"
+                                <input required type="text" name="mengambil" placeholder="Yang Mengambil"
                                     class="form-control"value="{{ old('mengambil', $peminjaman->mengambil) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
@@ -77,7 +82,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-12">
                                 <label for="keterangan" class="form-label">Keterangan</label>
-                                <textarea name="keterangan" id="keterangan">{{ $peminjaman->keterangan }}</textarea>
+                                <textarea required name="keterangan" class="form-control">{{ $peminjaman->keterangan }}</textarea>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Pilih Barang</label>

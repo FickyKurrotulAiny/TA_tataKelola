@@ -11,7 +11,7 @@
                     <div class="card">
                     </div>
                     <div class="card-body">
-                        <form class="main-form row" action="{{ route('peminjaman.store') }}" method="POST"
+                        <form class="main-form row" enctype="multipart/form-data" action="{{ route('peminjaman.store') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             <!-- @method('PUT') -->
@@ -35,7 +35,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Dosen Peminjam</label>
-                                <input type="text" name="nama_peminjam" placeholder="Nama Dosen Peminjam"
+                                <input required type="text" name="nama_peminjam" placeholder="Nama Dosen Peminjam"
                                     class="form-control @error('nama_peminjam') is-invalid @enderror"
                                     value="{{ old('nama_peminjam') }}">
                                 @error('nama_peminjam')
@@ -44,7 +44,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Kelas</label>
-                                <input type="text" name="kelas" placeholder="Kelas"
+                                <input required type="text" name="kelas" placeholder="Kelas"
                                     class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}">
                                 @error('kelas')
                                     <span class="text-danger">{{ $message }}</span>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Jurusan</label>
-                                <input type="text" name="jurusan" placeholder="Jurusan"
+                                <input required type="text" name="jurusan" placeholder="Jurusan"
                                     class="form-control @error('jurusan') is-invalid @enderror"
                                     value="{{ old('jurusan') }}">
                                 @error('jurusan')
@@ -61,7 +61,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Program Studi</label>
-                                <input type="text" name="program_studi" placeholder="Program Studi"
+                                <input required type="text" name="program_studi" placeholder="Program Studi"
                                     class="form-control @error('program_studi') is-invalid @enderror"
                                     value="{{ old('program_studi') }}">
                                 @error('program_studi')
@@ -70,7 +70,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Nama Kegiatan</label>
-                                <input type="text" name="nama_kegiatan" placeholder="Nama Kegiatan"
+                                <input required type="text" name="nama_kegiatan" placeholder="Nama Kegiatan"
                                     class="form-control @error('nama_kegiatan') is-invalid @enderror"
                                     value="{{ old('nama_kegiatan') }}">
                                 @error('nama_kegiatan')
@@ -79,7 +79,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Petugas Yang Menyerahkan</label>
-                                <input type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
+                                <input required type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
                                     class="form-control @error('petugas') is-invalid @enderror"
                                     value="{{ old('petugas') }}">
                                 @error('petugas')
@@ -88,7 +88,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Yang Mengambil</label>
-                                <input type="text" name="mengambil" placeholder="Yang Mengambil"
+                                <input required type="text" name="mengambil" placeholder="Yang Mengambil"
                                     class="form-control @error('mengambil') is-invalid @enderror"
                                     value="{{ old('mengambil') }}">
                                 @error('mengambil')
@@ -96,6 +96,11 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
+                                <label for="" class="form-label">Tanggal Kembali</label>
+                                <input required type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
+                                    class="form-control @error('tanggal_kembali') is-invalid @enderror"
+                                    value="{{ old('tanggal_kembali') }}">
+                                @error('tanggal_kembali')
                                 <label for="" class="form-label">Yang Mengembalikan</label>
                                 <input type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
                                     class="form-control @error('mengembalikan') is-invalid @enderror"
@@ -124,7 +129,7 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-12">
                                 <label for="keterangan" class="form-label">Keterangan</label>
-                                <textarea name="keterangan" id="keterangan"></textarea>
+                                <textarea name="keterangan" class="form-control" required></textarea>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Pilih Barang</label>
