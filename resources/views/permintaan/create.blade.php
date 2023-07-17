@@ -55,6 +55,26 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                @if (Auth::user()->level === 'admin')
+                                    <div class="mb-3 col-md-6 col-xl-4">
+                                        <label for="" class="form-label">Yang Mengambil</label>
+                                        <input type="text" name="mengambil" placeholder="Yang Mengambil"
+                                            class="form-control @error('mengambil') is-invalid @enderror"
+                                            value="{{ old('mengambil') }}">
+                                        @error('mengambil')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-6 col-xl-4">
+                                        <label for="" class="form-label">Petugas Yang Memberikan</label>
+                                        <input type="text" name="petugas" placeholder="Petugas Yang Memberikan"
+                                            class="form-control @error('petugas') is-invalid @enderror"
+                                            value="{{ old('petugas') }}">
+                                        @error('petugas')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                @endif
                                 <div class="col-md-12">
                                     <label class="form-label">Pilih Barang</label>
                                     <select class="js-select2-barang form-control" name="state">

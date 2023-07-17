@@ -50,6 +50,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('opsi', [Controllers\LaporanController::class, 'opsi'])->name('opsi');
 
     Route::get('/barang/search', [Controllers\DashboardController::class, 'search'])->name('search');
-    Route::get('/barang/search', [Controllers\Dashboard1Controller::class, 'search'])->name('search');
+    // Route::get('/barang/search', [Controllers\Dashboard1Controller::class, 'search'])->name('search');
 
 });

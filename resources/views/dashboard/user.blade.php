@@ -2,14 +2,16 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>INFORMASI DATA BARANG INVENTARIS YANG TERSEDIA</h1>
-                    <div class="card-header-action">
-                        <form action="{{ route('search') }}" method="get">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1>INFORMASI DATA BARANG INVENTARIS YANG TERSEDIA</h1>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="{{ route('dashboard') }}" method="get">
                             @method('get')
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" name="search" id="search">
+                                <input value="{{ $search }}" type="text" class="form-control" placeholder="Search" name="search" id="search">
                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                             </div>
                         </form>
@@ -45,6 +47,20 @@
                         </article>
                     </div>
                 @endforeach
+                @if (count($inventaris) < 1 && $search !== '')
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <center>
+                                    <h4>Data Not found</h4>
+                                    <a href="{{ route('dashboard') }}" class="btn btn-info">
+                                        Reload
+                                    </a>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

@@ -78,38 +78,43 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-
         DB::beginTransaction();
         try {
             $request->validate([
                 'tanggal' => 'required',
                 'nama_peminjam' => 'required',
                 'jurusan' => 'required',
-                'petugas' => 'required',
-                'mengambil' => 'required',
                 'tanggal_kembali' => 'required',
                 'nama_kegiatan' => 'required',
                 'kelas' => 'required',
                 'program_studi' => 'required',
                 'keterangan' => 'required',
-                'mengembalikan' => 'required',
-                'menerima' => 'required',
-                'keadaan_barang' => 'required',
             ],[
                 'tanggal.required' => 'Tanggal Wajib diisi!',
                 'nama_peminjam.required' => 'Nama Peminjam Wajib diisi!',
                 'jurusan.required' => 'Jurusan Wajib diisi!',
-                'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
-                'mengambil.required' => 'Yang Mengambil Wajib diisi!',
                 'tanggal_kembali.required' => 'Tanggl Kembali Wajib diisi!',
                 'nama_kegiatan' => 'Nama kegiatan Wajib diisi!',
                 'kelas' => 'Kelas Wajib diisi!',
                 'program_studi' => 'Program Studi Wajib diisi!',
                 'keterangan' => 'Keterangan Wajib diisi!',
-                'mengembalikan' => 'Yang Mengembalikan Wajib diisi!',
-                'menerima' => 'Petugas Yang Menerima Wajib diisi!',
-                'keadaan_barang' => 'Keadaan Barang Wajib diisi!',
             ]);
+
+            if(Auth::user()->level === 'admin'){
+                $request->validate([
+                    'mengembalikan' => 'required',
+                    'menerima' => 'required',
+                    'keadaan_barang' => 'required',
+                    'petugas' => 'required',
+                    'mengambil' => 'required',
+                ],[
+                    'mengembalikan' => 'Yang Mengembalikan Wajib diisi!',
+                    'menerima' => 'Petugas Yang Menerima Wajib diisi!',
+                    'keadaan_barang' => 'Keadaan Barang Wajib diisi!',
+                    'petugas.required' => 'Petugas Yang Menyerahkan Wajib diisi!',
+                    'mengambil.required' => 'Yang Mengambil Wajib diisi!',
+                ]);
+            }
 
             $peminjaman = new Peminjaman();
             $peminjaman->nama_peminjam = $request->nama_peminjam;
@@ -126,7 +131,7 @@ class PeminjamanController extends Controller
             $peminjaman->menerima = $request->menerima;
             $peminjaman->user_id = Auth::user()->id;
             $peminjaman->keadaan_barang = $request->keadaan_barang;
-            return $peminjaman;
+
             if ($peminjaman->save()) {
                 foreach ($request->kode_barang as $key => $kode_barang) {
                     $barang = Inventaris::where('kode_barang', $kode_barang)->first();
@@ -288,11 +293,13 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::find($id);
         $peminjamanDetails = PeminjamanDetail::where('id_peminjaman', $id)->get();
-        foreach($peminjamanDetails as $peminjamanDetail){
-            // Update stok pada tabel barang
-            $barang = Inventaris::where('id', $peminjamanDetail->id_barang)->first();
-            $barang->kondisi_baru = $barang->kondisi_baru + $peminjamanDetail->jumlah;
-            $barang->save();
+        if (Auth::user()->level !== 'admin') {
+            foreach($peminjamanDetails as $peminjamanDetail){
+                // Update stok pada tabel barang
+                $barang = Inventaris::where('id', $peminjamanDetail->id_barang)->first();
+                $barang->kondisi_baru = $barang->kondisi_baru + $peminjamanDetail->jumlah;
+                $barang->save();
+            }
         }
 
         // Hapus semua peminjaman detail terkait

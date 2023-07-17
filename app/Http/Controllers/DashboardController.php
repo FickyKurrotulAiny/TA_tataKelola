@@ -23,11 +23,16 @@ class DashboardController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index(){
+    public function index(Request $request){
         if(Auth::user()->level === 'user'){
-            $taris = Inventaris::where('kondisi_baru')->get();
-            $inventaris = Inventaris::get();
-            return view('dashboard.user', compact('inventaris', 'taris'));
+            $search = '';
+            if(isset($request)){
+                $search = $request->search;
+                $inventaris = Inventaris::where('nama_barang', 'like', "%" . $request->search . "%")->get();
+            }else{
+                $inventaris = Inventaris::get();
+            }
+            return view('dashboard.user', compact('inventaris','search'));
         }else{
             $data['navlink'] = 'dashboard';
             $inventaris = Inventaris::count();
@@ -46,7 +51,6 @@ class DashboardController extends Controller
             $inventaris = Inventaris::where('nama_barang', 'like', "%" . $search . "%")
                         ->paginate(5);
             return view('dashboard.user', compact('inventaris'))->with('i', ($request->input('page', 1) - 1) * 5);
-
         }catch(\Exception $e){
             dd($e);
         }

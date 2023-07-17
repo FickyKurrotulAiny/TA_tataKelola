@@ -5,15 +5,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>INFORMASI DATA BARANG PERSEDIAAN YANG TERSEDIA</h1>
-                    <div class="card-header-action">
-                        <form action="{{ route('search') }}" method="get">
-                            @method('get')
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" name="search" id="search">
-                                <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

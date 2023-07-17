@@ -37,11 +37,7 @@ class PermintaanController extends Controller
 
     public function getpermintaan(Request $request){
         if ($request->ajax()) {
-            if (Auth::user()->level === 'user') {
-                $data = Permintaan::where('user_id', Auth::user()->id);
-            } else {
-                $data = Permintaan::query();
-            }
+            $data = Permintaan::where('user_id', Auth::user()->id);
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('tanggal', function($value){
@@ -101,19 +97,40 @@ class PermintaanController extends Controller
                 'keterangan.required' => 'Keterangan Wajib diisii!',
             ]);
 
+            if(Auth::user()->level === 'admin'){
+                $request->validate([
+                    'mengambil' => 'required',
+                    'petugas' => 'required',
+                ],[
+                    'mengambil.required' => 'Yang Mengambil Wajib diisi',
+                    'petugas.required' => 'Petugas Yang Memberikan',
+                ]);
+            }
+
             $permintaan = new Permintaan();
-            $permintaan->tanggal = Carbon::now();
+            $permintaan->tanggal = $request->tanggal;
             $permintaan->nama_dosen = $request->nama_dosen;
             $permintaan->mata_kuliah = $request->mata_kuliah;
             $permintaan->kelas = $request->kelas;
             $permintaan->keterangan = $request->keterangan;
             $permintaan->user_id = Auth::user()->id;
 
+            if(Auth::user()->level === 'admin'){
+                $permintaan->petugas = $request->petugas;
+                $permintaan->mengambil = $request->mengambil;
+            }
+
             if($permintaan->save()){
                 foreach($request->id_bahan as $key=>$id_bahan){
                     $barang = Persediaan::where('id', $id_bahan)->first();
-                    if ((int)$barang->jumlah < (int)$request->qty[$key])
-                        return redirect('permintaan')->with('error', 'Jumlah permintaan melebihi stock tersedia!!');
+                    if (Auth::user()->level !== 'admin') {
+                        if ((int)$barang->jumlah_barang < (int)$request->qty[$key])
+                            return redirect('permintaan')->with('error', 'Jumlah permintaan melebihi stock tersedia!!');
+
+                        //update stock barang inventaris
+                        $barang->jumlah_barang = $barang->jumlah_barang - $request->qty[$key];
+                        $barang->save();
+                    }
 
                     $permintaan_detail = new PermintaanDetail;
                     $permintaan_detail->id_permintaan = $permintaan->id;
@@ -121,9 +138,6 @@ class PermintaanController extends Controller
                     $permintaan_detail->jumlah = $request->qty[$key];
                     $permintaan_detail->save();
 
-                    //update stock barang inventaris
-                    $barang->jumlah = $barang->jumlah - $request->qty[$key];
-                    $barang->save();
                 }
                 DB::commit();
                 return redirect('permintaan')->with('success', 'Tambah Permintaan Sukses!');
@@ -207,17 +221,19 @@ class PermintaanController extends Controller
                     $delete_id[] = $barang->id;
                     $permintaan_detail = PermintaanDetail::where([['id_permintaan',$permintaan->id],['id_barang',$barang->id]])->first();
 
-                    if ((int)$request->qty[$key] > (int)$permintaan_detail->jumlah) {
-                        $selisih = $request->qty[$key] - $permintaan_detail->jumlah;
-                        if ((int)$barang->jumlah < (int)$selisih)
-                            return redirect('permintaan')->with('error', 'Jumlah permintaan melebihi stock tersedia!!');
+                    if (Auth::user()->level !== 'admin') {
+                        if ((int)$request->qty[$key] > (int)$permintaan_detail->jumlah) {
+                            $selisih = $request->qty[$key] - $permintaan_detail->jumlah;
+                            if ((int)$barang->jumlah_barang < (int)$selisih)
+                                return redirect('permintaan')->with('error', 'Jumlah permintaan melebihi stock tersedia!!');
 
-                        $barang->jumlah = $barang->jumlah - $selisih;
-                    } else {
-                        $selisih = $permintaan_detail->jumlah - $request->qty[$key];
-                        $barang->jumlah = $barang->jumlah + $selisih;
+                            $barang->jumlah_barang = $barang->jumlah_barang - $selisih;
+                        } else {
+                            $selisih = $permintaan_detail->jumlah - $request->qty[$key];
+                            $barang->jumlah_barang = $barang->jumlah_barang + $selisih;
+                        }
+                        $barang->save();
                     }
-
                     $permintaan_detail->jumlah = $request->qty[$key];
                     $permintaan_detail->save();
 
@@ -245,11 +261,13 @@ class PermintaanController extends Controller
     {
         $permintaan = Permintaan::find($id);
         $permintaanDetails = PermintaanDetail::where('id_permintaan', $id)->get();
-        foreach($permintaanDetails as $permintaanDetail){
-            // Update stok pada tabel barang
-            $barang = Persediaan::where('id', $permintaanDetail->id_barang)->first();
-            $barang->jumlah = $barang->jumlah + $permintaanDetail->jumlah;
-            $barang->save();
+        if (Auth::user()->level !== 'admin') {
+            foreach($permintaanDetails as $permintaanDetail){
+                // Update stok pada tabel barang
+                $barang = Persediaan::where('id', $permintaanDetail->id_barang)->first();
+                $barang->jumlah_barang = $barang->jumlah_barang + $permintaanDetail->jumlah;
+                $barang->save();
+            }
         }
 
         // Hapus semua permintaan detail terkait

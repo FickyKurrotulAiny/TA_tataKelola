@@ -75,51 +75,53 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Petugas Yang Menyerahkan</label>
-                                    <input required type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
-                                        class="form-control @error('petugas') is-invalid @enderror"
-                                        value="{{ old('petugas') }}">
-                                    @error('petugas')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Yang Mengambil</label>
-                                    <input required type="text" name="mengambil" placeholder="Yang Mengambil"
-                                        class="form-control @error('mengambil') is-invalid @enderror"
-                                        value="{{ old('mengambil') }}">
-                                    @error('mengambil')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Yang Mengembalikan</label>
-                                    <input type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
-                                        class="form-control @error('mengembalikan') is-invalid @enderror"
-                                        value="{{ old('mengembalikan') }}">
-                                    @error('mengembalikan')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Petigas Yang Menerima</label>
-                                    <input type="text" name="menerima" placeholder="Petigas Yang Menerima"
-                                        class="form-control @error('menerima') is-invalid @enderror"
-                                        value="{{ old('menerima') }}">
-                                    @error('menerima')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6 col-xl-4">
-                                    <label for="" class="form-label">Keadaan Barang</label>
-                                    <input type="text" name="keadaan_barang" placeholder="Keadaan Barang"
-                                        class="form-control @error('keadaan_barang') is-invalid @enderror"
-                                        value="{{ old('keadaan_barang') }}">
-                                    @error('keadaan_barang')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                @if (Auth::user()->level === 'admin')
+                                    <div class="mb-3 col-md-6 col-xl-4">
+                                        <label for="" class="form-label">Petugas Yang Menyerahkan</label>
+                                        <input required type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
+                                            class="form-control @error('petugas') is-invalid @enderror"
+                                            value="{{ old('petugas') }}">
+                                        @error('petugas')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-6 col-xl-4">
+                                        <label for="" class="form-label">Yang Mengambil</label>
+                                        <input required type="text" name="mengambil" placeholder="Yang Mengambil"
+                                            class="form-control @error('mengambil') is-invalid @enderror"
+                                            value="{{ old('mengambil') }}">
+                                        @error('mengambil')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-6 col-xl-4">
+                                        <label for="" class="form-label">Yang Mengembalikan</label>
+                                        <input type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
+                                            class="form-control @error('mengembalikan') is-invalid @enderror"
+                                            value="{{ old('mengembalikan') }}">
+                                        @error('mengembalikan')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-6 col-xl-4">
+                                        <label for="" class="form-label">Petigas Yang Menerima</label>
+                                        <input type="text" name="menerima" placeholder="Petigas Yang Menerima"
+                                            class="form-control @error('menerima') is-invalid @enderror"
+                                            value="{{ old('menerima') }}">
+                                        @error('menerima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-6 col-xl-4">
+                                        <label for="" class="form-label">Keadaan Barang</label>
+                                        <input type="text" name="keadaan_barang" placeholder="Keadaan Barang"
+                                            class="form-control @error('keadaan_barang') is-invalid @enderror"
+                                            value="{{ old('keadaan_barang') }}">
+                                        @error('keadaan_barang')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                @endif
                                 <div class="mb-3 col-md-6 col-xl-12">
                                     <label for="keterangan" class="form-label">Keterangan</label>
                                     <textarea name="keterangan" class="form-control" required></textarea>
