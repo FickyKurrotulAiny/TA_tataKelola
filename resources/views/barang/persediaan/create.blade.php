@@ -60,7 +60,7 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Volume Barang (Saldo Awal)</label>
+                                <label for="" class="form-label" id="saldo_awal">Volume Barang (Saldo Awal)</label>
                                 <input type="text" name="volumeBarang_saldo" placeholder="Volume Barang (Saldo Awal)"
                                     class="form-control @error('volumeBarang_saldo') is-invalid @enderror"
                                     value="{{ old('volumeBarang_saldo') }}">
@@ -70,7 +70,7 @@
                             </div>
                             <br>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Volume Barang (Masuk)</label>
+                                <label for="" class="form-label" id="masuk">Volume Barang (Masuk)</label>
                                 <input type="text" name="volumeBarang_masuk" placeholder="Volume Barang (Masuk)"
                                     class="form-control @error('volumeBarang_masuk') is-invalid @enderror"
                                     value="{{ old('volumeBarang_masuk') }}">
@@ -80,7 +80,7 @@
                             </div>
                             <br>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Volume Barang (Keluar)</label>
+                                <label for="" class="form-label" id="keluar">Volume Barang (Keluar)</label>
                                 <input type="text" name="volumeBarang_keluar" placeholder="Volume Barang (Keluar)"
                                     class="form-control @error('volumeBarang_keluar') is-invalid @enderror"
                                     value="{{ old('volumeBarang_keluar') }}">
@@ -90,7 +90,7 @@
                             </div>
                             <br>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Volume Barang (Sisa)</label>
+                                <label for="" class="form-label" id="sisa">Volume Barang (Sisa)</label>
                                 <input type="text" name="volumeBarang_sisa" placeholder="Volume Barang (Sisa)"
                                     class="form-control @error('volumeBarang_sisa') is-invalid @enderror"
                                     value="{{ old('volumeBarang_sisa') }}">
@@ -154,4 +154,20 @@
             };
         }
     </script>
+
+    <script>
+        $(document).ready(function(){
+
+            $('#saldo_awal')
+            $('#masuk')
+            $('#keluar')
+            $('#sisa')
+
+        });
+
+        $('form').submit(function(){
+            var perhitungan = $('#inputText').val('');
+        });
+    </script>
+
 @endsection

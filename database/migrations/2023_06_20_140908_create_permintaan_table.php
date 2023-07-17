@@ -23,6 +23,7 @@ class CreatePermintaanTable extends Migration
             $table->string('jumlah');
             $table->string('satuan');
             $table->string('keterangan');
+            $table->string('user_id');
             $table->timestamps();
         });
     }

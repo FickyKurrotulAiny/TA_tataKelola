@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use App\Models\Minta;
+use App\Models\Persediaan;
+use App\Models\MintaDetail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MintaController extends Controller
 {
@@ -52,7 +56,8 @@ class MintaController extends Controller
     public function create()
     {
         $data['navlink'] = 'minta';
-        return view('minta.create', $data);
+        $barangs = Persediaan::get();
+        return view('minta.create', compact('barangs'), $data);
     }
 
     /**
@@ -63,47 +68,56 @@ class MintaController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->validate([
-        'tanggal' => 'required',
-        'nama_dosen' => 'required',
-        'mata_kuliah' => 'required',
-        'kelas' => 'required',
-        'nama_bahan' => 'required',
-        'jumlah' => 'required',
-        'satuan' => 'required',
-        'keterangan' => 'required',
-        'mengambil' => 'required',
-        'petugas' => 'required',
-        ],[
-        'tanggal.required' => 'Tanggal Wajib diisii!',
-        'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
-        'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
-        'kelas.required' => 'Kelas Wajib diisii!',
-        'nama_bahan.required' => 'Nama Bahan Wajib diisii!',
-        'jumlah.required' => 'Jumlah Wajib diisii!',
-        'satuan.required' => 'Satuan Wajib diisii!',
-        'keterangan.required' => 'Keterangan Wajib diisii!',
-        'mengambil.required' => 'Yang Mengambil Wajib diisi',
-        'petugas.required' => 'Petugas Yang Memberikan',
-        ]);
+        DB::beginTransaction();
+        dd($request->all());
+        try {
+            $request->validate([
+            'tanggal' => 'required',
+            'nama_dosen' => 'required',
+            'mata_kuliah' => 'required',
+            'kelas' => 'required',
+            'keterangan' => 'required',
+            'mengambil' => 'required',
+            'petugas' => 'required',
+            ],[
+            'tanggal.required' => 'Tanggal Wajib diisii!',
+            'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
+            'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
+            'kelas.required' => 'Kelas Wajib diisii!',
+            'keterangan.required' => 'Keterangan Wajib diisii!',
+            'mengambil.required' => 'Yang Mengambil Wajib diisi',
+            'petugas.required' => 'Petugas Yang Memberikan',
+            ]);
 
         $minta = new Minta();
-        $minta = Minta::create($request->all());
-
         $minta->tanggal = $request->tanggal;
         $minta->nama_dosen = $request->nama_dosen;
         $minta->mata_kuliah = $request->mata_kuliah;
         $minta->kelas = $request->kelas;
-        $minta->nama_bahan = $request->nama_bahan;
-        $minta->jumlah = $request->jumlah;
-        $minta->satuan = $request->satuan;
         $minta->keterangan = $request->keterangan;
         $minta->mengambil = $request->mengambil;
         $minta->petugas = $request->petugas;
-        $minta->save();
+        if($minta->save()){
+            foreach($request->id_bahan as $key=>$id_bahan){
+                    $barang = Persediaan::where('id', $id_bahan)->first();
+                    $minta_detail = new MintaDetail;
+                    $minta_detail->id_minta = $minta->id;
+                    $minta_detail->id_barang = $barang->id;
+                    $minta_detail->jumlah = $request->qty[$key];
+                    $minta_detail->save();
 
-        return redirect('minta')->with('success', 'Tambah Permintaan Sukses!');
+                    //update stock barang inventaris
+                    $barang->jumlah = $barang->jumlah - $request->qty[$key];
+                    $barang->save();
+                }
+                DB::commit();
+                return redirect('minta')->with('success', 'Tambah Permintaan Sukses!');
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            // return $e->getMessage();
+            return redirect('minta')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -114,9 +128,11 @@ class MintaController extends Controller
      */
     public function show($id)
     {
-        $minta = Minta::findOrFail($id);
+        $minta = Minta::where('id', $id)->with('details.barang')->first();
         $data['navlink'] = 'minta';
-        return view('minta.show', $data, ['minta' => $minta]);
+        $barangs = Persediaan::get();
+
+        return view('minta.show', $data, compact('minta'));
     }
 
     /**
@@ -127,9 +143,10 @@ class MintaController extends Controller
      */
     public function edit($id)
     {
-        $minta = Minta::findOrFail($id);
+        $minta = Minta::where('id', $id)->with('details.barang')->first();
         $data['navlink'] = 'minta';
-        return view('minta.edit', $data, compact('minta'));
+        $barangs = Persediaan::get();
+        return view('minta.edit', $data, compact('minta', 'barangs'));
     }
 
     /**
@@ -141,21 +158,74 @@ class MintaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $minta = Minta::findOrFail($id);
+        $request->validate([
+            'tanggal' => 'required',
+            'nama_dosen' => 'required',
+            'mata_kuliah' => 'required',
+            'kelas' => 'required',
+            'nama_bahan' => 'required',
+            'jumlah' => 'required',
+            'satuan' => 'required',
+            'keterangan' => 'required',
+            'mengambil' => 'required',
+            'petugas' => 'required',
+            ],[
+            'tanggal.required' => 'Tanggal Wajib diisii!',
+            'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
+            'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',
+            'kelas.required' => 'Kelas Wajib diisii!',
+            'nama_bahan.required' => 'Nama Bahan Wajib diisii!',
+            'jumlah.required' => 'Jumlah Wajib diisii!',
+            'satuan.required' => 'Satuan Wajib diisii!',
+            'keterangan.required' => 'Keterangan Wajib diisii!',
+            'mengambil.required' => 'Yang Mengambil Wajib diisi',
+            'petugas.required' => 'Petugas Yang Memberikan',
+            ]);
 
+        DB::beginTransaction();
+        try {
+
+        $minta = Minta::findOrFail($id);
         $minta->tanggal = $request->tanggal;
         $minta->nama_dosen = $request->nama_dosen;
         $minta->mata_kuliah = $request->mata_kuliah;
         $minta->kelas = $request->kelas;
         $minta->nama_bahan = $request->nama_bahan;
-        $minta->jumlah = $request->jumlah;
         $minta->satuan = $request->satuan;
         $minta->keterangan = $request->keterangan;
         $minta->mengambil = $request->mengambil;
         $minta->petugas = $request->petugas;
-        $minta->save();
+        if($minta->save()){
+            MintaDetail::where('id_minta', $id)->delete();
+            foreach($request->id_barang as $key=>$id_barang){
+                    $barang = Persediaan::where('id', $id_barang)->first();
+                    $dele_id[] = $barang->id;
+                    $minta_detail = MintaDetail::where([['id_minta', $minta->id], 'id_barang', $barang->id])->first();
 
-        return redirect('minta')->with('success', 'Edit Permintaan Sukses!');
+                    if ((int)$request->qty[$key] > (int)$minta_detail->jumlah){
+                        $selisih = $minta_detail->qty[$key] - $minta_detail->jumlah;
+                        if ((int)$barang->jumlah < (int)$selisih)
+                        return redirect('minta')->with('error', 'Jumlah Permintaan Melebihi stock tersedia!!');
+                        $barang->jumlah = $barang->jumlah - $selisih;
+                    } else {
+                        $selisih = $permintaan_detail->jumlah - $request->qty[$key];
+                        $barang->jumlah = $barang->jumlah + $selisih;
+                    }
+
+                    $minta_detail->jumlah = $request->qty[$key];
+                    $minta_detail->save();
+                }
+                MintaDetail::where('id_minta',$id)
+                ->whereNotIn('id_barang', $dele_id)
+                ->forcedDelete();
+                DB::commit();
+                return redirect('minta')->with('success', 'Tambah Permintaan Sukses!');
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            // return $e->getMessage();
+            return redirect('minta')->with('error', $e->getMessage());
+        }
     }
 
     /**

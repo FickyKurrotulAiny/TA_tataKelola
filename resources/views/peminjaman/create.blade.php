@@ -11,8 +11,8 @@
                     <div class="card">
                     </div>
                     <div class="card-body">
-                        <form class="main-form row" enctype="multipart/form-data" action="{{ route('peminjaman.store') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form class="main-form row" enctype="multipart/form-data" action="{{ route('peminjaman.store') }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <!-- @method('PUT') -->
                             <div class="mb-3 col-md-6 col-xl-4">
@@ -96,13 +96,8 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Tanggal Kembali</label>
-                                <input required type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
-                                    class="form-control @error('tanggal_kembali') is-invalid @enderror"
-                                    value="{{ old('tanggal_kembali') }}">
-                                @error('tanggal_kembali')
                                 <label for="" class="form-label">Yang Mengembalikan</label>
-                                <input type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
+                                <input required type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
                                     class="form-control @error('mengembalikan') is-invalid @enderror"
                                     value="{{ old('mengembalikan') }}">
                                 @error('mengembalikan')
@@ -129,7 +124,8 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-12">
                                 <label for="keterangan" class="form-label">Keterangan</label>
-                                <textarea name="keterangan" class="form-control" required></textarea>
+                                <textarea name="keterangan" id="keterangan"></textarea>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Pilih Barang</label>
@@ -160,16 +156,17 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <br>
                             <div class="col-md-12 mt-3">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
                                 <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">Batal</a>
                             </div>
                         </form>
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 

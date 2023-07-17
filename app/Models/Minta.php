@@ -24,4 +24,8 @@ class Minta extends Model
         'mengambil',
         'petugas',
     ];
+
+    public function details(){
+        return $this->hasMany(MintaDetail::class,'id_minta');
+    }
 }

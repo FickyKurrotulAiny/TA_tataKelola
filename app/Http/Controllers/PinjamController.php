@@ -219,8 +219,12 @@ class PinjamController extends Controller
                     $pinjam_detail->id_pinjam = $pinjam->id;
                     $pinjam_detail->id_barang = $barang->id;
                     $pinjam_detail->jumlah = $request->qty[$key];
+                    $barang->save();
                     $pinjam_detail->save();
                 }
+                PinjamDetail::where('id_pinjam',$id)
+                ->whereNotIn('id_barang',$delete_id)
+                ->forceDelete();
                 DB::commit();
                 return redirect('pinjam')->with('success', 'Update Pinjam Sukses!');
             }
@@ -239,6 +243,14 @@ class PinjamController extends Controller
     public function destroy($id)
     {
         $pinjam = Pinjam::find($id);
+        $pinjamDetails = PinjamDetail::where('id_pinjam', $id)->get();
+        foreach($pinjamDetails as $pinjamDetail){
+            // Update stok pada tabel barang
+            $barang = Inventaris::where('id', $pinjamDetail->id_barang)->first();
+            $barang->jumlah = $barang->jumlah + $pinjamDetail->jumlah;
+            $barang->save();
+        }
+        
         PinjamDetail::where('id_pinjam',$id)->delete();
         $pinjam->delete();
         return $id;

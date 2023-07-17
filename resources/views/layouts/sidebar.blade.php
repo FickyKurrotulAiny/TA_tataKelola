@@ -48,20 +48,20 @@
                         href="{{ route('peminjaman.index') }}"><i class="fas fa-sticky-note"></i>
                         <span>Peminjaman</span></a>
                 </li>
-                {{-- <li @if (Route::current()->getName() == 'minta.index' ||
+                <li @if (Route::current()->getName() == 'minta.index' ||
                         Route::current()->getName() == 'minta.show' ||
                         Route::current()->getName() == 'minta.create' ||
                         Route::current()->getName() == 'minta.edit') class="active" @endif><a class="nav-link"
                         href="{{ route('minta.index') }}"><i class="fas fa-file-alt"></i>
                         <span>Permintaanan</span></a>
-                </li> --}}
-                <li @if (Route::current()->getName() == 'permintaan.index' ||
+                </li>
+                {{-- <li @if (Route::current()->getName() == 'permintaan.index' ||
                         Route::current()->getName() == 'permintaan.show' ||
                         Route::current()->getName() == 'permintaan.create' ||
                         Route::current()->getName() == 'permintaan.edit') class="active" @endif><a class="nav-link"
                         href="{{ route('permintaan.index') }}"><i class="fas fa-file-alt"></i>
                         <span>Permintaanan</span></a>
-                </li>
+                </li> --}}
                 <li @if (Route::current()->getName() == 'user.index' ||
                         Route::current()->getName() == 'user.show' ||
                         Route::current()->getName() == 'user.create' ||

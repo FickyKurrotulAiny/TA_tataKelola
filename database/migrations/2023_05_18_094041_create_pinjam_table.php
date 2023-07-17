@@ -27,6 +27,7 @@ class CreatePinjamTable extends Migration
             $table->string('tahun_peroleh');
             $table->string('jumlah');
             $table->string('keterangan');
+            $table->string('user_id');
             $table->timestamps();
         });
     }

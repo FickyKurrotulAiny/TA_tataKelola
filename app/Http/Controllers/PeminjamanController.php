@@ -84,6 +84,7 @@ class PeminjamanController extends Controller
     {
 
         DB::beginTransaction();
+        // dd($request->all());
         try {
             $request->validate([
                 'tanggal' => 'required',
@@ -140,12 +141,11 @@ class PeminjamanController extends Controller
                     //update stock barang inventaris
                     $barang->jumlah = $barang->jumlah - $request->qty[$key];
                     $barang->save();
-
-                    $peminjaman_detail->save();
                 }
                 DB::commit();
                 return redirect('peminjaman')->with('success', 'Tambah Peminjaman Sukses!');
             }
+
         } catch (Exception $e) {
             DB::rollback();
             return $e->getMessage();
@@ -244,12 +244,8 @@ class PeminjamanController extends Controller
                     $peminjaman_detail->id_peminjaman = $peminjaman->id;
                     $peminjaman_detail->id_barang = $barang->id;
                     $peminjaman_detail->jumlah = $request->qty[$key];
-                    $barang->save();
                     $peminjaman_detail->save();
                 }
-                PeminjamanDetail::where('id_peminjaman',$id)
-                ->whereNotIn('id_barang',$delete_id)
-                ->forceDelete();
                 DB::commit();
                 return redirect('peminjaman')->with('success', 'Edit Peminjaman Sukses!');
             }
@@ -269,17 +265,6 @@ class PeminjamanController extends Controller
     public function destroy($id)
     {
         $peminjaman = Peminjaman::find($id);
-        $peminjamanDetails = PeminjamanDetail::where('id_peminjaman', $id)->get();
-        foreach($peminjamanDetails as $peminjamanDetail){
-            // Update stok pada tabel barang
-            $barang = Inventaris::where('id', $peminjamanDetail->id_barang)->first();
-            $barang->jumlah = $barang->jumlah + $peminjamanDetail->jumlah;
-            $barang->save();
-        }
-
-        // Hapus semua peminjaman detail terkait
-        PeminjamanDetail::where('id_peminjaman', $id)->delete();
-        // Hapus peminjaman
         $peminjaman->delete();
         return $id;
     }

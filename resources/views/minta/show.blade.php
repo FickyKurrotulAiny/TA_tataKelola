@@ -19,16 +19,6 @@
                                     <th>{{ Carbon\Carbon::parse($minta->tanggal)->format('d-m-Y') }}</th>
                                 </tr>
                                 <tr>
-                                    <th width="200px">Nama Bahan</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $minta->nama_bahan }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Jumlah</th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $minta->jumlah }}</th>
-                                </tr>
-                                <tr>
                                     <th width="200px">Nama Dosen </th>
                                     <th width="30px">:</th>
                                     <th>{{ $minta->nama_dosen }}</th>
@@ -42,11 +32,6 @@
                                     <th width="200px">Kelas </th>
                                     <th width="30px">:</th>
                                     <th>{{ $minta->kelas }}</th>
-                                </tr>
-                                <tr>
-                                    <th width="200px">Satuan </th>
-                                    <th width="30px">:</th>
-                                    <th>{{ $minta->satuan }}</th>
                                 </tr>
                                 <tr>
                                     <th width="200px">Yang mengambil </th>
@@ -65,6 +50,29 @@
                                 </tr>
                             </table>
                             <br>
+                            <table class="table table-bordered table-md">
+                                <thead>
+                                    <th>No.</th>
+                                    <th>Nama Barang</th>
+                                    <th>Merk</th>
+                                    <th>Satuan</th>
+                                    <th>Jumlah</th>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($permintaan->details as $details)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $details->barang->nama_barang }}</td>
+                                            <td>{{ $details->barang->merk }}</td>
+                                            <td>{{ $details->barang->satuan }}</td>
+                                            <td>{{ $details->jumlah }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             <tr>
                                 <th><a href="{{ route('minta.index') }}" class="btn btn-primary">Kembali</a></th>
                             </tr>
