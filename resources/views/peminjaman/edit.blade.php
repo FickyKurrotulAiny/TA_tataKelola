@@ -16,13 +16,8 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3 col-md-6 col-xl-4">
-<<<<<<< HEAD
-                                <label for="" class="form-label">Tanggal Pinjam</label>
-                                <input type="date" name="tanggal" placeholder="Tanggal"
-=======
                                 <label for="" class="form-label">tanggal</label>
                                 <input required type="date" name="tanggal" readonly placeholder="tanggal"
->>>>>>> 203c5ad41e25480a530502031c786399b9d0736a
                                     class="form-control"value="{{ old('tanggal', $peminjaman->tanggal) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
@@ -67,17 +62,17 @@
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Yang Mengembalikan</label>
-                                <input type="date" name="mengembalikan" placeholder="Yang Mengembalikan"
+                                <input type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
                                     class="form-control"value="{{ old('mengembalikan', $peminjaman->mengembalikan) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Petugas Yang Menerima</label>
-                                <input type="date" name="menerima" placeholder="Petugas Yang Menerima"
+                                <input type="text" name="menerima" placeholder="Petugas Yang Menerima"
                                     class="form-control"value="{{ old('menerima', $peminjaman->menerima) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">
                                 <label for="" class="form-label">Keadaan Barang</label>
-                                <input type="date" name="keadaan_barang" placeholder="Keadaan Barang"
+                                <input type="text" name="keadaan_barang" placeholder="Keadaan Barang"
                                     class="form-control"value="{{ old('keadaan_barang', $peminjaman->keadaan_barang) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-12">

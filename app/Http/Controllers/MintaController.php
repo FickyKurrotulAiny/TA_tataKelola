@@ -69,7 +69,7 @@ class MintaController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-        dd($request->all());
+        // dd($request->all());
         try {
             $request->validate([
             'tanggal' => 'required',

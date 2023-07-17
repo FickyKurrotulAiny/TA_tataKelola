@@ -9,159 +9,157 @@
                             Tambah Peminjaman</h3>
                     </div>
                     <div class="card">
-                    </div>
-                    <div class="card-body">
-                        <form class="main-form row" enctype="multipart/form-data" action="{{ route('peminjaman.store') }}"
-                            method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <!-- @method('PUT') -->
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Tanggal Pinjam</label>
-                                <input type="date" name="tanggal" placeholder="Tanggal"
-                                    class="form-control @error('tanggal') is-invalid @enderror"
-                                    value="{{ old('tanggal') }}">
-                                @error('tanggal')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Tanggal Kembali</label>
-                                <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
-                                    class="form-control @error('tanggal_kembali') is-invalid @enderror"
-                                    value="{{ old('tanggal_kembali') }}">
-                                @error('tanggal_kembali')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Nama Dosen Peminjam</label>
-                                <input required type="text" name="nama_peminjam" placeholder="Nama Dosen Peminjam"
-                                    class="form-control @error('nama_peminjam') is-invalid @enderror"
-                                    value="{{ old('nama_peminjam') }}">
-                                @error('nama_peminjam')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Kelas</label>
-                                <input required type="text" name="kelas" placeholder="Kelas"
-                                    class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}">
-                                @error('kelas')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Jurusan</label>
-                                <input required type="text" name="jurusan" placeholder="Jurusan"
-                                    class="form-control @error('jurusan') is-invalid @enderror"
-                                    value="{{ old('jurusan') }}">
-                                @error('jurusan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Program Studi</label>
-                                <input required type="text" name="program_studi" placeholder="Program Studi"
-                                    class="form-control @error('program_studi') is-invalid @enderror"
-                                    value="{{ old('program_studi') }}">
-                                @error('program_studi')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Nama Kegiatan</label>
-                                <input required type="text" name="nama_kegiatan" placeholder="Nama Kegiatan"
-                                    class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                    value="{{ old('nama_kegiatan') }}">
-                                @error('nama_kegiatan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Petugas Yang Menyerahkan</label>
-                                <input required type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
-                                    class="form-control @error('petugas') is-invalid @enderror"
-                                    value="{{ old('petugas') }}">
-                                @error('petugas')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Yang Mengambil</label>
-                                <input required type="text" name="mengambil" placeholder="Yang Mengambil"
-                                    class="form-control @error('mengambil') is-invalid @enderror"
-                                    value="{{ old('mengambil') }}">
-                                @error('mengambil')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Yang Mengembalikan</label>
-                                <input required type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
-                                    class="form-control @error('mengembalikan') is-invalid @enderror"
-                                    value="{{ old('mengembalikan') }}">
-                                @error('mengembalikan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Petigas Yang Menerima</label>
-                                <input type="text" name="menerima" placeholder="Petigas Yang Menerima"
-                                    class="form-control @error('menerima') is-invalid @enderror"
-                                    value="{{ old('menerima') }}">
-                                @error('menerima')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Keadaan Barang</label>
-                                <input type="text" name="keadaan_barang" placeholder="Keadaan Barang"
-                                    class="form-control @error('keadaan_barang') is-invalid @enderror"
-                                    value="{{ old('keadaan_barang') }}">
-                                @error('keadaan_barang')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-12">
-                                <label for="keterangan" class="form-label">Keterangan</label>
-                                <textarea name="keterangan" id="keterangan"></textarea>
-                            </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Pilih Barang</label>
-                                <select class="js-select2-barang form-control" name="state">
-                                    <option value="" disabled selected>Silahkan pilih barang yang ingin di pinjam
-                                    </option>
-                                    @foreach ($barangs as $barang)
-                                        <option value="{{ $barang->kode_barang }}"
-                                            data-json="{{ base64_encode(json_encode($barang)) }}">
-                                            {{ $barang->nama_barang }} -
-                                            {{ $barang->kode_barang }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-12 mt-3 mb-3">
-                                <table class="table order-list" id="table-list">
-                                    <thead>
-                                        <tr>
-                                            <th>Kode Barang</th>
-                                            <th>Nama Barang</th>
-                                            <th>Merk</th>
-                                            <th>Tahun Peroleh</th>
-                                            <th>Jumlah Barang</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-12 mt-3">
-                                <button type="submit" class="btn btn-primary">Tambah</button>
-                                <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">Batal</a>
-                            </div>
-                        </form>
-                        <br>
+                        <div class="card-body">
+                            <form class="main-form row" enctype="multipart/form-data" action="{{ route('peminjaman.store') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Tanggal Pinjam</label>
+                                    <input type="date" name="tanggal" placeholder="Tanggal"
+                                        class="form-control @error('tanggal') is-invalid @enderror"
+                                        value="{{ old('tanggal') }}">
+                                    @error('tanggal')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Tanggal Kembali</label>
+                                    <input type="date" name="tanggal_kembali" placeholder="Tanggal Kembali"
+                                        class="form-control @error('tanggal_kembali') is-invalid @enderror"
+                                        value="{{ old('tanggal_kembali') }}">
+                                    @error('tanggal_kembali')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Nama Dosen Peminjam</label>
+                                    <input required type="text" name="nama_peminjam" placeholder="Nama Dosen Peminjam"
+                                        class="form-control @error('nama_peminjam') is-invalid @enderror"
+                                        value="{{ old('nama_peminjam') }}">
+                                    @error('nama_peminjam')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Kelas</label>
+                                    <input required type="text" name="kelas" placeholder="Kelas"
+                                        class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}">
+                                    @error('kelas')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Jurusan</label>
+                                    <input required type="text" name="jurusan" placeholder="Jurusan"
+                                        class="form-control @error('jurusan') is-invalid @enderror"
+                                        value="{{ old('jurusan') }}">
+                                    @error('jurusan')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Program Studi</label>
+                                    <input required type="text" name="program_studi" placeholder="Program Studi"
+                                        class="form-control @error('program_studi') is-invalid @enderror"
+                                        value="{{ old('program_studi') }}">
+                                    @error('program_studi')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Nama Kegiatan</label>
+                                    <input required type="text" name="nama_kegiatan" placeholder="Nama Kegiatan"
+                                        class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                        value="{{ old('nama_kegiatan') }}">
+                                    @error('nama_kegiatan')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Petugas Yang Menyerahkan</label>
+                                    <input required type="text" name="petugas" placeholder="Petugas Yang Menyerahkan"
+                                        class="form-control @error('petugas') is-invalid @enderror"
+                                        value="{{ old('petugas') }}">
+                                    @error('petugas')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Yang Mengambil</label>
+                                    <input required type="text" name="mengambil" placeholder="Yang Mengambil"
+                                        class="form-control @error('mengambil') is-invalid @enderror"
+                                        value="{{ old('mengambil') }}">
+                                    @error('mengambil')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Yang Mengembalikan</label>
+                                    <input type="text" name="mengembalikan" placeholder="Yang Mengembalikan"
+                                        class="form-control @error('mengembalikan') is-invalid @enderror"
+                                        value="{{ old('mengembalikan') }}">
+                                    @error('mengembalikan')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Petigas Yang Menerima</label>
+                                    <input type="text" name="menerima" placeholder="Petigas Yang Menerima"
+                                        class="form-control @error('menerima') is-invalid @enderror"
+                                        value="{{ old('menerima') }}">
+                                    @error('menerima')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Keadaan Barang</label>
+                                    <input type="text" name="keadaan_barang" placeholder="Keadaan Barang"
+                                        class="form-control @error('keadaan_barang') is-invalid @enderror"
+                                        value="{{ old('keadaan_barang') }}">
+                                    @error('keadaan_barang')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-12">
+                                    <label for="keterangan" class="form-label">Keterangan</label>
+                                    <textarea name="keterangan" class="form-control" required></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Pilih Barang</label>
+                                    <select class="js-select2-barang form-control" name="state">
+                                        <option value="" disabled selected>Silahkan pilih barang yang ingin di pinjam
+                                        </option>
+                                        @foreach ($barangs as $barang)
+                                            <option value="{{ $barang->kode_barang }}"
+                                                data-json="{{ base64_encode(json_encode($barang)) }}">
+                                                {{ $barang->nama_barang }} -
+                                                {{ $barang->kode_barang }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mt-3 mb-3">
+                                    <table class="table order-list" id="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Kode Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Merk</th>
+                                                <th>Tahun Peroleh</th>
+                                                <th>Jumlah Barang</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="col-md-12 mt-3">
+                                    <button type="submit" class="btn btn-primary">Tambah</button>
+                                    <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">Batal</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
