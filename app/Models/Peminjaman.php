@@ -30,6 +30,7 @@ class Peminjaman extends Model
         'mengembalikan',
         'menerima',
         'keadaan_barang',
+        'user_id',
     ];
 
     protected $hidden = [];

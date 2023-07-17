@@ -72,7 +72,7 @@
                 <li><a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span></a></li>
             </ul>
-        @else (Auth::user()->level == 'user')
+        @else
             <ul class="sidebar-menu">
                 <li class="{{ Request::is('/') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}"><i
@@ -81,11 +81,11 @@
                 <li @if (Route::current()->getName() == 'dashboard1') class="active" @endif>
                     <a href="{{ route('dashboard1') }}"><i class="fas fa-boxes"></i><span>Barang Persediaan</span></a>
                 </li>
-                <li @if (Route::current()->getName() == 'pinjam.index' ||
-                        Route::current()->getName() == 'pinjam.show' ||
-                        Route::current()->getName() == 'pinjam.create' ||
-                        Route::current()->getName() == 'pinjam.edit') class="active" @endif><a class="nav-link"
-                        href="{{ route('pinjam.index') }}"><i class="fas fa-sticky-note"></i>
+                <li @if (Route::current()->getName() == 'peminjaman.index' ||
+                        Route::current()->getName() == 'peminjaman.show' ||
+                        Route::current()->getName() == 'peminjaman.create' ||
+                        Route::current()->getName() == 'peminjaman.edit') class="active" @endif><a class="nav-link"
+                        href="{{ route('peminjaman.index') }}"><i class="fas fa-sticky-note"></i>
                         <span>Peminjaman</span></a>
                 </li>
                 <li @if (Route::current()->getName() == 'permintaan.index' ||

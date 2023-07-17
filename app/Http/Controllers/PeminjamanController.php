@@ -29,11 +29,7 @@ class PeminjamanController extends Controller
     public function getpeminjaman(Request $request)
     {
         if ($request->ajax()) {
-            if (Auth::user()->level === 'user') {
-                $data = Peminjaman::where('user_id', Auth::user()->id);
-            } else {
-                $data = Peminjaman::query();
-            }
+            $data = Peminjaman::where('user_id', Auth::user()->id);
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('tanggal', function ($value) {
@@ -128,18 +124,26 @@ class PeminjamanController extends Controller
             $peminjaman->keterangan = $request->keterangan;
             $peminjaman->mengembalikan = $request->mengembalikan;
             $peminjaman->menerima = $request->menerima;
+            $peminjaman->user_id = Auth::user()->id;
             $peminjaman->keadaan_barang = $request->keadaan_barang;
-            if($peminjaman->save()){
-                foreach($request->kode_barang as $key=>$kode_barang){
-                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
+            return $peminjaman;
+            if ($peminjaman->save()) {
+                foreach ($request->kode_barang as $key => $kode_barang) {
+                    $barang = Inventaris::where('kode_barang', $kode_barang)->first();
+                    if (Auth::user()->level !== 'admin') {
+                        if ((int)$barang->kondisi_baru < (int)$request->qty[$key]){
+                            return redirect('peminjaman')->with('error', 'Jumlah pinjam melebihi stock tersedia!!');
+                        }
+
+                        //update stock barang inventaris
+                        $barang->kondisi_baru = $barang->kondisi_baru - $request->qty[$key];
+                        $barang->save();
+                    }
+
                     $peminjaman_detail = new PeminjamanDetail;
                     $peminjaman_detail->id_peminjaman = $peminjaman->id;
                     $peminjaman_detail->id_barang = $barang->id;
                     $peminjaman_detail->jumlah = $request->qty[$key];
-
-                    //update stock barang inventaris
-                    $barang->jumlah = $barang->jumlah - $request->qty[$key];
-                    $barang->save();
 
                     $peminjaman_detail->save();
                 }
@@ -236,15 +240,29 @@ class PeminjamanController extends Controller
             $peminjaman->mengembalikan = $request->mengembalikan;
             $peminjaman->menerima = $request->menerima;
             $peminjaman->keadaan_barang = $request->keadaan_barang;
-            if($peminjaman->save()){
-                PeminjamanDetail::where('id_peminjaman',$id)->delete();
-                foreach($request->kode_barang as $key=>$kode_barang){
-                    $barang = Inventaris::where('kode_barang',$kode_barang)->first();
-                    $peminjaman_detail = new PeminjamanDetail;
-                    $peminjaman_detail->id_peminjaman = $peminjaman->id;
-                    $peminjaman_detail->id_barang = $barang->id;
+            if ($peminjaman->save()) {
+                $delete_id = [];
+                foreach ($request->kode_barang as $key => $kode_barang) {
+                    $barang = Inventaris::where('kode_barang', $kode_barang)->first();
+
+                    $delete_id[] = $barang->id;
+                    $peminjaman_detail = PeminjamanDetail::where([['id_peminjaman',$peminjaman->id],['id_barang',$barang->id]])->first();
+
+                    if (Auth::user()->level !== 'admin') {
+                        if ((int)$request->qty[$key] > (int)$peminjaman_detail->jumlah) {
+                            $selisih = $request->qty[$key] - $peminjaman_detail->jumlah;
+                            if ((int)$barang->kondisi_baru < (int)$selisih)
+                                return redirect('peminjaman')->with('error', 'Jumlah pinjam melebihi stock tersedia!!');
+
+                            $barang->kondisi_baru = $barang->kondisi_baru - $selisih;
+                        } else {
+                            $selisih = $peminjaman_detail->jumlah - $request->qty[$key];
+                            $barang->kondisi_baru = $barang->kondisi_baru + $selisih;
+                        }
+                        $barang->save();
+                    }
+
                     $peminjaman_detail->jumlah = $request->qty[$key];
-                    $barang->save();
                     $peminjaman_detail->save();
                 }
                 PeminjamanDetail::where('id_peminjaman',$id)
@@ -273,7 +291,7 @@ class PeminjamanController extends Controller
         foreach($peminjamanDetails as $peminjamanDetail){
             // Update stok pada tabel barang
             $barang = Inventaris::where('id', $peminjamanDetail->id_barang)->first();
-            $barang->jumlah = $barang->jumlah + $peminjamanDetail->jumlah;
+            $barang->kondisi_baru = $barang->kondisi_baru + $peminjamanDetail->jumlah;
             $barang->save();
         }
 

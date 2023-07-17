@@ -9,88 +9,87 @@
                             Tambah Permintaan</h3>
                     </div>
                     <div class="card">
-                    </div>
-                    <div class="card-body">
-                        <form class="main-form row" action="{{ route('permintaan.store') }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <!-- @method('PUT') -->
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                    <label class="form-label">
-                                        Tanggal Pinjam
-                                    </label>
-                                    <input type="text" name="tanggal" class="form-control" readonly
-                                        value="{{ date('d-m-Y') }}" placeholder="Choose date" />
+                        <div class="card-body">
+                            <form class="main-form row" action="{{ route('permintaan.store') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                        <label class="form-label">
+                                            Tanggal Pinjam
+                                        </label>
+                                        <input type="text" name="tanggal" class="form-control" readonly
+                                            value="{{ date('d-m-Y') }}" placeholder="Choose date" />
+                                    </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Nama Dosen</label>
+                                    <input type="text" name="nama_dosen" placeholder="Nama Dosen"
+                                        class="form-control @error('nama_dosen') is-invalid @enderror"
+                                        value="{{ old('nama_dosen') }}">
+                                    @error('nama_dosen')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Nama Dosen</label>
-                                <input type="text" name="nama_dosen" placeholder="Nama Dosen"
-                                    class="form-control @error('nama_dosen') is-invalid @enderror"
-                                    value="{{ old('nama_dosen') }}">
-                                @error('nama_dosen')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Mata Kuliah</label>
-                                <input type="text" name="mata_kuliah" placeholder="Mata Kuliah"
-                                    class="form-control @error('mata_kuliah') is-invalid @enderror"
-                                    value="{{ old('mata_kuliah') }}">
-                                @error('mata_kuliah')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Kelas</label>
-                                <input type="text" name="kelas" placeholder="Kelas"
-                                    class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}">
-                                @error('kelas')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">Keterangan</label>
-                                <input type="text" name="keterangan" placeholder="Keterangan"
-                                    class="form-control @error('keterangan') is-invalid @enderror"
-                                    value="{{ old('keterangan') }}">
-                                @error('keterangan')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Pilih Barang</label>
-                                <select class="js-select2-barang form-control" name="state">
-                                    <option value="" disabled selected>Silahkan pilih barang yang ingin di minta
-                                    </option>
-                                    @foreach ($barangs as $barang)
-                                        <option value="{{ $barang->id }}"
-                                            data-json="{{ base64_encode(json_encode($barang)) }}">
-                                            {{ $barang->nama_barang }} -
-                                            {{ $barang->merk }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-12 mt-3 mb-3">
-                                    <table class="table order-list" id="table-list">
-                                        <thead>
-                                            <tr>
-                                                <th>Nama Bahan</th>
-                                                <th>Satuan</th>
-                                                <th>Merk</th>
-                                                <th>Jumlah Barang</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Mata Kuliah</label>
+                                    <input type="text" name="mata_kuliah" placeholder="Mata Kuliah"
+                                        class="form-control @error('mata_kuliah') is-invalid @enderror"
+                                        value="{{ old('mata_kuliah') }}">
+                                    @error('mata_kuliah')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                            <br>
-                            <div class="col-md-12 mt-3">
-                                <button type="submit" class="btn btn-primary">Tambah</button>
-                                <a href="{{ route('permintaan.index') }}" class="btn btn-secondary">Batal</a>
-                            </div>
-                        </form>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Kelas</label>
+                                    <input type="text" name="kelas" placeholder="Kelas"
+                                        class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}">
+                                    @error('kelas')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6 col-xl-4">
+                                    <label for="" class="form-label">Keterangan</label>
+                                    <input type="text" name="keterangan" placeholder="Keterangan"
+                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                        value="{{ old('keterangan') }}">
+                                    @error('keterangan')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Pilih Barang</label>
+                                    <select class="js-select2-barang form-control" name="state">
+                                        <option value="" disabled selected>Silahkan pilih barang yang ingin di minta
+                                        </option>
+                                        @foreach ($barangs as $barang)
+                                            <option value="{{ $barang->id }}"
+                                                data-json="{{ base64_encode(json_encode($barang)) }}">
+                                                {{ $barang->nama_barang }} -
+                                                {{ $barang->merk }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mt-3 mb-3">
+                                        <table class="table order-list" id="table-list">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama Bahan</th>
+                                                    <th>Satuan</th>
+                                                    <th>Merk</th>
+                                                    <th>Jumlah Barang</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <br>
+                                <div class="col-md-12 mt-3">
+                                    <button type="submit" class="btn btn-primary">Tambah</button>
+                                    <a href="{{ route('permintaan.index') }}" class="btn btn-secondary">Batal</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
