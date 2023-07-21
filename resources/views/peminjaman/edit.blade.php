@@ -16,8 +16,8 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3 col-md-6 col-xl-4">
-                                <label for="" class="form-label">tanggal</label>
-                                <input required type="date" name="tanggal" readonly placeholder="tanggal"
+                                <label for="" class="form-label">Tanggal</label>
+                                <input type="date" name="tanggal" placeholder="Tanggal"
                                     class="form-control"value="{{ old('tanggal', $peminjaman->tanggal) }}">
                             </div>
                             <div class="mb-3 col-md-6 col-xl-4">

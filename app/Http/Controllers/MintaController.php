@@ -18,33 +18,35 @@ class MintaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $data['navlink'] = 'minta';
         return view('minta.index', $data, compact('request'));
     }
 
-    public function getminta(Request $request){
+    public function getminta(Request $request)
+    {
         if ($request->ajax()) {
             $data = Minta::select('*');
             return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('tanggal', function($value){
-                        $tanggal = Carbon::parse($value->tanggal)->format('d-m-Y');
-                        return $tanggal;
-                    })
-                    ->addColumn('action', function($value){
+                ->addIndexColumn()
+                ->addColumn('tanggal', function ($value) {
+                    $tanggal = Carbon::parse($value->tanggal)->format('d-m-Y');
+                    return $tanggal;
+                })
+                ->addColumn('action', function ($value) {
                     $btn = '<div class="d-flex flex-row bd-highlight mb-3">
-                        <a href="'.route('minta.show', $value->id).'" class="btn btn-warning mr-3">Lihat</i></a>
+                        <a href="' . route('minta.show', $value->id) . '" class="btn btn-warning mr-3">Lihat</i></a>
 
-                        <a class="btn btn-info mr-3" href="'.route('minta.edit', $value->id).'">Edit</i></a>
+                        <a class="btn btn-info mr-3" href="' . route('minta.edit', $value->id) . '">Edit</i></a>
 
-                        <button class="btn btn-danger delete" id="'.$value->id.'" nama="'.$value->nama.'" type="submit"
-                            onclick="deleteMinta('.$value->id.')">Hapus</i></button>
+                        <button class="btn btn-danger delete" id="' . $value->id . '" nama="' . $value->nama . '" type="submit"
+                            onclick="deleteMinta(' . $value->id . ')">Hapus</i></button>
                     </div>';
                     return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -79,7 +81,7 @@ class MintaController extends Controller
             'keterangan' => 'required',
             'mengambil' => 'required',
             'petugas' => 'required',
-            ],[
+        ], [
             'tanggal.required' => 'Tanggal Wajib diisii!',
             'nama_dosen.required' => 'Nama Dosen Wajib diisii!',
             'mata_kuliah.required' => 'Mata kuliah Wajib diisii!',

@@ -17,11 +17,13 @@
                             @method('PUT')
                             <div class="row">
                                 <div class="mb-3 col-md-6 col-xl-4">
-                                    <label class="form-label">
-                                        Tanggal Pinjam
-                                    </label>
-                                    <input type="text" name="tanggal" class="form-control" readonly
-                                        value="{{ $permintaan->tanggal }}" placeholder="Choose date" />
+                                    <label for="" class="form-label">Tanggal</label>
+                                    <input type="date" name="tanggal" placeholder="Tanggal"
+                                        class="form-control @error('tanggal') is-invalid @enderror"
+                                        value="{{ $permintaan->tanggal }}">
+                                    @error('tanggal')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3 col-md-6 col-xl-4">
                                     <label for="" class="form-label">Nama Dosen</label>

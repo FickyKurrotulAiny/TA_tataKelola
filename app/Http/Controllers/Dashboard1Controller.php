@@ -25,8 +25,14 @@ class Dashboard1Controller extends Controller
     }
     public function index(){
         if(Auth::user()->level === 'user'){
-            $persediaans = Persediaan::get();
-            return view('dashboard.user2', compact('persediaans'));
+            $search = '';
+            if(isset($request)){
+                $search = $request->search;
+                $persediaans = Persediaan::where('nama_barang', 'like', "%" . $request->search . "%")->get();
+            }else{
+                $persediaans = Persediaan::get();
+            }
+            return view('dashboard.user2', compact('persediaans','search'));
         }else{
             $data['navlink'] = 'dashboard';
             $inventaris = Inventaris::count();

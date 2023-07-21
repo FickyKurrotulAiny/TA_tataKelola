@@ -2,14 +2,17 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>INFORMASI DATA BARANG PERSEDIAAN YANG TERSEDIA</h1>
-                    <div class="card-header-action">
-                        <form action="{{ route('search') }}" method="get">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1>INFORMASI DATA BARANG PERSEDIAAN YANG TERSEDIA</h1>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="{{ route('dashboard1') }}" method="get">
                             @method('get')
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" name="search" id="search">
+                                <input value="{{ $search }}" type="text" class="form-control" placeholder="Search"
+                                    name="search" id="search">
                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                             </div>
                         </form>
@@ -46,8 +49,24 @@
                         </article>
                     </div>
                 @endforeach
+                @if (count($persediaans) < 1 && $search !== '')
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <center>
+                                    <h4>Barang Tidak Tersedia</h4>
+                                    <br>
+                                    <a href="{{ route('dashboard1') }}" class="btn btn-info">
+                                        Kembali
+                                    </a>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
+
     </section>
     <div class="modal fade" tabindex="-1" role="dialog" id="modal-details" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">

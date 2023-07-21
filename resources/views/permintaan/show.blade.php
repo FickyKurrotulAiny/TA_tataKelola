@@ -38,6 +38,18 @@
                                     <th width="30px">:</th>
                                     <th>{{ $permintaan->keterangan }}</th>
                                 </tr>
+                                @if (Auth::user()->level === 'admin')
+                                    <tr>
+                                        <th width="200px">Yang mengambil </th>
+                                        <th width="30px">:</th>
+                                        <th>{{ $permintaan->mengambil }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="200px">Petugas Yang Memberikan</th>
+                                        <th width="30px">:</th>
+                                        <th>{{ $permintaan->petugas }}</th>
+                                    </tr>
+                                @endif
                             </table>
                             <table class="table table-bordered table-md">
                                 <thead>
@@ -65,8 +77,10 @@
                             <br>
                             <tr>
                                 <th><a href="{{ route('permintaan.index') }}" class="btn btn-primary">Kembali</a></th>
+                                @if (Auth::user()->level !== 'admin')
                                 <th><a href="{{url('/generatePDFPermintaan/'.$permintaan->id)}}" target="_blank"
-                                            class="btn btn-primary">Cetak Form</a></th>
+                                    class="btn btn-primary">Cetak Form</a></th>
+                                @endif
                             </tr>
                         </div>
                     </div>
